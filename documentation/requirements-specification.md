@@ -56,3 +56,27 @@ huffman(f[1...n])
 (8) insertRear(Q,(n + k, f[n + k]))
 (9) return T
 ```
+
+## The time and space complexities
+
+The time complexity of Huffman coding is $O(n \log n)$ according to the Wikipedia article and the Geeks for Geeks article (links below). I do however want to verify this from a more trusted source during the project. 
+
+Based on initial study it seems that several different time and space complexities can be achieved for LZ77, depending on the execution. Based on the sources it is possible to achieve $O(n)$ and to best of my understanding $O(n \log n)$ could be achievable with a simpler design as well. 
+
+
+
+
+### Additional sources
+
+Huffman coding:
+* Geeks for Geeks' [article](https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/) on Huffman coding
+* Microsoft Documentation: [2.1.4.2 Huffman Code Construction Phase](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-xca/35a83e96-981d-48ed-a4eb-0b9cc6b51440)
+* Wikipedia: [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding)
+* John Morris: [Huffman encoding](https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html)
+
+
+LZ77
+* Towards Data Science: [How data compression works: Exploring LZ77](https://towardsdatascience.com/how-data-compression-works-exploring-lz77-3a2c2e06c097)
+* Microsoft Documentation: [2.1.1.1.1 LZ77 Compression Algorithm](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wusp/fb98aa28-5cd7-407f-8869-a6cef1ff1ccb)
+* Wikipedia: [LZ77 and LZ78](https://en.wikipedia.org/wiki/LZ77_and_LZ78)
+* PADS: [Practical Algorithms and Data structures on Strings](https://www.cs.helsinki.fi/group/pads/)
