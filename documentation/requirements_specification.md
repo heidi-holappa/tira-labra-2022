@@ -7,7 +7,9 @@ This application was build as a university computer science laboratory project t
 The application is built with Python. Poetry is used for dependency management and packaging. 
 
 ## Algorithms used
-The application provides data compression with two well know algorithms: Dr. Huffman's [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding) and Professor Lempel's and Professor Ziv's [LZ77](https://en.wikipedia.org/wiki/LZ77_and_LZ78).
+The application provides data compression with two well know algorithms: 
+* Dr. Huffman's [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding) and 
+* Professor Lempel's and Professor Ziv's [LZ77](https://en.wikipedia.org/wiki/LZ77_and_LZ78).
 
 ### LZ77
 A pseudo code for LZ77 can be found in the [Wikipedia article](https://en.wikipedia.org/wiki/LZ77_and_LZ78):
