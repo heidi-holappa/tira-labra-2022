@@ -19,9 +19,10 @@ I opted to choose the last one and focus on data compression algorithms. It is a
 
 This week I have studied about data compression and scraped the surface on the fascinating topic. I have decided that my project will focus on lossless data compression. In the course material a comparison of Huffman vs. Lempel-Ziv was given as an example of a good scope for this project and I decided to start by looking into these two algorithms.
 
-I have created a project and a remote repository to GitHub. I have created a requirements specification documentation and did my best to include everything asked for. I have also 
+I have created a project and a remote repository to GitHub. I have created a requirements specification documentation and did my best to include everything asked for. I have also initialized Poetry and added Pylint, Pytest, Invoke and Coverage for future purposes. 
 
 ## How has the application progressed?
+This week the application has not yet progressed. 
 
 ## What did I learn during this week / today?
 
