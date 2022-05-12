@@ -6,6 +6,6 @@ The project is built on two well known algorithms <inserts names here>. <add add
 
 # Project documentation
 
-* Requirements specification
-* Weekly report #1
+* [Requirements specification](/documentation/requirements-specification.md)
+* [Weekly report #1](/documentation/weekly-report-1.md)
 
