@@ -3,8 +3,11 @@
 ## Purpose of the application
 This application was build as a university computer science laboratory project to study the operation of lossless data compression. 
 
-## Languages 
+## Programming language used
 The application is built with Python. Poetry is used for dependency management and packaging. 
+
+## Study program (degree education)
+Bachelor's Programme in Computer Science and Master's Programme (3 years + 2 years) 
 
 ## Algorithms used
 The application provides data compression with two well know algorithms: 
