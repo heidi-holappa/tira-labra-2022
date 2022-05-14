@@ -45,6 +45,21 @@ repeat
 ```
 
 ### Huffman coding
+A pseudocode example from Cormen et al [12]:
+
+```
+HUFFMAN(C)
+1   n = |C|
+2   Q = C
+3   for i to n - 1
+4       allocate a new node z
+5       z.left = x = EXTRACT-MIN(Q)
+6       z.right = y = EXTRACT-MIN(Q)
+7       z.freq = x.freq + y.freq
+8       INSERT(Q,z)
+9   return EXTRACT-MIN(Q) // return the root of the tree
+```
+
 A pseudocode example for Huffman coding can be found in Professor Alvarez' [notes](http://cs.bc.edu/~alvarez/Algorithms/Notes/huffman.pdf):
 ```
 Input: Array f[1...n] of numerical frequencies or probabilities.
@@ -96,12 +111,14 @@ Based on initial study it seems that variations of LZ77 achieve different time c
 [11] Professor Blelloch, Guy. Lecture slides from course "Algorithms in the 'Real World'": https://www.cs.cmu.edu/~guyb/realworld/slidesF08/suffixcompress.pdf  
   
 **General**  
-[12] Salomon, D. (David). A Concise Introduction to Data Compression. London: Springer, 2008. Print.  
-[13] Sayood, Khalid. Introduction to Data Compression. 3rd ed. Amsterdam ;: Elsevier, 2006. Print.  
-[14] Salomon, Daṿid, and Giovanni Motta. Handbook of Data Compression. 5th ed. 2010. London: Springer London, 2010. Web.  
+[12] Cormen, Thomas H. Introduction to Algorithms. 3rd ed. Cambridge, Mass: MIT Press, 2009.  
+[13] Salomon, D. (David). A Concise Introduction to Data Compression. London: Springer, 2008. Print.  
+[14] Sayood, Khalid. Introduction to Data Compression. 3rd ed. Amsterdam ;: Elsevier, 2006. Print.  
+[15] Salomon, Daṿid, and Giovanni Motta. Handbook of Data Compression. 5th ed. 2010. London: Springer London, 2010. Web.  
 
 **Video-sources**  
-[15] Computerphile: [Elegant compression in Text (the LZ 77 method)](https://youtu.be/goOa3DGezUA)  
-[16] Google Developers: [The LZ77 Compression Family](https://youtu.be/Jqc418tQDkg)  
-[17] Tom Scott: [How Computers Compress Text: Huffman coding and Huffman Trees](https://youtu.be/JsTptu56GM8)  
-[18] Computerphile: [How Huffman Trees Work](https://youtu.be/umTbivyJoiI)
+[16] Computerphile: [Elegant compression in Text (the LZ 77 method)](https://youtu.be/goOa3DGezUA)  
+[17] Google Developers: [The LZ77 Compression Family](https://youtu.be/Jqc418tQDkg)  
+[18] Tom Scott: [How Computers Compress Text: Huffman coding and Huffman Trees](https://youtu.be/JsTptu56GM8)  
+[19] Computerphile: [How Huffman Trees Work](https://youtu.be/umTbivyJoiI)
+[20] Google Developers: [Compressor Head - series](https://youtu.be/Eb7rzMxHyOk)
