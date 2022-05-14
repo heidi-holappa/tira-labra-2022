@@ -58,6 +58,8 @@ During next week after receiving feedback on my project proposal I will either s
 
 I propose that I exclude GUI-classes from the automated tests as was done in the OhTe-course.  
 
+## Study hours for week #1
+
 | Date (dd/mm/yyyy) |Task | Hours |
 | ---- | ---- | ---- |
 | 9.5.2022 | Course introduction lecture | 2 |
