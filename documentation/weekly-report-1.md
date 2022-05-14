@@ -68,5 +68,4 @@ I propose that I exclude GUI-classes from the automated tests as was done in the
 | 12.5.2022 | Studying algorithms, writing documentation | 1,5 |
 | 14.5.2022 | Studying algorithms, writing documentation | 3 |
 | 14.5.2022 | Writing documentation, reading source material | 2 |
-| ---- | ---- | ---- |
 | **total**| ---- | **14** |
