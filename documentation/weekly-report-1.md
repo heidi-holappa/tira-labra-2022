@@ -3,11 +3,14 @@
 ## Quick recap on progress
 
 * Initial requirements specification created, including
-  * topic for the project
-  * initial proposal for algorithms to be used
-  * programming language to be used  
+  * topic for the project (lossless compression)
+  * initial proposal for algorithms to be used (Huffman coding & LZ77)
+  * programming language to be used (Python)
+  * language to be used in documentation and code (English)
+  * Initial sources
 * Project and remote repository created
-* Signed into labtool, added link to Github
+* Signed into labtool, added link to Github repository
+* Weekly report #1 written
 
 
 ## What have I done this week?
