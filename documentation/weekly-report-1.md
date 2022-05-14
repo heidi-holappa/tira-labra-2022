@@ -26,19 +26,24 @@ I have also initialized Poetry and added Pylint, Pytest, Invoke and Coverage for
 ## How has the application progressed?
 This week the core content application has not yet progressed. I did however create an initial template for the GUI, which can already be tested by downloading the project. I used my previous work from the OhTe-course to setup the main layout, menu structure and theme configuration that I personally created this spring. I considered that reusing my own work in this way is acceptable, as the GUI is merely a tool to make focusing on the purpose of this course more convenient. 
 
-I have made an initial proposal for the application structure, which can be found in the requirements specification documentation. 
+I have made an initial proposal for the application structure, which can be found in the [architecture](architecture.md) documentation. 
 
 ## What did I learn during this week / today?
-I learned...
+I scraped the surface on lossless compression and learned a little on the history of the Huffman coding and LZ77. I also got a basic understanding on how these two algorithms / approaches work, and that they are rarely used on their own, but rather as 'tools' to tackle a part of a more complex task. I learned a little bit about DEFLATE that combines the two before mentions algorithms. If there is time, it'd be fantastic to implement that as well into this project! 
 
 ## What remained unclear or caused difficulties? 
-I am at this time uncertain on whether I chose a good starting point for this project. It was relatively easy to find pseudocode examples of the two algorithms I propose focusing on (Huffman coding, LZ77). I estimated that the sources seemed trustworthy, but I have a certain amount of uncertainty nevertheless. I would very much appreciate on hearing feedback on this. Taking in to consideration that my goal is the get a good grade (at the least a 5), 
+I am at this time uncertain on whether I chose a good starting point for this project. It was relatively easy to find pseudocode examples of the two algorithms I propose focusing on (Huffman coding, LZ77), but I do not yet understand the functionalities of these algorithms well enough to fully understand, whether the pseudocode examples I first found are optimal or not. I still need to do a lot of research. 
 
+At the moment I am struggling with understanding the time and space complexities of these algorithms. I have detailed my current understanding in the 'requirements specification' document and would very much appreciate feedback on the content. Also I would like to hear feedback on whether the scope of my project is good for this course, taking in to consideration that my goal is the get a good grade (preferrably a 5). 
+
+To sum up
+* I would like to setup an online meeting to get guidance
+* I am uncertain on the time and space complexities 
 * is the scope good for this project? 
-* are my initial sources a good starting point? 
+* tips on good and well regarded sources would be very welcome
 
 ## Next steps
-During next week I will start building the application. The initial idea is to have a rough GUI ready and first working versions of the algorithms ready for use.
+During next week I will start building the application and first versions of the algorithms selected for this project. The initial idea is to have first working versions of the algorithms ready for use and GUI-features that enable trying out the implementation of the algorithms. 
 
 
 | Date (dd/mm/yyyy) |Task | Hours |
@@ -49,5 +54,6 @@ During next week I will start building the application. The initial idea is to h
 | 11.5.2022 | Reading about Huffman coding and LZ77 | 1 |
 | 12.5.2022 | Creating project, Github repository, signup to Labtool | 2 |
 | 12.5.2022 | Studying algorithms, writing documentation | 1,5 |
+| 14.5.2022 | Studying algorithms, writing documentaiton | 3 |
 | ---- | ---- | ---- |
-| **total**| ---- | **9** |
+| **total**| ---- | **12** |
