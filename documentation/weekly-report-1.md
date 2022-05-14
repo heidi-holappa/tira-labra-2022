@@ -36,13 +36,13 @@ I scraped the surface on lossless compression and learned a little on the histor
 
 At the moment I have three main areas on which I would like to get guidance. I would very much like to have an online meeting to go through these. 
 
-### Is this a good starting point for the project? 
+### #1 Is this a good starting point for the project? 
 I am at this time uncertain on whether I chose a good starting point for this project. Data compression is a topic I am not familiar with and I would like to learn the basics of lossless data compression. For this reason I wanted to focus on these two well known algorithms. It was relatively easy to find pseudocode examples of the two algorithms I propose focusing on (Huffman coding, LZ77), but I do not yet understand the functionalities of these algorithms well enough to fully understand, whether the pseudocode examples I first found are optimal or not. I still need to do more research. 
 
-### Time and space complexities
-At the moment I am struggling with understanding the time and space complexities of these algorithms. I have detailed my current understanding in the 'requirements specification' document and would very much appreciate feedback on the content. Also I would like to hear feedback on whether the scope of my project is good for this course, taking in to consideration that my goal is the get a good grade (preferrably a 5). 
+### #2 Time and space complexities
+At the moment I am struggling with understanding the time and space complexities of these algorithms. I have detailed my current understanding in the ['requirements specification'](requirements-specification.md) document and would very much appreciate feedback on the content. Also I would like to hear feedback on whether the scope of my project is good for this course, taking in to consideration that my goal is the get a good grade (preferrably a 5). 
 
-### Compression ratio
+### #3 Compression ratio
 Based on initial reading the compression ratio of Huffman coding is approximately 1,5:1. For the project a compression ratio greater than 1.67:1 is preferrable. I am unclear on how I should approach this objective if my project focuses on comparing Huffman coding and LZ77. Should I search for ways to optimize the algorithms? 
 
 
