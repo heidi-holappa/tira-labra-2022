@@ -78,7 +78,7 @@ According to articles on Geeks for Geeks [1] Wikipedia [3] the time complexity o
 Based on initial study it seems that variations of LZ77 achieve different time complexities [8,9]. Based on the sources a time complexity of, when certain conditions apply, $O(n)$ is possible to achieve. My current understading is, that the time complexity of the original LZ77 is harded to estimate. The best and worst cases depend i.e. on the size of the buffer window and given data. To best of my current understanding a time complexity of $O(n \log n)$ could be achievable with a relatively simple design as well. I am at the moment uncertain on the big O space complexity of LZ77. 
 
 
-## Sources
+## Sources (will be later moved to Execution document)
 
 **Huffman coding:**  
 [1] Geeks for Geeks' [article](https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/) on Huffman coding  
