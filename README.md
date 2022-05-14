@@ -1,7 +1,7 @@
 # Introduction
-This project was built as a university course project in Summer 2022 for the laboratory class of Data Structures and Algorithms. I chose to do my project on lossless data compression.
+This project is being built as a university course project during Summer 2022 for the laboratory class of Data Structures and Algorithms. I propose doing my project on lossless data compression.
 
-The project is built on two well known algorithms <inserts names here>. <add additional details on application details>. 
+The initial proposal is to do a comparison on two well known algorithms, Huffman coding and LZ77. For more detailed proposal please see 'Requirements specification.' For detailed report on the projects first week see 'Weekly Report #1.'
 
 
 ## Project documentation
