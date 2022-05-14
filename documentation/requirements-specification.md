@@ -58,25 +58,34 @@ huffman(f[1...n])
 ```
 
 ## The time and space complexities
+My initial understanding is that text compression can be done in time complexity $O(n \log n)$ with both Huffman coding and LZ77. I am currently researching the selected algorithms and will possibly update these complexities in the first weeks of the course. 
 
-The time complexity of Huffman coding is $O(n \log n)$ according to the Wikipedia article and the Geeks for Geeks article (links below). I do however want to verify this from a more trusted source during the project. 
+According to articles on Geeks for Geeks [1] Wikipedia [3] the time complexity of Huffman coding is $O(n \log n)$. Based on initial research there is much more complexity and uncertainty to the time and space complexities of Huffman coding [12,13,14]. According to professor David Solomon [12,14], the average space complexity for Huffman coding is 2.2 bits/symbol, but the best and worst cases have significant variation. 
 
-Based on initial study it seems that several different time and space complexities can be achieved for LZ77, depending on the execution. Based on the sources it is possible to achieve $O(n)$ and to best of my understanding $O(n \log n)$ could be achievable with a simpler design as well. 
-
-
+Based on initial study it seems that variations of LZ77 achieve different time complexities [8,9]. Based on the sources a time complexity of, when certain conditions apply, $O(n)$ is possible to achieve. My current understading is, that the time complexity of the original LZ77 is harded to estimate. The best and worst cases depend i.e. on the size of the buffer window and given data. To best of my current understanding a time complexity of $O(n \log n)$ could be achievable with a relatively simple design as well. 
 
 
 ### Additional sources
 
 Huffman coding:
-* Geeks for Geeks' [article](https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/) on Huffman coding
-* Microsoft Documentation: [2.1.4.2 Huffman Code Construction Phase](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-xca/35a83e96-981d-48ed-a4eb-0b9cc6b51440)
-* Wikipedia: [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding)
-* John Morris: [Huffman encoding](https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html)
+[1] Geeks for Geeks' [article](https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/) on Huffman coding
+[2] Microsoft Documentation: [2.1.4.2 Huffman Code Construction Phase](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-xca/35a83e96-981d-48ed-a4eb-0b9cc6b51440)
+[3] Wikipedia: [Huffman coding](https://en.wikipedia.org/wiki/Huffman_coding)
+[4] John Morris: [Huffman encoding](https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html)
 
 
 LZ77
-* Towards Data Science: [How data compression works: Exploring LZ77](https://towardsdatascience.com/how-data-compression-works-exploring-lz77-3a2c2e06c097)
-* Microsoft Documentation: [2.1.1.1.1 LZ77 Compression Algorithm](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wusp/fb98aa28-5cd7-407f-8869-a6cef1ff1ccb)
-* Wikipedia: [LZ77 and LZ78](https://en.wikipedia.org/wiki/LZ77_and_LZ78)
-* PADS: [Practical Algorithms and Data structures on Strings](https://www.cs.helsinki.fi/group/pads/)
+[5] Towards Data Science: [How data compression works: Exploring LZ77](https://towardsdatascience.com/how-data-compression-works-exploring-lz77-3a2c2e06c097)
+[6] Microsoft Documentation: [2.1.1.1.1 LZ77 Compression Algorithm](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wusp/fb98aa28-5cd7-407f-8869-a6cef1ff1ccb)
+[7] Wikipedia: [LZ77 and LZ78](https://en.wikipedia.org/wiki/LZ77_and_LZ78)
+[8] PADS: [Practical Algorithms and Data structures on Strings](https://www.cs.helsinki.fi/group/pads/)
+[9] Kempa, Dominik, and Dmitry Kosolobov. “LZ-End Parsing in Linear Time.” (2017): n. pag. Print.
+[10] Kosolobov, Dmitry. “Relations Between Greedy and Bit-Optimal LZ77 Encodings.” (2018): n. pag. Print.
+[11] Professor Blelloch, Guy. Lecture slides from course "Algorithms in the 'Real World'": https://www.cs.cmu.edu/~guyb/realworld/slidesF08/suffixcompress.pdf
+
+General
+[12] Salomon, D. (David). A Concise Introduction to Data Compression. London: Springer, 2008. Print.
+[13] Sayood, Khalid. Introduction to Data Compression. 3rd ed. Amsterdam ;: Elsevier, 2006. Print.
+[14] Salomon, Daṿid, and Giovanni Motta. Handbook of Data Compression. 5th ed. 2010. London: Springer London, 2010. Web.
+
+
