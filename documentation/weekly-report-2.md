@@ -3,7 +3,7 @@
 ## Quick recap on progress
 
 ## What have I done this week?
-I was unfortunate to catch a flu previous weekend and was on a sick leave from work for the whole week. I did my best to put energy into the project and am once again satisfied with what I have done under the circumstances. Looking forwarded next week, hopefully without a flu and with time and energy to fully commit to this project. The biggest thing for me this week has been the growing excitement while learning more on data compression. So far this has been the favorite course I have taken. I feels great to have such passionate feelings on a subject one is studying! 
+I was unfortunate to catch a flu previous weekend and was on a sick leave from work for the whole week. I did my best to put energy into the project and am once again satisfied with what I have done under the circumstances. Looking forward next week, hopefully without a flu and with time and energy to fully commit to this project. The biggest thing for me this week has been the growing excitement while learning more on data compression. So far this has been the favorite course I have taken. It feels great to have such passionate feelings on a subject one is studying! 
 
 On a more conrete level I read more on the Huffman coding and built a first version of the algorithm. I did struggle quite a bit with understanding the algorithm fully, but I think I have a good understanding of the basic functionalities now. I also created first functionalities in the GUI. I had to learn on how to use filedialog (file explorer) in Tkinter and it was a great new thing to learn! A user can now compress / uncompress files from the GUI. 
 
