@@ -11,8 +11,9 @@ class MainView:
         frame: a variable for creating the Frame object
     """
 
-    def __init__(self, root):
+    def __init__(self, root, compression_view):
         self._root = root
+        self._compression_view = compression_view
         self._frame = None
 
         self._initialize()
@@ -59,6 +60,23 @@ class MainView:
             column=0,
             pady=10
         )
+
+        self.construct_buttons()
+
+    def construct_buttons(self):
+
+        button_compression_view = ttk.Button(
+            master=self._frame,
+            text="compress / uncompress data",
+            command=self._compression_view,
+            style="Custom.TButton"
+        )
+        
+        button_compression_view.grid(
+            row=3,
+            column=0
+        )
+
     
     def _create_menubar(self):
         """A method that calls for the construction of default menu bar.
