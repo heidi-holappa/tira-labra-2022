@@ -198,7 +198,7 @@ class HuffmanCoding:
         self.calculate_frequencies()
         self.build_huffman_tree()
         self.huffman_encode()
-        self.write_compressed_file("compressed.huf", self.compressed)
+        self.write_compressed_file(self.compressed_filename, self.compressed)
         # for key, item in self.frequencies.items():
         #     print(key, item)
         
