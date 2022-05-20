@@ -9,6 +9,7 @@ The initial proposal is to do a comparison on two well known algorithms, Huffman
 * [Requirements specification](/documentation/requirements-specification.md)
 * [How-to-Guide](/documentation/how-to-guide.md)
 * [Weekly report #1](/documentation/weekly-report-1.md)
+* [Weekly report #2](documentation/weekly-report-2.md)
 * [Project architecture (extra document)](/documentation/architecture.md)
 
 ## Installation
