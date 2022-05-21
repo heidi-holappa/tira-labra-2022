@@ -357,12 +357,6 @@ class CompressionView:
             column=1,
             sticky=constants.W
         )
-        
-
-
-
-
-
 
     def _handle_compression(self):
         """An initial method for handling compression. 
