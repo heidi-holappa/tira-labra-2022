@@ -113,7 +113,7 @@ class HuffmanCoding:
         self.uncompressed = ""
         node = self.root_node
         i = 0
-        while i <= len(self.compressed):
+        while i < len(self.compressed):
             byte = self.compressed[i]
             if byte == "1" and node.right_child:
                 node = node.right_child
