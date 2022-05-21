@@ -3,6 +3,15 @@ from entities.huffman import HuffmanCoding
 class CompressionManagement:
 
     def __init__(self):
+        self.last_analysis = {
+            "algorithm_used":"Huffman coding",
+            "uncompressed_size": 0,
+            "compressed_content":0,
+            "compressed_header":0,
+            "compressed_total":0,
+            "content_ratio":0,
+            "total_ratio":0
+        }
         pass
 
     def initial_huffman_compression(self, filename: str):
@@ -12,12 +21,23 @@ class CompressionManagement:
 
         Args:
             filename (str): filename to be read
+
+        Returns:
+            dict: a dictionary of analysis data to populate GUI labels
         """
         compressed_filename = filename[:-3] + "huf"
         analysis_filename = filename[:-4] + "_compression_analysis.log"
         huffman_compressor = HuffmanCoding(filename, compressed_filename)
         huffman_compressor.execute_compression()
         huffman_compressor.huffman_analyze(analysis_filename)
+        self.last_analysis["uncompressed_size"] = huffman_compressor.uncompressed_size
+        self.last_analysis["compressed_total"] = huffman_compressor.total_compressed
+        self.last_analysis["compressed_content"] = huffman_compressor.stored_characters
+        self.last_analysis["compressed_header"] = huffman_compressor.int_bits
+        self.last_analysis["compressed_total"] = huffman_compressor.compressed_size
+        self.last_analysis["content_ratio"] = huffman_compressor.content_ratio
+        self.last_analysis["total_ratio"] = huffman_compressor.total_ratio
+
 
         # with open(filename) as file_to_be_compressed:
         #     content = file_to_be_compressed.read()

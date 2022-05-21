@@ -165,24 +165,28 @@ class HuffmanCoding:
         Args:
             filename (str): a filename to which to store the content.
         """
-        uncompressed_size = len(self.content)*8
-        stored_characters = len(self.frequencies) * 8
-        int_bits = 0
+
+
+        self.uncompressed_size = len(self.content)*8
+        self.stored_characters = len(self.frequencies) * 8
+        self.int_bits = 0
         for key, value in self.frequencies.items():
-            int_bits += int(value).bit_length()
-        compressed_size = len(self.compressed)
-        total_compressed = compressed_size + int_bits + stored_characters
+            self.int_bits += int(value).bit_length()
+        self.compressed_size = len(self.compressed)
+        self.total_compressed = self.compressed_size + self.int_bits + self.stored_characters
         with open(filename, "w") as report:
-            report.write(f"Uncompressed size: {uncompressed_size} bits\n")
+            report.write(f"Uncompressed size: {self.uncompressed_size} bits\n")
             report.write("-----\n")
-            report.write(f"Compressed content: {compressed_size} bits\n")
+            report.write(f"Compressed content: {self.compressed_size} bits\n")
             report.write("frequencies:\n")
-            report.write(f"characters: {stored_characters}\n")
-            report.write(f"frequency int value bit size: {int_bits}\n")
-            report.write(f"compression total: {total_compressed}\n")
+            report.write(f"characters: {self.stored_characters}\n")
+            report.write(f"frequency int value bit size: {self.int_bits}\n")
+            report.write(f"compression total: {self.total_compressed}\n")
             report.write("-----\n")
-            report.write(f"Compression ratio on content: {compressed_size / uncompressed_size}\n")
-            report.write(f"Compression ratio on total: {total_compressed / uncompressed_size}\n")
+            self.content_ratio = self.compressed_size / self.uncompressed_size
+            report.write(f"Compression ratio on content: {self.content_ratio}\n")
+            self.total_ratio = self.total_compressed / self.uncompressed_size
+            report.write(f"Compression ratio on total: {self.total_ratio}\n")
 
     def execute_compression(self):
         """This method calls the methods that handle different
