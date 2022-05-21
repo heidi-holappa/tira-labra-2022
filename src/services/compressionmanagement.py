@@ -24,10 +24,6 @@ class CompressionManagement:
         huffman_compressor.huffman_analyze(analysis_filename)
         self.last_analysis = huffman_compressor.last_analysis
 
-        # with open(filename) as file_to_be_compressed:
-        #     content = file_to_be_compressed.read()
-        # print(content)
-
     def initial_huffman_uncompression(self, filename: str):
         """An initial method for testing Huffman decoding.
 
@@ -39,7 +35,7 @@ class CompressionManagement:
 
         uncompressed_filename = filename[:-4] + "_uncompressed.txt"
         analysis_filename = filename[:-4] + "_uncompression_analysis.log"
-        huffman_uncompressor = HuffmanCoding(filename, uncompressed_filename)
+        huffman_uncompressor = HuffmanCoding(uncompressed_filename, filename)
         huffman_uncompressor.execute_uncompression()
         huffman_uncompressor.huffman_analyze(analysis_filename)
 

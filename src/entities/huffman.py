@@ -152,7 +152,7 @@ class HuffmanCoding:
 
     def fetch_compressed_content(self):
         self.frequencies = {}
-        with open(self.uncompressed_filename, encoding="utf-8") as source_content:
+        with open(self.compressed_filename, encoding="utf-8") as source_content:
             for row in source_content:
                 if ";" in row:
                     row = row.replace("\n", "")
@@ -227,7 +227,7 @@ class HuffmanCoding:
         self.fetch_compressed_content()
         self.build_huffman_tree()
         self.huffman_decode()
-        self.write_uncompressed_file("uncompressed.txt", self.uncompressed)
+        self.write_uncompressed_file(self.uncompressed_filename, self.uncompressed)
 
 
 class HuffmanNode:

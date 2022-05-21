@@ -400,13 +400,13 @@ class CompressionView:
             state="enabled"
         )
         self.analysis_content_ratio_value.configure(
-            text=str(
-                self.compression_management.last_analysis["content_ratio"]) + " percent",
+            text="{:.2f}".format(
+                self.compression_management.last_analysis["content_ratio"]*100) + " percent",
             state="enabled"
         )
         self.analysis_total_ratio_value.configure(
-            text=str(
-                self.compression_management.last_analysis["total_ratio"]) + " percent",
+            text="{:.2f}".format(
+                self.compression_management.last_analysis["total_ratio"]*100) + " percent",
             state="enabled"
         )
 
