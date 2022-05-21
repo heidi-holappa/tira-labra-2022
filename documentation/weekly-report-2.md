@@ -36,6 +36,15 @@ I still need to improve the Huffman algorithm in multiple ways. Currently it onl
 
 The other big issue to solve is storing the huffman tree. I had trouble finding good material, most likely because I did not fully understand what search terms to use. I asked for sources on good tutorials on the subject at the Telegram channel and got a very good tip. The tutorial had a lot of good vocabulary so I am confident that finding more tutorials on the topic will be easier! 
 
+## Pylint and Pytest - status update
+In this weeks tasks unittests 
+
+At the moment the Pylint score of the application is 9.62/10 and there are a few open issues to be dealt with. The branch coverage is 86 percent. The tests are not as of yet diverse and need to be worked on. 
+
+![Coverage-report](images/coverage-report-img.png)
+
+As I wrote the tests I noticed a serious error with my decoding method. For some reason the final character of the compressed content was left out while decoding. I made a temporary solution of continuing iteration until a leaf is found to get the last character, but the decoder method obviously needs refactoring and improving. 
+
 ## Next steps
 * Build initial version of Lempel-Ziv 77 algorithm
 * Improve Huffman coding
@@ -55,4 +64,5 @@ The other big issue to solve is storing the huffman tree. I had trouble finding 
 | 20.5.2022 | Polish GUI, create LabelFrames for widget-layout | 1 |
 | 21.5.2022 | Refactor code based on pylint feedback | 1 |
 | 21.5.2022 | Create initial analysis data view for GUI | 1 |
-| **total**| ---- | **13,5** |
+| 21.5.2022 | Write initial tests | 2 |
+| **total**| ---- | **15,5** |
