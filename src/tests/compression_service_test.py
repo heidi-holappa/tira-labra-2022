@@ -17,6 +17,8 @@ class TestCompressionManagement(unittest.TestCase):
         compressed_file_created = bool(os.path.exists(compressed_filename))
         os.remove(filename)
         os.remove(compressed_filename)
+        analysis_filename = filename[:-4] + "_compression_analysis.log"
+        os.remove(analysis_filename)
         self.assertEqual(True, compressed_file_created)
 
     def test_validation_success_when_extension_is_valid(self):
