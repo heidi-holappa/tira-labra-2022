@@ -1,14 +1,14 @@
 # Weekly Report #2
 
 ## Quick recap on progress
-* Initial version of Huffman algorithm built. Header still needs to be compressed more efficiently
+* Initial version of Huffman algorithm built. Header still needs to be compressed more efficiently. 
+* Decoding has an issue that needs to be fixed. Last character is not decoded. One of the tests currently fails. 
 * GUI now has basic functionalities
 * First tests written
 * Code cleaned and refactored based on pylint feedback
-* Docstring written for written code
+* Docstring written for code
 * Content created for How-to-guide
 * New features can be tested by following the instructions in the how-to-guide
-
 
 ## What have I done this week?
 I was unfortunate to catch a flu previous weekend and was on a sick leave from work for the whole week. I did my best to put energy into the project and am once again satisfied with what I have done under the circumstances. Looking forward next week, hopefully without a flu and with time and energy to fully commit to this project. The biggest thing for me this week has been the growing excitement while learning more on data compression. So far this has been the favorite course I have taken. It feels great to have such passionate feelings on a subject one is studying! 
@@ -24,7 +24,7 @@ To make testing easier, files can also be compressed/uncompressed directly from 
 * compressed files have ".huf" as an extension
 * An initial simple analysis file is created on compression results. Analysis data is also shown in the GUI
 * The GUI has first working functionalities
-* The application has extensive docstring
+* The application has semi-extensive docstring
 * The application now uses dotenv for easier configuration
 * First tests written. 
 
@@ -32,24 +32,42 @@ To make testing easier, files can also be compressed/uncompressed directly from 
 I learned a lot more on Huffman coding and know now how to proceed with that part of this project. I also learned a new useful skill for GUI - creation (how to open file explorer to read files). 
 
 ## What remained unclear or caused difficulties? 
-I still need to improve the Huffman algorithm in multiple ways. Currently it only handles .txt-files with ASCII 256 content. I would like to look into how to make the algorithm a bit more universal. 
+While writing tests I learned that my code for decoding does not work. For a reason that is at the moment unknown to me the last character is not decoded. At the moment my code for decoding looks like this. 
 
-The other big issue to solve is storing the huffman tree. I had trouble finding good material, most likely because I did not fully understand what search terms to use. I asked for sources on good tutorials on the subject at the Telegram channel and got a very good tip. The tutorial had a lot of good vocabulary so I am confident that finding more tutorials on the topic will be easier! 
+```
+    node = self.root_node
+    i = 0
+    while i <= len(self.compressed):
+        byte = self.compressed[i]
+        if byte == "1" and node.right_child:
+            node = node.right_child
+            i += 1
+        elif byte == "0" and node.left_child:
+            node = node.left_child
+            i += 1
+        else:
+            self.uncompressed += chr(node.character)
+            node = self.root_node
+```
+I will look into this issue next and I'm confident that I will be able to solve it. For the time being one of the tests fails, as it should because of this issue. 
+
+On top of the beforementioned biggest issue, I still need to improve the Huffman algorithm in multiple ways. Currently it only handles .txt-files with ASCII 256 content. I would like to look into how to make the algorithm a bit more universal. 
+
+The other issue to solve is storing the huffman tree. I had trouble finding good material, most likely because I did not fully understand what search terms to use. I asked for sources on good tutorials on the subject at the Telegram channel and got a very good tip. The tutorial had a lot of good vocabulary so I am confident that finding more tutorials on the topic will be easier! 
 
 ## Pylint and Pytest - status update
-In this weeks tasks unittests 
+In this weeks tasks unittests and cleaning code had a special focus. 
 
-At the moment the Pylint score of the application is 9.62/10 and there are a few open issues to be dealt with. The branch coverage is 86 percent. The tests are not as of yet diverse and need to be worked on. 
+At the moment the Pylint score of the application is 9.62/10 and there are a few open issues to be dealt with. The branch coverage is 70-86 percent (86 when I enable the crude and imperfect fix for the decoding issue mentioned before, 70 percent without the test for decoding). The tests are not as of yet diverse and need to be worked on. I got some good ideas from the Telegram discussion on how to expand the tests in the upcoming week. 
 
 ![Coverage-report](images/coverage-report-img.png)
 
-As I wrote the tests I noticed a serious error with my decoding method. For some reason the final character of the compressed content was left out while decoding. I made a temporary solution of continuing iteration until a leaf is found to get the last character, but the decoder method obviously needs refactoring and improving. 
+As I wrote the tests I noticed an error with my decoding method. For some reason the final character of the compressed content was left out while decoding. That was a very clear demonstration of the benefits of extensive testing!     
 
 ## Next steps
 * Build initial version of Lempel-Ziv 77 algorithm
 * Improve Huffman coding
 * Improve compression analysis
-
 
 ## Study hours for week #2
 
