@@ -36,7 +36,7 @@ class GuiMenu:
         """A method that opens the requirements specification in the operating system's default browser.
         """
         webbrowser.open_new(
-            "https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/requirements-specification.md")
+            "https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/how-to-guide.md")
 
     def _show_about(self):
         """A method that prompts a messabox with project information.
