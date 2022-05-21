@@ -124,6 +124,15 @@ class HuffmanCoding:
             else:
                 self.uncompressed += chr(node.character)
                 node = self.root_node
+            # THIS PART NEEDS TO BE THINKED OVER. REFACTOR.
+            if i == len(self.compressed)-1:
+                if byte == "1" and node.right_child:
+                    node = node.right_child
+                elif byte == "0" and node.left_child:
+                    node = node.left_child
+                else:
+                    self.uncompressed += chr(node.character)
+                    node = self.root_node
         self.content = self.uncompressed
 
     def write_compressed_file(self, filename, content):
