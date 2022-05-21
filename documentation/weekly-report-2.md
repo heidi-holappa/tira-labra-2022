@@ -50,6 +50,14 @@ While writing tests I learned that my code for decoding does not work. For a rea
             self.uncompressed += chr(node.character)
             node = self.root_node
 ```
+
+As can be seen by using the terminal command `poetry run invoke test`, the failing method showcases the difference between the original and uncompressed content (the last character is missing):
+```
+--------------------------------------------------------------------- Captured stdout call ----------------------------------------------------------------------
+original content:  AABBBCDDEEEEFFFGHIJKLMN , uncompressed content:  AABBBCDDEEEEFFFGHIJKLM
+```
+
+
 I will look into this issue next and I'm confident that I will be able to solve it. Unfortunately I ran out of time before the deadline. For the time being one of the tests fails, as it should because of this issue. 
 
 On top of the before mentioned issue with decoding algorithm, I still need to improve the Huffman algorithm in multiple ways. Currently it only handles .txt-files with ASCII 256 content. I would like to look into how to make the algorithm a bit more universal. 
