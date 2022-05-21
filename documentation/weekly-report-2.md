@@ -8,7 +8,7 @@
 * Code cleaned and refactored based on pylint feedback
 * Code formatted with autopep8
 * Docstring written for code
-* Content created for How-to-guide
+* Content created for [How-to-guide](how-to-guide.md)
 * New features can be tested by following the instructions in the how-to-guide
 * Application has been tested on University virtual computer environment. 
 
