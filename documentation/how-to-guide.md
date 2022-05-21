@@ -14,16 +14,18 @@ poetry run invoke start
 
 # How to Use the Application
 
-Run the application with the command `poetry run invoke start`. The application start with a main screen
+Run the application with the command `poetry run invoke start`. The application starts with a main view.
 
 ## Main view
 
 ![Main view](images/how-to-guide-main-view.png)
 
 From the menu a user can 
-* exit the application
-* access help - documentation
-* view app infomartion
+* File-menu
+  * exit the application
+* Help-menu
+  * access help - documentation
+  * view app information
 
 From the button `compress / uncompress data` user can access compression view. 
 
