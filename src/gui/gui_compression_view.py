@@ -22,13 +22,13 @@ class CompressionView:
             self._frame.pack(fill=constants.X)
 
     def destroy(self):
-        """A method to destroy the Frame-object and all it's children. 
+        """A method to destroy the Frame-object and all it's children.
         """
         if self._frame:
             self._frame.destroy()
 
     def _initialize(self):
-        """Initializes the widgets in the main view. 
+        """Initializes the widgets in the main view.
         """
         self._frame = Frame(self._root,
                             padx=50,
@@ -56,7 +56,7 @@ class CompressionView:
         self._label_and_instruction_frame.grid(sticky=constants.EW)
         self._analysis_frame.grid(sticky=constants.EW)
         self._buttons_frame.grid(sticky=constants.EW)
-        
+
         label = ttk.Label(
             master=self._label_and_instruction_frame,
             text="Compress or uncompress data",
@@ -71,7 +71,7 @@ class CompressionView:
 
         self.label_file_explorer = ttk.Label(
             self._buttons_frame,
-            text = "Start by selecting a file to compress / uncompress",
+            text="Start by selecting a file to compress / uncompress",
             style="Custom.TLabel"
         )
 
@@ -93,14 +93,13 @@ class CompressionView:
             column=0,
             pady=10
         )
-        
 
         self._construct_radio_buttons()
         self._construct_analysis_frame()
         self._construct_buttons()
 
     def _construct_radio_buttons(self):
-        
+
         self._compression_var = IntVar()
         radiobutton_label = ttk.Label(
             master=self._buttons_frame,
@@ -144,26 +143,26 @@ class CompressionView:
             command=self._handle_compression,
             style="Custom.TButton"
         )
-        
+
         button_uncompress = ttk.Button(
             master=self._buttons_frame,
             text="uncompress",
             command=self._handle_uncompression,
             style="Custom.TButton"
         )
-        
+
         button_select_file.grid(
             row=1,
             column=0,
             sticky=constants.W
         )
-        
+
         button_compress.grid(
             row=5,
             column=0,
             pady=20
         )
-        
+
         button_uncompress.grid(
             row=5,
             column=1,
@@ -182,14 +181,14 @@ class CompressionView:
             text="Selected algorithm:",
             style="Custom.TLabel"
         )
-        
+
         self.analysis_algorithm_used_value = ttk.Label(
             master=self._analysis_frame,
             text="no action selected",
             style="Custom.TLabel",
             state="disabled"
         )
-        
+
         analysis_original_size_label = ttk.Label(
             master=self._analysis_frame,
             text="Original size (bits):",
@@ -202,7 +201,7 @@ class CompressionView:
             style="Custom.TLabel",
             state="disabled"
         )
-    
+
         analysis_compressed_content_size_label = ttk.Label(
             master=self._analysis_frame,
             text="Compressed content (bits):",
@@ -359,10 +358,10 @@ class CompressionView:
         )
 
     def _handle_compression(self):
-        """An initial method for handling compression. 
+        """An initial method for handling compression.
 
         Currently only Huffman coding is available. 
-        Only validations at the moment are that file is chosen and file extension matches. 
+        Only validations at the moment are that file is chosen and file extension matches.
         """
         if not self.filename:
             self._file_error("Select a file to compress")
@@ -381,39 +380,44 @@ class CompressionView:
             state="enabled"
         )
         self.analysis_original_size_value.configure(
-            text=str(self.compression_management.last_analysis["uncompressed_size"]) + " bits",
+            text=str(
+                self.compression_management.last_analysis["uncompressed_size"]) + " bits",
             state="enabled"
         )
         self.analysis_compressed_content_size_value.configure(
-            text=str(self.compression_management.last_analysis["compressed_content"]) + " bits",
+            text=str(
+                self.compression_management.last_analysis["compressed_content"]) + " bits",
             state="enabled"
         )
         self.analysis_compressed_header_value.configure(
-            text=str(self.compression_management.last_analysis["compressed_header"]) + " bits",
+            text=str(
+                self.compression_management.last_analysis["compressed_header"]) + " bits",
             state="enabled"
         )
         self.analysis_compressed_total_size_value.configure(
-            text=str(self.compression_management.last_analysis["compressed_total"]) + " bits",
+            text=str(
+                self.compression_management.last_analysis["compressed_total"]) + " bits",
             state="enabled"
         )
         self.analysis_content_ratio_value.configure(
-            text=str(self.compression_management.last_analysis["content_ratio"]) + " percent",
+            text=str(
+                self.compression_management.last_analysis["content_ratio"]) + " percent",
             state="enabled"
         )
         self.analysis_total_ratio_value.configure(
-            text=str(self.compression_management.last_analysis["total_ratio"]) + " percent",
+            text=str(
+                self.compression_management.last_analysis["total_ratio"]) + " percent",
             state="enabled"
         )
 
-
     def _handle_uncompression(self):
-        """An initial method for handling compression. 
+        """An initial method for handling compression.
 
-        Note to self: validation has duplicate code. Consider creating a method to 
+        Note to self: validation has duplicate code. Consider creating a method to
         handle validation.
 
-        Currently only Huffman coding is available. 
-        Only validations at the moment are that file is chosen and file extension matches. 
+        Currently only Huffman coding is available.
+        Only validations at the moment are that file is chosen and file extension matches.
         """
         if not self.filename:
             self._file_error("Select a file to uncompress")
@@ -421,24 +425,25 @@ class CompressionView:
         if not self.compression_management.validate_file_extension(self.filename[-3:], "huf"):
             self._file_error("Can only uncompress huf-files currently")
             return
-        self.compression_management.initial_huffman_uncompression(self.filename)
-        self._compression_status_notification("File uncompressed successfully!")
+        self.compression_management.initial_huffman_uncompression(
+            self.filename)
+        self._compression_status_notification(
+            "File uncompressed successfully!")
 
     def _handle_get_file(self):
-        """A method to handle filedialog opening. 
+        """A method to handle filedialog opening.
 
-        Default path can be configured in .env - file. 
-
+        Default path can be configured in .env - file.
         """
 
-        self.filename = filedialog.askopenfilename(initialdir = DEFAULT_DATA_PATH,
-                                        title = "Select a File",
-                                        filetypes = (
-                                            ("Supported types",".txt"),
-                                            ("Supported types", ".huf"),
-                                            ("all files",".*")
-                                            )
-                                        )
+        self.filename = filedialog.askopenfilename(initialdir=DEFAULT_DATA_PATH,
+                                                   title="Select a File",
+                                                   filetypes=(
+                                                       ("Supported types", ".txt"),
+                                                       ("Supported types", ".huf"),
+                                                       ("all files", ".*")
+                                                   )
+                                                   )
         self.label_file_explorer.configure(text="File Opened: "+self.filename)
 
     def _file_error(self, content: str):
@@ -451,16 +456,15 @@ class CompressionView:
             title="Error!",
             message=content,
             icon=messagebox.ERROR)
-    
+
     def _compression_status_notification(self, content: str):
         """A method for handling information messageboxes
 
         Args:
-            content (str): a custom informational message to be shown. 
+            content (str): a custom informational message to be shown.
         """
         messagebox.showinfo(
             title="Success!",
             message=content,
             icon=messagebox.INFO
         )
-

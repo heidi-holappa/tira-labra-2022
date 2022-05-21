@@ -3,6 +3,7 @@ from gui.gui_compression_view import CompressionView
 from gui.gui_theme import setTheme
 from gui.gui_main_view import MainView
 
+
 class GUI:
 
     """Creates a hub-object to coordinate application logic for other GUI-objects.
@@ -39,9 +40,9 @@ class GUI:
         self._hide_current_view()
 
         self._current_view = MainView(
-                        self._root,
-                        self._handle_compression_view
-                        )
+            self._root,
+            self._handle_compression_view
+        )
 
         self._current_view.pack()
 
@@ -51,9 +52,10 @@ class GUI:
             self._root,
         )
         self._current_view.pack()
-    
+
     def _handle_compression_view(self):
         self._show_compression_view()
+
 
 def main():
     """A method that launch the application.

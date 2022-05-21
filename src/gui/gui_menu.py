@@ -14,13 +14,11 @@ class GuiMenu:
 
         self._root = root
 
-
     def init_menu(self):
         menubar = Menu(self._root)
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Exit", command=self.exit)
         menubar.add_cascade(label="File", menu=filemenu)
-
 
         helpmenu = Menu(menubar, tearoff=0)
         helpmenu.add_command(

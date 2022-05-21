@@ -71,13 +71,12 @@ class MainView:
             command=self._compression_view,
             style="Custom.TButton"
         )
-        
+
         button_compression_view.grid(
             row=3,
             column=0
         )
 
-    
     def _create_menubar(self):
         """A method that calls for the construction of default menu bar.
         """

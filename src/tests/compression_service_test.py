@@ -2,6 +2,7 @@ import unittest
 import os
 from services.compressionmanagement import defaul_compression_management
 
+
 class TestCompressionManagement(unittest.TestCase):
 
     def setUp(self):
@@ -18,19 +19,16 @@ class TestCompressionManagement(unittest.TestCase):
         os.remove(compressed_filename)
         self.assertEqual(True, compressed_file_created)
 
-    
-    
-    
     def test_validation_success_when_extension_is_valid(self):
         extension = "txt"
         accepted_extensions = "log;txt;md"
-        return_value = self.compression_management.validate_file_extension(extension, accepted_extensions)
+        return_value = self.compression_management.validate_file_extension(
+            extension, accepted_extensions)
         self.assertEqual(True, return_value)
 
     def test_validation_failes_when_extension_is_not_valid(self):
         extension = "dxd"
         accepted_extensions = "log;txt;md"
-        return_value = self.compression_management.validate_file_extension(extension, accepted_extensions)
+        return_value = self.compression_management.validate_file_extension(
+            extension, accepted_extensions)
         self.assertEqual(False, return_value)
-
-    
