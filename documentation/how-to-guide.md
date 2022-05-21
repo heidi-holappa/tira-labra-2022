@@ -54,11 +54,11 @@ Additionally a log-file containing initial analysis on the compression is create
 The application uses dotenv for configuration. User can change the default folder used in File Explorer. 
 
 
-## How To Run Tests
+# How To Run Tests
 To run the tests use the command `poetry run invoke test` in the root folder of the project. To generate a coverage report use the command `poetry run invoke coverage-report`.
 
 
-## For creator 
+# For creator 
 Below are the course guidelines on what how-to-guide should include. These are here for easier access. Will be deleted once the project is finished:
 
 * Miten ohjelma suoritetaan, miten eri toiminnallisuuksia käytetään
