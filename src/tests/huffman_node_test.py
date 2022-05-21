@@ -15,4 +15,3 @@ class TestHuffmanCompression(unittest.TestCase):
 
     def tearDown(self):
         pass
-

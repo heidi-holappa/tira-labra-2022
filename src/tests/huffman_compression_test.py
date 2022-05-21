@@ -9,13 +9,13 @@ class TestHuffmanCompression(unittest.TestCase):
     def setUp(self):
         self.filename = "testfile.txt"
         self.compressed_filename = self.filename[:-3] + "huf"
-        self.huffman_coder = HuffmanCoding(self.filename, self.compressed_filename)
+        self.huffman_coder = HuffmanCoding(
+            self.filename, self.compressed_filename)
         pass
 
     def tearDown(self):
         self.destroy_test_files()
 
-        
     def test_calculate_frequencies_stores_correct_values(self):
         content = "AAABBC"
         self.create_test_file(content)
@@ -57,18 +57,18 @@ class TestHuffmanCompression(unittest.TestCase):
         self.huffman_coder.uncompressed_filename = uncompressed_filename
         self.huffman_coder.execute_uncompression()
         content_matches = True
-        print("original content: ", content, ", uncompressed content: ", self.huffman_coder.uncompressed)
+        print("original content: ", content, ", uncompressed content: ",
+              self.huffman_coder.uncompressed)
         os.remove(uncompressed_filename)
         for i in range(len(content)):
             if content[i] != self.huffman_coder.uncompressed[i]:
                 content_matches = False
         self.assertEqual(True, content_matches)
 
-
     def create_test_file(self, content: str):
         with open(self.filename, "w") as file:
             file.write(content)
-    
+
     def destroy_test_files(self):
         os.remove(self.filename)
         os.remove(self.compressed_filename)

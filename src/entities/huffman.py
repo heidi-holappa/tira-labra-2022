@@ -133,7 +133,7 @@ class HuffmanCoding:
             #     else:
             #         self.uncompressed += chr(node.character)
             #         node = self.root_node
-                    
+
         self.content = self.uncompressed
 
     def write_compressed_file(self, filename, content):
@@ -184,14 +184,17 @@ class HuffmanCoding:
         for key, value in self.frequencies.items():
             coded_character_bits += int(value).bit_length()
         compressed_content_size = len(self.compressed)
-        total_compressed = compressed_content_size + coded_character_bits + stored_characters
+        total_compressed = compressed_content_size + \
+            coded_character_bits + stored_characters
         with open(filename, "w", encoding="utf-8") as report:
             report.write(f"Uncompressed size: {uncompressed_size} bits\n")
             report.write("-----\n")
-            report.write(f"Compressed content: {compressed_content_size} bits\n")
+            report.write(
+                f"Compressed content: {compressed_content_size} bits\n")
             report.write("frequencies:\n")
             report.write(f"characters: {stored_characters}\n")
-            report.write(f"frequency int value bit size: {coded_character_bits}\n")
+            report.write(
+                f"frequency int value bit size: {coded_character_bits}\n")
             report.write(f"compression total: {total_compressed}\n")
             report.write("-----\n")
             content_ratio = compressed_content_size / uncompressed_size
@@ -202,11 +205,10 @@ class HuffmanCoding:
         self.last_analysis["uncompressed_size"] = uncompressed_size
         self.last_analysis["compressed_total"] = total_compressed
         self.last_analysis["compressed_content"] = compressed_content_size
-        self.last_analysis["compressed_header"] = coded_character_bits + stored_characters
+        self.last_analysis["compressed_header"] = coded_character_bits + \
+            stored_characters
         self.last_analysis["content_ratio"] = content_ratio
         self.last_analysis["total_ratio"] = total_ratio
-
-
 
     def execute_compression(self):
         """This method calls the methods that handle different
@@ -237,7 +239,8 @@ class HuffmanCoding:
         self.fetch_compressed_content()
         self.build_huffman_tree()
         self.huffman_decode()
-        self.write_uncompressed_file(self.uncompressed_filename, self.uncompressed)
+        self.write_uncompressed_file(
+            self.uncompressed_filename, self.uncompressed)
 
 
 class HuffmanNode:
