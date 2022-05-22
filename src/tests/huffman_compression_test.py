@@ -1,5 +1,6 @@
 import unittest
 import os
+import random
 import string
 from entities.huffman import HuffmanCoding
 
@@ -51,6 +52,24 @@ class TestHuffmanCompression(unittest.TestCase):
 
     def test_compressed_simple_file_has_same_content_uncompressed(self):
         content = "AABBBCDDEEEEFFFGHIJKLMN"
+        self.create_test_file(content)
+        self.huffman_coder.execute_compression()
+        uncompressed_filename = self.filename[:-4] + "_uncompressed.txt"
+        self.huffman_coder.uncompressed_filename = uncompressed_filename
+        self.huffman_coder.execute_uncompression()
+        content_matches = True
+        print("original content: ", content, ", uncompressed content: ",
+              self.huffman_coder.uncompressed)
+        os.remove(uncompressed_filename)
+        for i in range(len(content)):
+            if content[i] != self.huffman_coder.uncompressed[i]:
+                content_matches = False
+        self.assertEqual(True, content_matches)
+
+    def test_create_random_ascii_and_test_uncompressed_file_matches_original(self):
+        n = 50000
+        characters = string.printable.split()[0]
+        content = "".join([random.choice(characters) for i in range(n)])
         self.create_test_file(content)
         self.huffman_coder.execute_compression()
         uncompressed_filename = self.filename[:-4] + "_uncompressed.txt"
