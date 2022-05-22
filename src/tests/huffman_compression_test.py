@@ -76,8 +76,6 @@ class TestHuffmanCompression(unittest.TestCase):
         self.huffman_coder.uncompressed_filename = uncompressed_filename
         self.huffman_coder.execute_uncompression()
         content_matches = True
-        print("original content: ", content, ", uncompressed content: ",
-              self.huffman_coder.uncompressed)
         os.remove(uncompressed_filename)
         for i in range(len(content)):
             if content[i] != self.huffman_coder.uncompressed[i]:
