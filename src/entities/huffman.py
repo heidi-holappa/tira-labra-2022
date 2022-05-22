@@ -117,23 +117,17 @@ class HuffmanCoding:
             byte = self.compressed[i]
             if byte == "1" and node.right_child:
                 node = node.right_child
+                if i == len(self.compressed) - 1:
+                    self.uncompressed += chr(node.character)
                 i += 1
             elif byte == "0" and node.left_child:
                 node = node.left_child
+                if i == len(self.compressed) - 1:
+                    self.uncompressed += chr(node.character)
                 i += 1
             else:
                 self.uncompressed += chr(node.character)
                 node = self.root_node
-            # THIS PART NEEDS TO BE THINKED OVER. REFACTOR.
-            # if i == len(self.compressed)-1:
-            #     if byte == "1" and node.right_child:
-            #         node = node.right_child
-            #     elif byte == "0" and node.left_child:
-            #         node = node.left_child
-            #     else:
-            #         self.uncompressed += chr(node.character)
-            #         node = self.root_node
-
         self.content = self.uncompressed
 
     def write_compressed_file(self, filename, content):
@@ -170,6 +164,7 @@ class HuffmanCoding:
                     self.frequencies[int(row_values[0])] = int(row_values[1])
                 else:
                     self.compressed = row
+                    print(row)
 
     def huffman_analyze(self, filename: str):
         """An initial method for creating analysis data on compression.
@@ -225,8 +220,7 @@ class HuffmanCoding:
         self.build_huffman_tree()
         self.huffman_encode()
         self.write_compressed_file(self.compressed_filename, self.compressed)
-        # for key, item in self.frequencies.items():
-        #     print(key, item)
+        print(self.huffman_coded_values)
 
     def execute_uncompression(self):
         """This method handles the uncompression of a given content
@@ -241,6 +235,7 @@ class HuffmanCoding:
         self.huffman_decode()
         self.write_uncompressed_file(
             self.uncompressed_filename, self.uncompressed)
+        print(self.huffman_coded_values)
 
 
 class HuffmanNode:
