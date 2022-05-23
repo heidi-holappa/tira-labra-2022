@@ -1,3 +1,5 @@
+# STILL A DRAFT. BUILDING THIS ON WEEK 3
+
 class LempelZiv77:
 
     def __init__(self, uncompressed_filename: str, compressed_filename: str):
