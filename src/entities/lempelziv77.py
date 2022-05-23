@@ -1,6 +1,3 @@
-from bz2 import compress
-
-
 class LempelZiv77:
 
     def __init__(self, uncompressed_filename: str, compressed_filename: str):
@@ -19,12 +16,13 @@ class LempelZiv77:
     def compress_content(self):
         i = 0
         while i < len(self.content):
-            
+            # Call find longest match
+            # Store information based on whether a match is found or not
             pass
     
-    def find_longest_match(self, i):
-        buffer_index = min(self.buffer, len(self.content)-1)
-        window_index = max(0, i - self.window)
+    def find_longest_match(self, current_index):
+        buffer_index = min(current_index + self.buffer, len(self.content))
+        start_index = max(0, current_index - self.window)
         pass
 
 
