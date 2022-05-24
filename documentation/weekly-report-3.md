@@ -26,4 +26,5 @@
 | 22.5.2022 | Study automated tests and LZ77 | 1,5 |
 | 22.5.2022 | Write test, discover a new issue with Huffman coding (one character files) | 1 |
 | 23.5.2022 | Study LZ77, start drafting algorithm | 1 |
-| **total**| ---- | **4** |
+| 23.5.2022 | Study LZ77, work on algorithm | 2 |
+| **total**| ---- | **6** |
