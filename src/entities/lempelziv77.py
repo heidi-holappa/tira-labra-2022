@@ -1,5 +1,8 @@
 # STILL A DRAFT. BUILDING THIS ON WEEK 3
 
+import string
+
+
 class LempelZiv77:
 
     def __init__(self, uncompressed_filename: str, compressed_filename: str):
@@ -38,8 +41,36 @@ class LempelZiv77:
         self.compress_content()
         self.write_compressed_content_into_a_file()
 
+def longest_match(window, buffer):
+    longest = (0, 0, 0)
+    result = 0
+    for i in range(len(window) - len(buffer)):
+        if window[i] == buffer[0]:
+            string_length = repeating_length_recursion(window[i:], buffer)
+            if string_length > result:
+                result = string_length
+    return result
+
+
+
+                
+    return(longest)
+
+def repeating_length_recursion(window, string_buffer):
+    if window == "" or string_buffer == "":
+        return 0
+    
+    if window[0] == string_buffer[0]:
+        return 1 + repeating_length_recursion(window[1:] + string_buffer[0], string_buffer[1:])
+    else:
+        return 0
+
+
+
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")
     lz77.content = "ABCABCCCC"
-    lz77.compress_content()
-    print(lz77.compressed_content)
+    # lz77.compress_content()
+    # print(lz77.compressed_content)
+    print(longest_match("CCCADDD", "AA"))
+    print(longest_match("AABABDCCCC", "ABAB"))
