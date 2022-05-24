@@ -48,18 +48,21 @@ class LempelZiv77:
     def find_longest_match(self, current_index: int, window: str, buffer: str) -> tuple:
         longest = (0, 0, 0)
         result = 0
-        for i in range(len(window)):
-            for j in range(len(buffer)):
-                if window[i] == buffer[j]:
-                    string_length = self.repeating_length_recursion(window[i:], buffer[j:])
-                    if string_length > result:
-                        result = string_length
-                        offset = len(window) - i + j
-                        length = result
-                        next_character = i + result
-                        longest = (offset, length, self.content[next_character])
+        i = 0
+        while i < len(window):
+            # print("Window pointer: ", max(0, current_index - self.window_size) + i, "character: ", self.content[current_index + i], "Buffer: ", current_index + len(window), "buffer_character: ", self.content[current_index + len(window)] )
+            string_length = self.repeating_length_recursion(window[i:], buffer)
+            if string_length > result:
+                result = string_length
+                offset = len(window) - i
+                length = result
+                next_character = i + result
+                longest = (offset, length, self.content[next_character])
+                i += length
+            else:
+                i += 1
         if result == 0:
-            longest = (0, 0, self.content[current_index])
+            longest = (0, 1, self.content[current_index])
         return longest
 
 
