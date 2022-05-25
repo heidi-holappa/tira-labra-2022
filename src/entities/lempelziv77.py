@@ -56,7 +56,9 @@ class LempelZiv77:
                 result = string_length
                 offset = len(window) - i
                 length = result
-                next_character = i + result
+                next_character = current_index + i + result
+                if next_character >= len(self.content):
+                    next_character = 0
                 longest = (offset, length, self.content[next_character])
                 i += length
             else:
