@@ -1,5 +1,5 @@
 from heapq import heapify, heappush, heappop
-
+from services.filemanagement import default_file_manager
 
 class HuffmanCoding:
 
@@ -24,6 +24,7 @@ class HuffmanCoding:
             "content_ratio": 0,
             "total_ratio": 0
         }
+        self.file_manager = default_file_manager
 
     def calculate_frequencies(self):
         """This method calculates the frequencies of all characters included
@@ -151,8 +152,12 @@ class HuffmanCoding:
             compressed_file.write(content)
 
     def fetch_uncompressed_content(self):
-        with open(self.uncompressed_filename, encoding="utf-8") as source_content:
-            self.content = source_content.read()
+        """Calls a method from an instant of FileManager object from service package
+        to fetch the content of a selected file.
+        """
+        # with open(self.uncompressed_filename, encoding="utf-8") as source_content:
+        #     self.content = source_content.read()
+        self.content = self.file_manager.fetch_uncompressed_content(self.uncompressed_filename)
 
     def fetch_compressed_content(self):
         self.frequencies = {}
@@ -221,6 +226,11 @@ class HuffmanCoding:
         self.huffman_encode()
         self.write_compressed_file(self.compressed_filename, self.compressed)
         print(self.huffman_coded_values)
+        longest_value = 0
+        for key, value in self.huffman_coded_values.items():
+            if len(value) > longest_value:
+                longest_value = len(value)
+        print("longest value: ", longest_value)
 
     def execute_uncompression(self):
         """This method handles the uncompression of a given content
