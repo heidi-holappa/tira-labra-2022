@@ -9,7 +9,7 @@ class CompressionView:
     def __init__(self, root):
         self._root = root
         self._frame = None
-        self._state = "disabled"
+        self._state = "enabled"
         self.filename = None
         self.compression_management = defaul_compression_management
 
@@ -369,10 +369,13 @@ class CompressionView:
         if not self.compression_management.validate_file_extension(self.filename[-3:], "txt"):
             self._file_error("Can only compress txt-files currently")
             return
-        self.compression_management.initial_huffman_compression(self.filename)
+        compression_method = self._compression_var.get()
+        if compression_method == 1:
+            self.compression_management.initial_huffman_compression(self.filename)
+            self.configure_analysis_labels()
+        if compression_method == 2:
+            self.compression_management.lempel_ziv_compress(self.filename)
         self._compression_status_notification("File compressed successfully!")
-
-        self.configure_analysis_labels()
 
     def configure_analysis_labels(self):
         self.analysis_algorithm_used_value.configure(
@@ -419,14 +422,24 @@ class CompressionView:
         Currently only Huffman coding is available.
         Only validations at the moment are that file is chosen and file extension matches.
         """
+
+        compression_method = self._compression_var.get()
         if not self.filename:
             self._file_error("Select a file to uncompress")
             return
-        if not self.compression_management.validate_file_extension(self.filename[-3:], "huf"):
-            self._file_error("Can only uncompress huf-files currently")
+        if compression_method == 1 and not self.compression_management.validate_file_extension(self.filename[-3:], "huf"):
+            self._file_error("Can only uncompress huf- and lz-files currently")
             return
-        self.compression_management.initial_huffman_uncompression(
-            self.filename)
+        if compression_method == 2 and not self.compression_management.validate_file_extension(self.filename[-2:], "lz"):
+            self._file_error("Can only uncompress huf- and lz-files currently")
+            return
+        if compression_method == 1:
+            self.compression_management.initial_huffman_uncompression(
+                self.filename)
+        if compression_method == 2:
+            self.compression_management.lempel_ziv_uncompress(
+                self.filename
+            )
         self._compression_status_notification(
             "File uncompressed successfully!")
 
@@ -441,6 +454,7 @@ class CompressionView:
                                                    filetypes=(
                                                        ("Supported types", ".txt"),
                                                        ("Supported types", ".huf"),
+                                                       ("Supported types", ".lz"),
                                                        ("all files", ".*")
                                                    )
                                                    )
