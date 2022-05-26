@@ -1,4 +1,5 @@
 from entities.huffman import HuffmanCoding
+from entities.lempelziv77 import LempelZiv77
 
 
 class CompressionManagement:
@@ -39,7 +40,7 @@ class CompressionManagement:
         huffman_uncompressor.execute_uncompression()
         huffman_uncompressor.huffman_analyze(analysis_filename)
 
-    def initial_lempel_ziv_test(self, content: str):
+    def lempel_ziv_compress(self, filename: str):
         """A method for testing Lempel-Ziv 77 compression.
 
         Gets a string of content and compresses it.
@@ -48,7 +49,19 @@ class CompressionManagement:
             content (str): content to be compressed
         """
 
-        pass
+        compressed_filename = filename[:-3] + "lz"
+        # analysis_filename = filename[:-4] + "_compression_analysis.log"
+        lempel_ziv_compressor = LempelZiv77(filename, compressed_filename)
+        lempel_ziv_compressor.lempel_ziv_activate_compression()
+        # lempel_ziv_compressor.lempel_ziv_analyze(analysis_filename)
+        # self.last_analysis = lempel_ziv.last_analysis
+
+
+    def lempel_ziv_uncompress(self, filename: str):
+        uncompressed_filename = filename[:-3] + "_uncompressed.txt"
+        lempel_ziv_uncompressor = LempelZiv77(uncompressed_filename, filename)
+        lempel_ziv_uncompressor.lempel_ziv_activate_uncompression()
+
 
     def validate_file_extension(self, extension: str, accepted_extensions: str) -> bool:
         """A method to validate that the file extension is valid.
