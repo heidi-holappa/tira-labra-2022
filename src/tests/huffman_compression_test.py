@@ -50,6 +50,38 @@ class TestHuffmanCompression(unittest.TestCase):
         print(test_content)
         self.assertEqual(True, all_found)
 
+    def test_compression_and_decompression_work_with_a_single_character_file(self):
+        content = "a"
+        self.create_test_file(content)
+        self.huffman_coder.execute_compression()
+        uncompressed_filename = self.filename[:-4] + "_uncompressed.txt"
+        self.huffman_coder.uncompressed_filename = uncompressed_filename
+        self.huffman_coder.execute_uncompression()
+        content_matches = True
+        print("original content: ", content, ", uncompressed content: ",
+              self.huffman_coder.uncompressed)
+        os.remove(uncompressed_filename)
+        for i in range(len(content)):
+            if content[i] != self.huffman_coder.uncompressed[i]:
+                content_matches = False
+        self.assertEqual(True, content_matches)
+
+    def test_compression_and_decompression_work_with_two_character_file(self):
+        content = "ab"
+        self.create_test_file(content)
+        self.huffman_coder.execute_compression()
+        uncompressed_filename = self.filename[:-4] + "_uncompressed.txt"
+        self.huffman_coder.uncompressed_filename = uncompressed_filename
+        self.huffman_coder.execute_uncompression()
+        content_matches = True
+        print("original content: ", content, ", uncompressed content: ",
+              self.huffman_coder.uncompressed)
+        os.remove(uncompressed_filename)
+        for i in range(len(content)):
+            if content[i] != self.huffman_coder.uncompressed[i]:
+                content_matches = False
+        self.assertEqual(True, content_matches)
+
     def test_compressed_simple_file_has_same_content_uncompressed(self):
         content = "AABBBCDDEEEEFFFGHIJKLMN"
         self.create_test_file(content)
