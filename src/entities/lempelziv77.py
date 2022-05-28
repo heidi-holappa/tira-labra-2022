@@ -1,14 +1,23 @@
-import string
-
 from services.filemanagement import default_file_manager
 
 class NoCompressedContentError(Exception):
     pass
 
-
 class LempelZiv77:
 
+    """Class responsible for compressing/uncompressing data with LZ77
+    compression algorithm.
+    """
+
     def __init__(self, uncompressed_filename: str, compressed_filename: str):
+        """Construction for the class
+
+        Args:
+            uncompressed_filename (str): name and location of the file with
+            uncompressed data
+            compressed_filename (str): name and location of the file with
+            compressed data
+        """
         self.uncompressed_filename = uncompressed_filename
         self.compressed_filename = compressed_filename
         self.content = ""
@@ -17,40 +26,74 @@ class LempelZiv77:
         self.window_size = 4095
         self.buffer_size = 15
         self.file_manager = default_file_manager
-        
+        self._bytearray_list = []
+        self.bytearray_data = None
 
     def fetch_uncompressed_content(self):
+        """Calls FileManagement from service package to fetch uncompressed content
+        """
         self.content = self.file_manager.fetch_uncompressed_content(self.uncompressed_filename)
-    
+
     def fetch_compressed_content(self):
-        compressed_content_as_bytes: bytes = self.file_manager.fetch_compressed_content(self.compressed_filename)
+        """Calls FileManagement from service package to fetch compressed content and
+        another method to transform the fetched content into a string.
+        """
+        compressed_content_as_bytes: bytes = self.file_manager.fetch_compressed_content(
+                                                self.compressed_filename)
         self.tranform_bytes_into_string(compressed_content_as_bytes)
 
     def tranform_bytes_into_string(self, byte_data):
+        """Transforms the byte data into string of ones and zeroes.
+
+        Args:
+            byte_data (bytes): Stored content as bytes of data
+        """
         for byte in byte_data:
             self.compressed_content += str(bin(byte)[2:].zfill(8))
 
     def write_txt_content_into_a_file(self, filename, content_to_write):
+        """Calls file management to write content to a file
+
+        Args:
+            filename (str): file to write to
+            content_to_write (str): content to be written
+        """
         self.file_manager.create_txt_file(filename, content_to_write)
 
     def write_binary_content_into_a_file(self, filename, content_to_write):
+        """Calls FileManagement from service package to write byte content
+        to a file.
+
+        Args:
+            filename (str): file to write into
+            content_to_write (bytes): byte-data to be written
+        """
         self.file_manager.create_binary_file(filename, content_to_write)
 
     def lempel_ziv_activate_compression(self):
+        """A method to activate and manage different steps of compression
+        """
         self.fetch_uncompressed_content()
         self.compress_content()
         self.write_binary_content_into_a_file(self.compressed_filename, self.bytearray_data)
 
     def lempel_ziv_activate_uncompression(self):
+        """A method to activate and manage different steps of uncopmpression
+        """
         self.fetch_compressed_content()
         self.lempel_ziv_handle_uncompression()
         self.write_txt_content_into_a_file(self.uncompressed_filename, self.content)
 
     def lempel_ziv_handle_uncompression(self):
+        """A method to handle the steps of data uncompression. First data is transformed
+        to tuples. Then the content is uncompressed.
+        """
         self.transform_fetched_content_to_tuples()
         self.lempel_ziv_uncompress()
 
     def compress_content(self):
+        """A method to compress the given content.
+        """
         self.compressed_content_as_list = []
         i = 0
         while i < len(self.content):
@@ -61,8 +104,11 @@ class LempelZiv77:
 
 
     def create_binary_version_of_content(self):
+        """A method to create binary type content of the data. The logic is the following:
+        Offset: 12 bits
+        Length of match: 4 bits
+        Next character: a byte"""
         self.compressed_content = ""
-        self._bytearray_list = []
         for member in self.compressed_content_as_list:
             offset = member[0]
             match_length = member[1]
@@ -75,22 +121,45 @@ class LempelZiv77:
             self._bytearray_list.append(value)
         self.bytearray_data = bytearray(self._bytearray_list)
 
-
     def init_window_search(self, current_index: int) -> tuple:
+        """A method to initialize the window search.
+
+        Args:
+            current_index (int): Index from which the sliding windows starts.
+
+        Returns:
+            tuple: result of compression (offset, length, next character)
+        """
         window_start_index = max(0, current_index - self.window_size)
         window_end_index = current_index
         buffer_end_index = min(
             current_index + self.buffer_size, len(self.content))
         result = self.find_longest_match(
-            current_index, self.content[window_start_index:window_end_index], self.content[current_index:buffer_end_index])
+            current_index,
+            self.content[window_start_index:window_end_index],
+            self.content[current_index:buffer_end_index])
         return result
 
     def find_longest_match(self, current_index: int, window: str, buffer: str) -> tuple:
+        """A method to find the longest match in the sliding window
+
+        Args:
+            current_index (int): Index from which the sliding window starts
+            window (str): content in the window area
+            buffer (str): content in the lookahead buffer
+
+        Returns:
+            tuple: returns the match (offset, length, next character)
+        """
         longest = (0, 0, 0)
         result = 0
         i = 0
         while i < len(window):
-            # print("Window pointer: ", max(0, current_index - self.window_size) + i, "character: ", self.content[current_index + i], "Buffer: ", current_index + len(window), "buffer_character: ", self.content[current_index + len(window)] )
+            # print("Window pointer: ",
+            #         max(0, current_index - self.window_size) + i,
+            #         "character: ", self.content[current_index + i],
+            #         "Buffer: ", current_index + len(window),
+            #         "buffer_character: ", self.content[current_index + len(window)] )
             match_length = self.repeating_length_recursion(window[i:], buffer)
             if match_length > result:
                 result = match_length
@@ -105,17 +174,17 @@ class LempelZiv77:
         return longest
 
     def repeating_length_recursion(self, window: str, string_buffer: str):
-        """A recursion that finds the total length of the string match. 
+        """A recursion that finds the total length of the string match.
 
         This method was referenced from Tim Guite's tutorial:
         https://github.com/TimGuite/lz77/blob/master/python/compress.py
 
         Maximum recursion depth is the size of the lookahead buffer. Please
-        be aware of this when configuring the buffer value. 
+        be aware of this when configuring the buffer value.
 
         Args:
             window (str): the window from which matches are looked for
-            string_buffer (str): the lookahead buffer for searching matches. 
+            string_buffer (str): the lookahead buffer for searching matches.
 
         Returns:
             int: lenght of match
@@ -124,11 +193,13 @@ class LempelZiv77:
             return 0
 
         if window[0] == string_buffer[0]:
-            return 1 + self.repeating_length_recursion(window[1:] + string_buffer[0], string_buffer[1:])
-        else:
-            return 0        
+            return 1 + self.repeating_length_recursion(
+                window[1:] + string_buffer[0], string_buffer[1:])
+        return 0
 
     def transform_fetched_content_to_tuples(self):
+        """A method that transforms the fetched data into tuples.
+        """
         # print("now transforming", self.compressed_content)
 
         self.compressed_content_as_list = []
@@ -141,20 +212,24 @@ class LempelZiv77:
             i += 24
         print(self.compressed_content_as_list)
 
-    
     def lempel_ziv_uncompress(self):
+        """A method to handle the uncompression of the data.
+
+        Raises:
+            NoCompressedContentError: A general error to be raised if no data is given.
+        """
         # print(self.compressed_content_as_list)
         if len(self.compressed_content_as_list) == 0:
             raise NoCompressedContentError()
-        n = len(self.compressed_content_as_list)
+        variable_n = len(self.compressed_content_as_list)
         uncompressed_string = ""
-        for i in range(n):
+        for i in range(variable_n):
             if self.compressed_content_as_list[i][0] == 0:
                 uncompressed_string += self.compressed_content_as_list[i][2]
             else:
-                m = self.compressed_content_as_list[i][1]
+                variable_m = self.compressed_content_as_list[i][1]
                 offset = self.compressed_content_as_list[i][0]
-                for i in range(m):
+                for _ in range(variable_m):
                     uncompressed_string += uncompressed_string[-offset]
         self.content = uncompressed_string
         # match = True
@@ -166,7 +241,7 @@ class LempelZiv77:
 
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")
-    lz77.content = "ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
+    lz77.content ="ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
     lz77.compress_content()
     lz77.lempel_ziv_uncompress()
     # print(lz77.compressed_content)
