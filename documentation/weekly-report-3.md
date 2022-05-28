@@ -1,22 +1,91 @@
 # Weekly Report #3
 
 ## Quick recap on progress
-* Fixed issue with Huffman decoding
+* Created first working version of LZ77 algorithm
+* LZ77 compressed data is written as bytes into a file. 
+* LZ77 algorithm and data storing need optimization.
+* Found a way to store Huffman tree
+* Huffman coding compressed data is all stored as ones and zeroes. Data can be uncompressed as well. 
+* Fixed issue with Huffman decoding left unsolved in week 2. 
 * Found an edge case while writing tests: Encountered a new issue with Huffman coding - can not compress files with just one character. 
+  * These edge cases need to be thought about in the upcoming weeks. 
+
 
 ## What have I done this week?
+The biggest concrete progression this week has been creating the first working version of Lempel-Ziv 1977 (LZ77) algorithm. Data can now be compressed and uncompressed with the algorithm. Another big time sink this week has been learning some basics on storing data in binary form. This is a topic that I was not familiar with before hand and it has taken a lot of time to get a grasp on how data can be stored. It is very likely that the solutions I use currently are not optimal and need to be worked on. I will discuss about this with the course teacher next week.  
+
+One more big step for this week was that all compressed data created by Huffman coding is now stored as ones and zeroes. This means that writing the data as bytes is now a simple step away. To achieve this I had to learn how to store a Huffman tree in a compact form. Especially re-creating the tree from the compact form required a lot of thinking. The tree is now stored in the following way
+
+```
+1. First traverse left and store all the left nodes (as zeroes)
+2. Once you can not go left anymore, go right in the first possible location. Store nodes on right as ones.  
+3. Repeat one and two if possible
+```
+
+As an example assume we have the following tree
+
+```mermaid
+graph TB
+    A((NA))-->B((NA))
+    A-->D((A))
+    B-->E((B))
+    B-->F((NA))
+    F-->G((D))
+    F-->H((C))
+```
+
+Following the instructions above it would be stored in the form `001011`
+
+
 
 ## How has the application progressed?
+* Data can be now compressed and uncompressed with two different compression algorithms. 
+* Data compressed with LZ77 is written as bytes into a file. 
+* The code was refactored in such amounts that the analysis data is not currently updated. Will be fixed on week 4. 
 
 ## What did I learn during this week / today?
+I learned basics on LZ77 and scraped the surface on storing information as bytes. Both are absolutely fascinating subjects and diving deep would require a lot more time, and especially regarding the information storing also guidance/lessons. I do feel that with storing information in binary form I am a bit in deep waters, and I congratulate myself on getting something working together! 
 
 ## What remained unclear or caused difficulties? 
+* Storing data - is my current solution good. Would there be a better way?
+* Optimizing the algorithms
+  * Compression with LZ77 slows down as the window size expands. 
+  * Storing optimal amount of information with LZ77
+* Writing a comprehensive set of automated tests that with a decent reliability test that the algorithms work as they should
+
+As I would like to talk about the data storing next week, I'll detail below how I currently store the data. 
+
+### Storing data: Huffman coding
+At the moment I decided to store the data with the following logic:
+* Length of the tree building instructions (12 bits)
+* Length of extra bits needed for the data to be full bytes (1-8 bits at the moment, could be 0-7 bits as well)
+* number of characters (n < 256, so one byte)
+* tree structure
+* characters (8 * number of characters)
+* compressed content
+* extra bits (to have the data be full bytes)
+
+### Storing data: LZ77
+At the moment the data is stored as follows:
+* Offset: 12 bits (window size is 4096)
+* Length of match: 4 bits (lookahead buffer is 16)
+* Next character: byte (ASCII characters)
+
+One optimaztion I have in mind is that I only need the next character in situations where a match is not found. Each character left out saves one byte, so there will be significant saving.  
 
 
 ## Pylint and Pytest - status update
+At the moment the Pylint score is `xxx` and there are some open issues to be dealt with. The code was rewritten this week and there is need for refactoring. Some commented code is also present at the moment. These will be removed during the next week. 
+
+
 
 
 ## Next steps
+* Optimization:
+  * Time efficiency
+    * Optimize compression time efficiency with LZ77
+  * Space efficiency
+    * Optimize space consumption on stored data on both algorithms
 
 ## Study hours for week #2
 
@@ -32,4 +101,6 @@
 | 25.5.2022 | Study writing binary files | 1 |
 | 26.5.2022 | Study writing binary files | 1,5 |
 | 26.5.2022 | Create first working version of Lempel-Ziv 77 compression/uncompression using files | 2 |
-| **total**| ---- | **12,25** |
+| 27.5.2022 | Create a working storable Huffman tree | 1 |
+| **total**| ---- | **13,25** |
+
