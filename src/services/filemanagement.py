@@ -34,7 +34,7 @@ class FileManagement:
 
         At initial stage the filename is set. Later on, it will be created
         based on the file opened for compression.
-        
+
         Args:
             filename (str): name and location of file to be read
             content (str): content to be written
@@ -42,7 +42,7 @@ class FileManagement:
         """
         with open(filename, "w", encoding="utf-8") as uncompressed_file:
             uncompressed_file.write(content)
-    
+
     def create_binary_file(self, filename: str, content: bytearray):
         with open(filename, "wb") as compressed_file:
             compressed_file.write(content)
