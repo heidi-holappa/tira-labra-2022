@@ -47,4 +47,5 @@ class FileManagement:
         with open(filename, "wb") as compressed_file:
             compressed_file.write(content)
 
+
 default_file_manager = FileManagement()

@@ -56,12 +56,10 @@ class CompressionManagement:
         # lempel_ziv_compressor.lempel_ziv_analyze(analysis_filename)
         # self.last_analysis = lempel_ziv.last_analysis
 
-
     def lempel_ziv_uncompress(self, filename: str):
         uncompressed_filename = filename[:-3] + "_uncompressed.txt"
         lempel_ziv_uncompressor = LempelZiv77(uncompressed_filename, filename)
         lempel_ziv_uncompressor.lempel_ziv_activate_uncompression()
-
 
     def validate_file_extension(self, extension: str, accepted_extensions: str) -> bool:
         """A method to validate that the file extension is valid.

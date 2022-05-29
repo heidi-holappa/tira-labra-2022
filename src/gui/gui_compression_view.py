@@ -371,7 +371,8 @@ class CompressionView:
             return
         compression_method = self._compression_var.get()
         if compression_method == 1:
-            self.compression_management.initial_huffman_compression(self.filename)
+            self.compression_management.initial_huffman_compression(
+                self.filename)
             self.configure_analysis_labels()
         if compression_method == 2:
             self.compression_management.lempel_ziv_compress(self.filename)
