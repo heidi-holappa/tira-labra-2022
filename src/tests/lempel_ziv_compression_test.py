@@ -16,7 +16,6 @@ class TestLempelZivCompression(unittest.TestCase):
     def tearDown(self):
         self.destroy_test_files()
 
-
     def test_byte_to_string_transformation_works(self):
         values = [65]
         byte_array = bytearray(values)
@@ -59,8 +58,6 @@ class TestLempelZivCompression(unittest.TestCase):
             if content[i] != self.lz77_coder.content[i]:
                 content_matches = False
         self.assertEqual(True, content_matches)
-
-
 
     def create_test_file(self, content: str):
         with open(self.filename, "w") as file:
