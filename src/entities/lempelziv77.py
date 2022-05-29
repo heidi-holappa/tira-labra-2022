@@ -1,7 +1,9 @@
 from services.filemanagement import default_file_manager
 
+
 class NoCompressedContentError(Exception):
     pass
+
 
 class LempelZiv77:
 
@@ -32,14 +34,15 @@ class LempelZiv77:
     def fetch_uncompressed_content(self):
         """Calls FileManagement from service package to fetch uncompressed content
         """
-        self.content = self.file_manager.fetch_uncompressed_content(self.uncompressed_filename)
+        self.content = self.file_manager.fetch_uncompressed_content(
+            self.uncompressed_filename)
 
     def fetch_compressed_content(self):
         """Calls FileManagement from service package to fetch compressed content and
         another method to transform the fetched content into a string.
         """
         compressed_content_as_bytes: bytes = self.file_manager.fetch_compressed_content(
-                                                self.compressed_filename)
+            self.compressed_filename)
         self.tranform_bytes_into_string(compressed_content_as_bytes)
 
     def tranform_bytes_into_string(self, byte_data):
@@ -75,14 +78,16 @@ class LempelZiv77:
         """
         self.fetch_uncompressed_content()
         self.compress_content()
-        self.write_binary_content_into_a_file(self.compressed_filename, self.bytearray_data)
+        self.write_binary_content_into_a_file(
+            self.compressed_filename, self.bytearray_data)
 
     def lempel_ziv_activate_uncompression(self):
         """A method to activate and manage different steps of uncopmpression
         """
         self.fetch_compressed_content()
         self.lempel_ziv_handle_uncompression()
-        self.write_txt_content_into_a_file(self.uncompressed_filename, self.content)
+        self.write_txt_content_into_a_file(
+            self.uncompressed_filename, self.content)
 
     def lempel_ziv_handle_uncompression(self):
         """A method to handle the steps of data uncompression. First data is transformed
@@ -101,7 +106,6 @@ class LempelZiv77:
             self.compressed_content_as_list.append(result)
             i += result[1]
         self.create_binary_version_of_content()
-
 
     def create_binary_version_of_content(self):
         """A method to create binary type content of the data. The logic is the following:
@@ -167,7 +171,8 @@ class LempelZiv77:
                 next_character = current_index + match_length
                 if next_character >= len(self.content):
                     next_character = 0
-                longest = (offset, match_length, ord(self.content[next_character]))
+                longest = (offset, match_length, ord(
+                    self.content[next_character]))
             i += 1
         if result == 0:
             longest = (0, 1, ord(self.content[current_index]))
@@ -241,7 +246,7 @@ class LempelZiv77:
 
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")
-    lz77.content ="ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
+    lz77.content = "ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
     lz77.compress_content()
     lz77.lempel_ziv_uncompress()
     # print(lz77.compressed_content)
