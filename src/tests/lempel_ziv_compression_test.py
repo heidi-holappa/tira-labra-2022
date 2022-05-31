@@ -42,7 +42,7 @@ class TestLempelZivCompression(unittest.TestCase):
         self.assertEqual(True, content_matches)
 
     def test_create_random_ascii_and_test_uncompressed_file_matches_original(self):
-        n = 10000
+        n = 50000
         characters = string.printable.split()[0]
         content = "".join([random.choice(characters) for i in range(n)])
         self.create_test_file(content)
