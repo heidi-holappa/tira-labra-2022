@@ -119,7 +119,8 @@ class LempelZiv77:
             next_character = member[2]
             self.compressed_content += str(bin(offset)[2:].zfill(12))
             self.compressed_content += str(bin(match_length)[2:].zfill(4))
-            self.compressed_content += str(bin(next_character)[2:].zfill(8))
+            if offset == 0:
+                self.compressed_content += str(bin(next_character)[2:].zfill(8))
         for i in range(0, len(self.compressed_content), 8):
             value = ord(chr(int(self.compressed_content[i:i+8], 2)))
             self._bytearray_list.append(value)
@@ -138,12 +139,17 @@ class LempelZiv77:
         window_end_index = current_index
         buffer_end_index = min(
             current_index + self.buffer_size, len(self.content))
-        result = self.find_longest_match(
-            current_index,
+        # result = self.find_longest_match(
+        #     current_index,
+        #     self.content[window_start_index:window_end_index],
+        #     self.content[current_index:buffer_end_index])
+        result = self.find_matches_in_sliding_window(
             self.content[window_start_index:window_end_index],
             self.content[current_index:buffer_end_index])
-        return result
+        return result      
 
+
+    # NOT CURRENTLY USED, REMOVE IF NOT NEEDED
     def find_longest_match(self, current_index: int, window: str, buffer: str) -> tuple:
         """A method to find the longest match in the sliding window
 
@@ -159,12 +165,8 @@ class LempelZiv77:
         result = 0
         i = 0
         while i < len(window):
-            # print("Window pointer: ",
-            #         max(0, current_index - self.window_size) + i,
-            #         "character: ", self.content[current_index + i],
-            #         "Buffer: ", current_index + len(window),
-            #         "buffer_character: ", self.content[current_index + len(window)] )
             match_length = self.repeating_length_recursion(window[i:], buffer)
+            # match_length = self.find_matches_in_sliding_window(window[i:], buffer)
             if match_length > result:
                 result = match_length
                 offset = len(window) - i
@@ -178,6 +180,7 @@ class LempelZiv77:
             longest = (0, 1, ord(self.content[current_index]))
         return longest
 
+    # CURRENTLY DEACTIVATED, REMOVE IF NOT NEEDED ANYMORE
     def repeating_length_recursion(self, window: str, string_buffer: str):
         """A recursion that finds the total length of the string match.
 
@@ -202,20 +205,58 @@ class LempelZiv77:
                 window[1:] + string_buffer[0], string_buffer[1:])
         return 0
 
+    def find_matches_in_sliding_window(self, window: str, stringbuffer: str):
+        """An iterative method to find the longest string match in a sliding window.
+
+        Args:
+            window (str): sliding window from which to search for matches. 
+            stringbuffer (str): lookahead buffer for which the longest match is searched
+            for
+
+        Returns:
+            tuple: offset, match length and character, if no match is found. 
+        """
+        len_window = len(window)
+        window = window + stringbuffer
+        i_window = 0
+        i_buffer = 0
+        len_buffer = len(stringbuffer)
+        longest = (0, 0, 0)
+        for i_window in range(len_window):
+            result = 0
+            if window[i_window] == stringbuffer[i_buffer]:
+                result = 1
+                for i in range(1, len_buffer):
+                    if window[i_window + i] == stringbuffer[i]:
+                        result += 1
+                    else:
+                        break
+            if result > longest[1]:
+                longest = (len_window - i_window, result, 0)
+            if result == len_buffer - 1:
+                break
+        if longest[1] == 0:
+            longest = (0, 1, ord(stringbuffer[0]))
+        return longest
+
+
+
     def transform_fetched_content_to_tuples(self):
         """A method that transforms the fetched data into tuples.
         """
-        # print("now transforming", self.compressed_content)
 
         self.compressed_content_as_list = []
         i = 0
         while i < len(self.compressed_content):
             offset = int(self.compressed_content[i:i+12], 2)
             length = int(self.compressed_content[i+12:i+16], 2)
-            character = chr(int(self.compressed_content[i+16:i+24], 2))
+            if offset == 0:
+                character = chr(int(self.compressed_content[i+16:i+24], 2))
+                i += 24
+            else:
+                character = ""
+                i += 16
             self.compressed_content_as_list.append((offset, length, character))
-            i += 24
-        print(self.compressed_content_as_list)
 
     def lempel_ziv_uncompress(self):
         """A method to handle the uncompression of the data.
@@ -223,7 +264,6 @@ class LempelZiv77:
         Raises:
             NoCompressedContentError: A general error to be raised if no data is given.
         """
-        # print(self.compressed_content_as_list)
         if len(self.compressed_content_as_list) == 0:
             raise NoCompressedContentError()
         variable_n = len(self.compressed_content_as_list)
@@ -237,11 +277,6 @@ class LempelZiv77:
                 for _ in range(variable_m):
                     uncompressed_string += uncompressed_string[-offset]
         self.content = uncompressed_string
-        # match = True
-        # for i in range(len(uncompressed_string)):
-        #     if uncompressed_string[i] != self.content[i]:
-        #         match = False
-        # print(uncompressed_string, match)
 
 
 if __name__ == "__main__":
