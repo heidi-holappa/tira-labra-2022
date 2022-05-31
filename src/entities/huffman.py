@@ -143,7 +143,7 @@ class HuffmanCoding:
                               tree_string: str = "",
                               tree_characters: str = ""):
         """Creates a storable version of the Huffman tree. The logic is that
-        'travelling' to the left is 0 and 'travelling' to the right is 1.
+        'traveling' to the left is 0 and 'traveling' to the right is 1.
         The tree is written in the following way:
         1) Travel left as many times as possible
         2) Travel right at the nearest possible location
@@ -212,15 +212,21 @@ class HuffmanCoding:
         print(stdout, travelpath)
 
     def write_compressed_file(self, filename, content):
-        """This method writes the compressed data into a file.
-
-        At initial stage the filename is set. Later on, it will be created
-        based on the file opened for compression.
+        """Converts content into a bytearray and calls an instance
+        of FileManagement from Service package to store content as
+        bytes. 
         """
-        with open(filename, "w", encoding="utf-8") as compressed_file:
-            # for key, value in self.frequencies.items():
-            #     compressed_file.write(f"{str(key)};{value}\n")
-            compressed_file.write(content)
+        content_as_integers = []
+        for i in range(0, len(content), 8):
+            content_as_integers.append(int(content[i:i+8], 2))
+        byte_array = bytearray(content_as_integers)
+        self.file_manager.create_binary_file(filename, byte_array)
+        
+        
+        # with open(filename, "w", encoding="utf-8") as compressed_file:
+        #     # for key, value in self.frequencies.items():
+        #     #     compressed_file.write(f"{str(key)};{value}\n")
+        #     compressed_file.write(content)
 
     def write_uncompressed_file(self, filename, content):
         """This method writes the compressed data into a file.
@@ -240,6 +246,7 @@ class HuffmanCoding:
         self.content = self.file_manager.fetch_uncompressed_content(
             self.uncompressed_filename)
 
+    # THIS METHOD IS OBSOLETE: DELETE WHEN CERTAIN THAT CAN BE DELETED
     def fetch_compressed_content(self):
         """An old method. Will be erased once refactoring is done.
         """
@@ -264,8 +271,12 @@ class HuffmanCoding:
         Content
         Extra bits
         """
-        with open(self.compressed_filename, encoding="utf-8") as source_content:
-            compressed_content = source_content.read()
+        compressed_content = ""
+        byte_data = self.file_manager.fetch_compressed_content(self.compressed_filename)
+        for byte in byte_data:
+            compressed_content += str(bin(byte)[2:].zfill(8))
+        # with open(self.compressed_filename, encoding="utf-8") as source_content:
+        #     compressed_content = source_content.read()
         tree_length = int(compressed_content[:12], 2)
         extra_bits = int(compressed_content[12:16], 2)
         # print("extra bits: ", extra_bits)
@@ -418,7 +429,7 @@ class HuffmanCoding:
             self.uncompressed_filename, self.uncompressed)
         # print(self.huffman_coded_values)
 
-        self.activate_preorder_traversal()
+        # self.activate_preorder_traversal()
 
     def activate_preorder_traversal(self):
         result = []
