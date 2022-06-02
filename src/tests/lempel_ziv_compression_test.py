@@ -122,7 +122,7 @@ class TestLempelZivCompression(unittest.TestCase):
         self.assertEqual(True, content_matches)
     
     def test_compressed_data_matches_with_a_longer_existing_file(self):
-        filename = os.path.join(DEFAULT_TEST_DATA_PATH, "gutenberg-project-1.txt")
+        filename = os.path.join(DEFAULT_TEST_DATA_PATH, "randon-printable-ascii-data.txt")
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
         self.create_test_file(content)
