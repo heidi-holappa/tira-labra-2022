@@ -1,12 +1,12 @@
 import unittest
 import os
-from services.compressionmanagement import defaul_compression_management
+from services.compressionmanagement import default_compression_management
 
 
 class TestCompressionManagement(unittest.TestCase):
 
     def setUp(self):
-        self.compression_management = defaul_compression_management
+        self.compression_management = default_compression_management
 
     def test_data_compression_method_is_run_successfully(self):
         filename = "file.txt"
@@ -17,8 +17,6 @@ class TestCompressionManagement(unittest.TestCase):
         compressed_file_created = bool(os.path.exists(compressed_filename))
         os.remove(filename)
         os.remove(compressed_filename)
-        analysis_filename = filename[:-4] + "_compression_analysis.log"
-        os.remove(analysis_filename)
         self.assertEqual(True, compressed_file_created)
 
     def test_validation_success_when_extension_is_valid(self):
