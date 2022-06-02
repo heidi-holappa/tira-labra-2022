@@ -1,5 +1,6 @@
+import time
 from services.filemanagement import default_file_manager
-
+from services.loghandler import LogHandler
 
 class NoCompressedContentError(Exception):
     pass
@@ -30,6 +31,7 @@ class LempelZiv77:
         self.file_manager = default_file_manager
         self._bytearray_list = []
         self.bytearray_data = None
+        self.loghandler = LogHandler()
 
     def fetch_uncompressed_content(self):
         """Calls FileManagement from service package to fetch uncompressed content
@@ -77,14 +79,25 @@ class LempelZiv77:
         """A method to activate and manage different steps of compression
         """
         self.fetch_uncompressed_content()
+        starttime = time.time()
+
         self.compress_content()
+
+        endtime = time.time()
+        total_time = endtime - starttime
+        self.loghandler.logdata["compression_time"] = f"{total_time:.2f}"
+        
         self.write_binary_content_into_a_file(
             self.compressed_filename, self.bytearray_data)
+        
+        self.analyze_compression()
 
     def lempel_ziv_activate_uncompression(self):
         """A method to activate and manage different steps of uncopmpression
         """
+        print("fetching data")
         self.fetch_compressed_content()
+        print("data fetched")
         self.lempel_ziv_handle_uncompression()
         self.write_txt_content_into_a_file(
             self.uncompressed_filename, self.content)
@@ -275,9 +288,20 @@ class LempelZiv77:
                 variable_m = self.compressed_content_as_list[i][1]
                 offset = self.compressed_content_as_list[i][0]
                 for _ in range(variable_m):
+                    # print(offset, len(uncompressed_string), len(self.compressed_content_as_list), i,  self.compressed_content_as_list[i])
                     uncompressed_string += uncompressed_string[-offset]
         self.content = uncompressed_string
 
+    def analyze_compression(self):
+        """An initial method for creating analysis data on compression.
+        """
+
+        self.loghandler.logdata["original_filename"] = self.uncompressed_filename
+        self.loghandler.logdata["compressed_filename"] = self.compressed_filename
+        self.loghandler.logdata["compression_method"] = "Lempel-Ziv 77"
+        self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
+        self.loghandler.logdata["compressed_size"] = len(self.compressed_content)
+        self.loghandler.create_entry()
 
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")

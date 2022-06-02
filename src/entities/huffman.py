@@ -1,5 +1,7 @@
 from heapq import heapify, heappush, heappop
+import time
 from services.filemanagement import default_file_manager
+from services.loghandler import LogHandler
 
 
 class HuffmanCoding:
@@ -16,6 +18,7 @@ class HuffmanCoding:
         self.frequencies = {}
         self.huffman_coded_values = {}
         self.root_node = HuffmanNode("aa", 0)
+        self.loghandler = LogHandler()
         self.last_analysis = {
             "algorithm_used": "Huffman coding",
             "uncompressed_size": 0,
@@ -23,8 +26,7 @@ class HuffmanCoding:
             "compressed_header": 0,
             "compressed_total": 0,
             "content_ratio": 0,
-            "total_ratio": 0
-        }
+            "total_ratio": 0}
         self.file_manager = default_file_manager
 
     def calculate_frequencies(self):
@@ -127,15 +129,15 @@ class HuffmanCoding:
         self.compressed += characters
         self.compressed += encoded_content
         self.compressed += "0" * extra_bits_needed
-        with open("huffman_compression.log", "a") as logfile:
-            logfile.write("----BEGIN LOG ENTRY ----\n")
-            logfile.write("----ENCODING----\n")
-            logfile.write("Filename: " + self.uncompressed_filename + "\n")
-            logfile.write("Huffman tree:\n" + huffman_tree + "\n")
-            logfile.write("Characters:\n" + characters + "\n")
-            logfile.write("Encoded content:\n" + encoded_content + "\n")
-            logfile.write("Extra bits: " + str(extra_bits_needed) + "\n")
-            logfile.write("---- END OF LOG ENTRY ----\n\n")
+        # with open("huffman_compression.log", "a") as logfile:
+        #     logfile.write("----BEGIN LOG ENTRY ----\n")
+        #     logfile.write("----ENCODING----\n")
+        #     logfile.write("Filename: " + self.uncompressed_filename + "\n")
+        #     logfile.write("Huffman tree:\n" + huffman_tree + "\n")
+        #     logfile.write("Characters:\n" + characters + "\n")
+        #     logfile.write("Encoded content:\n" + encoded_content + "\n")
+        #     logfile.write("Extra bits: " + str(extra_bits_needed) + "\n")
+        #     logfile.write("---- END OF LOG ENTRY ----\n\n")
         # print(bool(len(self.compressed) % 8 == 0))
 
     def storable_huffman_tree(self,
@@ -297,16 +299,18 @@ class HuffmanCoding:
         self.decompress_huffman_tree(self.root_node, tree, characters)
         # print("Storable Huffman tree check\n", self.storable_huffman_tree(self.root_node))
 
-        with open("huffman_compression.log", "a") as logfile:
-            logfile.write("----BEGIN LOG ENTRY ----\n")
-            logfile.write("----DECODING----\n")
-            logfile.write("Filename: " + self.uncompressed_filename + "\n")
-            logfile.write("Huffman tree:\n" + tree + "\n")
-            logfile.write("Characters:\n" + characters + "\n")
-            logfile.write("Encoded content:\n" + self.compressed + "\n")
-            logfile.write("Extra bits: " + str(extra_bits) + "\n")
-            logfile.write("---- END OF LOG ENTRY ----\n\n")
+        # with open("huffman_compression.log", "a") as logfile:
+        #     logfile.write("----BEGIN LOG ENTRY ----\n")
+        #     logfile.write("----DECODING----\n")
+        #     logfile.write("Filename: " + self.uncompressed_filename + "\n")
+        #     logfile.write("Huffman tree:\n" + tree + "\n")
+        #     logfile.write("Characters:\n" + characters + "\n")
+        #     logfile.write("Encoded content:\n" + self.compressed + "\n")
+        #     logfile.write("Extra bits: " + str(extra_bits) + "\n")
+        #     logfile.write("---- END OF LOG ENTRY ----\n\n")
 
+    
+    # UPDATE DOCSTRING
     def decompress_huffman_tree(self, node, tree, characters):
         """A recursive method that handles the decompression of the Huffman tree. Logic
         is as follows:
@@ -350,44 +354,17 @@ class HuffmanCoding:
             return tree, characters[8:]
         # print(chr(int(characters[char_idx: char_idx + 8], 2)))
 
-    def huffman_analyze(self, filename: str):
+    def analyze_compression(self):
         """An initial method for creating analysis data on compression.
-
-        Args:
-            filename (str): a filename to which to store the content.
         """
 
-        uncompressed_size = len(self.content)*8
-        stored_characters = len(self.frequencies) * 8 * 2
-        coded_character_bits = 0
-        for key, value in self.frequencies.items():
-            coded_character_bits += int(value).bit_length()
-        compressed_content_size = len(self.compressed)
-        total_compressed = compressed_content_size + \
-            coded_character_bits + stored_characters
-        with open(filename, "w", encoding="utf-8") as report:
-            report.write(f"Uncompressed size: {uncompressed_size} bits\n")
-            report.write("-----\n")
-            report.write(
-                f"Compressed content: {compressed_content_size} bits\n")
-            report.write("frequencies:\n")
-            report.write(f"characters: {stored_characters}\n")
-            report.write(
-                f"frequency int value bit size: {coded_character_bits}\n")
-            report.write(f"compression total: {total_compressed}\n")
-            report.write("-----\n")
-            content_ratio = compressed_content_size / uncompressed_size
-            report.write(f"Compression ratio on content: {content_ratio}\n")
-            total_ratio = total_compressed / uncompressed_size
-            report.write(f"Compression ratio on total: {total_ratio}\n")
+        self.loghandler.logdata["original_filename"] = self.uncompressed_filename
+        self.loghandler.logdata["compressed_filename"] = self.compressed_filename
+        self.loghandler.logdata["compression_method"] = "Huffman coding"
+        self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
+        self.loghandler.logdata["compressed_size"] = len(self.compressed)
+        self.loghandler.create_entry()
 
-        self.last_analysis["uncompressed_size"] = uncompressed_size
-        self.last_analysis["compressed_total"] = total_compressed
-        self.last_analysis["compressed_content"] = compressed_content_size
-        self.last_analysis["compressed_header"] = coded_character_bits + \
-            stored_characters
-        self.last_analysis["content_ratio"] = content_ratio
-        self.last_analysis["total_ratio"] = total_ratio
 
     def execute_compression(self):
         """This method calls the methods that handle different
@@ -399,17 +376,26 @@ class HuffmanCoding:
         Step 4: compress
         Step 5: write content to file
         """
+        
         self.fetch_uncompressed_content()
+
+        starttime = time.time()
+                
         self.calculate_frequencies()
         self.build_huffman_tree()
         self.huffman_encode()
+
+        endtime = time.time()
+        total_time = endtime - starttime
+        self.loghandler.logdata["compression_time"] = f"{total_time:.2f}"
+
         self.write_compressed_file(self.compressed_filename, self.compressed)
-        # print(self.huffman_coded_values)
+
         longest_value = 0
         for key, value in self.huffman_coded_values.items():
             if len(value) > longest_value:
                 longest_value = len(value)
-        # print("longest value: ", longest_value)
+
         result, travel_path = self.activate_preorder_traversal()
         print(result, travel_path)
 
@@ -496,11 +482,4 @@ class HuffmanNode:
 
 
 if __name__ == "__main__":
-    print("TEST-1: COMPRESSING FILE")
-    huffman_compressor = HuffmanCoding("compress_this.txt", "compressed.huf")
-    huffman_compressor.execute_compression()
-    huffman_compressor.huffman_analyze("huffman_compression_report.log")
-    print("TEST-2: UNCOMPRESSING FILE")
-    huffman_uncompressor = HuffmanCoding("compressed.huf", "uncompressed.txt")
-    huffman_uncompressor.execute_uncompression()
-    huffman_uncompressor.huffman_analyze("huffman_uncompression_report.log")
+    pass
