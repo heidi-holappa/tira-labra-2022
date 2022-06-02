@@ -1,3 +1,6 @@
+import os
+from config import DEFAULT_DATA_PATH
+
 class FileManagement:
 
     def __init__(self):
@@ -46,6 +49,17 @@ class FileManagement:
     def create_binary_file(self, filename: str, content: bytearray):
         with open(filename, "wb") as compressed_file:
             compressed_file.write(content)
+
+    def get_log_content(self):
+        filename = os.path.join(DEFAULT_DATA_PATH, "compression.log")
+        content = ""
+        if os.path.exists(filename):
+            with open(filename, "r", encoding="utf-8") as file:
+                content = file.read()
+        if not content:
+            content = "No log content yet. Compress something to get log data."
+        return content
+    
 
 
 default_file_manager = FileManagement()

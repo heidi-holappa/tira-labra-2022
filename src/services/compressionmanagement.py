@@ -1,5 +1,7 @@
 from entities.huffman import HuffmanCoding
 from entities.lempelziv77 import LempelZiv77
+from config import DEFAULT_DATA_PATH
+import os
 
 
 class CompressionManagement:
@@ -19,11 +21,11 @@ class CompressionManagement:
             dict: a dictionary of analysis data to populate GUI labels
         """
         compressed_filename = filename[:-3] + "huf"
-        analysis_filename = filename[:-4] + "_compression_analysis.log"
+        # analysis_filename = filename[:-4] + "_compression_analysis.log"
         huffman_compressor = HuffmanCoding(filename, compressed_filename)
         huffman_compressor.execute_compression()
-        huffman_compressor.huffman_analyze(analysis_filename)
-        self.last_analysis = huffman_compressor.last_analysis
+        huffman_compressor.analyze_compression()
+        # self.last_analysis = huffman_compressor.last_analysis
 
     def initial_huffman_uncompression(self, filename: str):
         """An initial method for testing Huffman decoding.
@@ -35,10 +37,10 @@ class CompressionManagement:
         """
 
         uncompressed_filename = filename[:-4] + "_uncompressed.txt"
-        analysis_filename = filename[:-4] + "_uncompression_analysis.log"
+        # analysis_filename = filename[:-4] + "_uncompression_analysis.log"
         huffman_uncompressor = HuffmanCoding(uncompressed_filename, filename)
         huffman_uncompressor.execute_uncompression()
-        huffman_uncompressor.huffman_analyze(analysis_filename)
+        # huffman_uncompressor.huffman_analyze(analysis_filename)
 
     def lempel_ziv_compress(self, filename: str):
         """A method for testing Lempel-Ziv 77 compression.
@@ -74,5 +76,12 @@ class CompressionManagement:
         accepted = accepted_extensions.split(";")
         return bool(extension in accepted)
 
+    def compress_all_txt_files_in_directory(self):
+        for file in os.listdir(DEFAULT_DATA_PATH):
+            if file.endswith(".txt"):
+                self.lempel_ziv_compress(os.path.join(DEFAULT_DATA_PATH, file))
+                self.initial_huffman_compression(os.path.join(DEFAULT_DATA_PATH, file))
+        print("DONE!")
 
-defaul_compression_management = CompressionManagement()
+
+default_compression_management = CompressionManagement()
