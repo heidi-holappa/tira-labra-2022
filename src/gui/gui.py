@@ -2,6 +2,7 @@ from tkinter import Tk
 from gui.gui_compression_view import CompressionView
 from gui.gui_theme import setTheme
 from gui.gui_main_view import MainView
+from gui.gui_testing_view import TestingView
 
 
 class GUI:
@@ -41,7 +42,8 @@ class GUI:
 
         self._current_view = MainView(
             self._root,
-            self._handle_compression_view
+            self._handle_compression_view,
+            self._handle_testing_view,
         )
 
         self._current_view.pack()
@@ -55,6 +57,17 @@ class GUI:
 
     def _handle_compression_view(self):
         self._show_compression_view()
+    
+    def _show_testing_view(self):
+        self._hide_current_view()
+        self._current_view = TestingView(
+            self._root,
+        )
+        self._current_view.pack()
+
+    
+    def _handle_testing_view(self):
+        self._show_testing_view()
 
 
 def main():

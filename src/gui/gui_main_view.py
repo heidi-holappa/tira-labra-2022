@@ -1,5 +1,6 @@
 from tkinter import ttk, constants, Frame, Menu
 from gui.gui_menu import GuiMenu
+from services.compressionmanagement import default_compression_management
 
 
 class MainView:
@@ -11,10 +12,12 @@ class MainView:
         frame: a variable for creating the Frame object
     """
 
-    def __init__(self, root, compression_view):
+    def __init__(self, root, compression_view, testing_view):
         self._root = root
         self._compression_view = compression_view
+        self._testing_view = testing_view
         self._frame = None
+        self.compression_management = default_compression_management
 
         self._initialize()
 
@@ -72,10 +75,43 @@ class MainView:
             style="Custom.TButton"
         )
 
+        button_compress_all = ttk.Button(
+            master=self._frame,
+            text="compress all txt-files in default directory",
+            command=self.compress_all,
+            style="Custom.TButton"
+
+        )
+
+        button_testing_view = ttk.Button(
+            master=self._frame,
+            text="Run extensive tests",
+            command=self._testing_view,
+            style="Custom.TButton"
+
+        )
+
         button_compression_view.grid(
             row=3,
             column=0
         )
+
+        button_testing_view.grid(
+            row=4,
+            column=0,
+            padx=10,
+            pady=10
+        )
+
+        button_compress_all.grid(
+            row=5,
+            column=0,
+            padx= 10, 
+            pady = 0
+        )
+
+    def compress_all(self):
+        self.compression_management.compress_all_txt_files_in_directory()
 
     def _create_menubar(self):
         """A method that calls for the construction of default menu bar.

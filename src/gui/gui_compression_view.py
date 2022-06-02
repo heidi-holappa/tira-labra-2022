@@ -1,7 +1,8 @@
-from tkinter import ttk, constants, Frame, Menu, IntVar, filedialog, messagebox
+from tkinter import ttk, constants, Frame, Menu, IntVar, filedialog, messagebox, Text
 from config import DEFAULT_DATA_PATH
 from gui.gui_menu import GuiMenu
-from services.compressionmanagement import defaul_compression_management
+from services.compressionmanagement import default_compression_management
+from services.filemanagement import default_file_manager
 
 
 class CompressionView:
@@ -11,7 +12,8 @@ class CompressionView:
         self._frame = None
         self._state = "enabled"
         self.filename = None
-        self.compression_management = defaul_compression_management
+        self.compression_management = default_compression_management
+        self.filemanager = default_file_manager
 
         self._initialize()
 
@@ -65,7 +67,7 @@ class CompressionView:
 
         label_description = ttk.Label(
             master=self._label_and_instruction_frame,
-            text="In this view you can compress or uncompress data. Note: radiobutton is currently disabled as only an initial version of Huffman coding is available.",
+            text="In this view you can compress or uncompress data.\nUse radio button to choose compression algorithm. Compression log data is updated when file is compressed.",
             style="Centered.TLabel"
         )
 
@@ -95,7 +97,7 @@ class CompressionView:
         )
 
         self._construct_radio_buttons()
-        self._construct_analysis_frame()
+        self._construct_log_frame()
         self._construct_buttons()
 
     def _construct_radio_buttons(self):
@@ -168,195 +170,30 @@ class CompressionView:
             column=1,
             pady=20
         )
-
-    def _construct_analysis_frame(self):
+    
+    def _construct_log_frame(self):
         analysis_header = ttk.Label(
             master=self._analysis_frame,
-            text="Compression analysis",
+            text="Compression log",
             style="Header1.TLabel"
         )
 
-        analysis_algorithm_used_label = ttk.Label(
+        textfield = Text(
             master=self._analysis_frame,
-            text="Selected algorithm:",
-            style="Custom.TLabel"
+            wrap="word",
+            bg="white"
         )
-
-        self.analysis_algorithm_used_value = ttk.Label(
-            master=self._analysis_frame,
-            text="no action selected",
-            style="Custom.TLabel",
-            state="disabled"
-        )
-
-        analysis_original_size_label = ttk.Label(
-            master=self._analysis_frame,
-            text="Original size (bits):",
-            style="Custom.TLabel"
-        )
-
-        self.analysis_original_size_value = ttk.Label(
-            master=self._analysis_frame,
-            text="no action selected",
-            style="Custom.TLabel",
-            state="disabled"
-        )
-
-        analysis_compressed_content_size_label = ttk.Label(
-            master=self._analysis_frame,
-            text="Compressed content (bits):",
-            style="Custom.TLabel"
-        )
-
-        self.analysis_compressed_content_size_value = ttk.Label(
-            master=self._analysis_frame,
-            text="no action selected",
-            style="Custom.TLabel",
-            state="disabled"
-        )
-
-        analysis_compressed_header_label = ttk.Label(
-            master=self._analysis_frame,
-            text="Compressed file header (bits):",
-            style="Custom.TLabel"
-        )
-
-        self.analysis_compressed_header_value = ttk.Label(
-            master=self._analysis_frame,
-            text="no action selected",
-            style="Custom.TLabel",
-            state="disabled"
-        )
-
-        analysis_compressed_total_size_label = ttk.Label(
-            master=self._analysis_frame,
-            text="Total compressed (bits):",
-            style="Custom.TLabel"
-        )
-
-        self.analysis_compressed_total_size_value = ttk.Label(
-            master=self._analysis_frame,
-            text="no action selected",
-            style="Custom.TLabel",
-            state="disabled"
-        )
-
-        analysis_content_ratio_label = ttk.Label(
-            master=self._analysis_frame,
-            text="Compression ratio (content):",
-            style="Custom.TLabel"
-        )
-
-        self.analysis_content_ratio_value = ttk.Label(
-            master=self._analysis_frame,
-            text="no action selected",
-            style="Custom.TLabel",
-            state="disabled"
-        )
-
-        analysis_total_ratio_label = ttk.Label(
-            master=self._analysis_frame,
-            text="Compression ratio (total):",
-            style="Custom.TLabel"
-        )
-
-        self.analysis_total_ratio_value = ttk.Label(
-            master=self._analysis_frame,
-            text="no action selected",
-            style="Custom.TLabel",
-            state="disabled"
-        )
-
-        analysis_header.grid(
+        textfield.grid(
             row=0,
-            column=0,
-            sticky=constants.W
+            column=0
         )
 
-        analysis_algorithm_used_label.grid(
-            row=1,
-            column=0,
-            sticky=constants.W
-        )
+        log_content = self.filemanager.get_log_content()
 
-        self.analysis_algorithm_used_value.grid(
-            row=1,
-            column=1,
-            sticky=constants.W
-        )
+        textfield.insert(1.0, log_content)
+        textfield["state"] = "normal"
 
-        analysis_original_size_label.grid(
-            row=2,
-            column=0,
-            sticky=constants.W
-        )
-
-        self.analysis_original_size_value.grid(
-            row=2,
-            column=1,
-            sticky=constants.W
-        )
-
-        analysis_compressed_content_size_label.grid(
-            row=3,
-            column=0,
-            sticky=constants.W
-        )
-
-        self.analysis_compressed_content_size_value.grid(
-            row=3,
-            column=1,
-            sticky=constants.W
-        )
-
-        analysis_compressed_header_label.grid(
-            row=4,
-            column=0,
-            sticky=constants.W
-        )
-
-        self.analysis_compressed_header_value.grid(
-            row=4,
-            column=1,
-            sticky=constants.W
-        )
-
-        analysis_compressed_total_size_label.grid(
-            row=5,
-            column=0,
-            sticky=constants.W
-        )
-
-        self.analysis_compressed_total_size_value.grid(
-            row=5,
-            column=1,
-            sticky=constants.W
-        )
-
-        analysis_total_ratio_label.grid(
-            row=6,
-            column=0,
-            sticky=constants.W
-        )
-
-        self.analysis_total_ratio_value.grid(
-            row=6,
-            column=1,
-            sticky=constants.W
-        )
-
-        analysis_content_ratio_label.grid(
-            row=7,
-            column=0,
-            sticky=constants.W
-        )
-
-        self.analysis_content_ratio_value.grid(
-            row=7,
-            column=1,
-            sticky=constants.W
-        )
-
+   
     def _handle_compression(self):
         """An initial method for handling compression.
 
@@ -373,46 +210,23 @@ class CompressionView:
         if compression_method == 1:
             self.compression_management.initial_huffman_compression(
                 self.filename)
-            self.configure_analysis_labels()
         if compression_method == 2:
             self.compression_management.lempel_ziv_compress(self.filename)
+        self._update_log()
         self._compression_status_notification("File compressed successfully!")
 
-    def configure_analysis_labels(self):
-        self.analysis_algorithm_used_value.configure(
-            text=self.compression_management.last_analysis["algorithm_used"],
-            state="enabled"
-        )
-        self.analysis_original_size_value.configure(
-            text=str(
-                self.compression_management.last_analysis["uncompressed_size"]) + " bits",
-            state="enabled"
-        )
-        self.analysis_compressed_content_size_value.configure(
-            text=str(
-                self.compression_management.last_analysis["compressed_content"]) + " bits",
-            state="enabled"
-        )
-        self.analysis_compressed_header_value.configure(
-            text=str(
-                self.compression_management.last_analysis["compressed_header"]) + " bits",
-            state="enabled"
-        )
-        self.analysis_compressed_total_size_value.configure(
-            text=str(
-                self.compression_management.last_analysis["compressed_total"]) + " bits",
-            state="enabled"
-        )
-        self.analysis_content_ratio_value.configure(
-            text="{:.2f}".format(
-                self.compression_management.last_analysis["content_ratio"]*100) + " percent",
-            state="enabled"
-        )
-        self.analysis_total_ratio_value.configure(
-            text="{:.2f}".format(
-                self.compression_management.last_analysis["total_ratio"]*100) + " percent",
-            state="enabled"
-        )
+    def _update_log(self):
+        self.clear_frame(self._analysis_frame)
+        self._construct_log_frame()
+
+    def clear_frame(self, frame: ttk.LabelFrame):
+        """A general method for clearing a selected frame before repopulating it. 
+        Can be used for multiple purposes. 
+        Args:
+            frame (ttk.LabelFrame): LabelFrame widget in which the buttons are to be embedded.
+        """
+        for widgets in frame.winfo_children():
+            widgets.destroy()
 
     def _handle_uncompression(self):
         """An initial method for handling compression.
