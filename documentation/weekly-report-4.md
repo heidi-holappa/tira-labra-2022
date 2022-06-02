@@ -39,5 +39,8 @@ The huffman coding consists of different steps that have different time complexi
 | 31.5.2022 | Huffman coding now stores data as bytes | 1 |
 | 31.5.2022 | Refactor LZ77, create iterative loop for window | 1 |
 | 31.5.2022 | Create a new service package object to handle log/analysis data | 0,5 |
-| **total**| ---- | **5,5** |
+| 2.6.2022 | Improve logging, create new tests | 1,5 |
+| 2.6.2022 | Learn that text-files downloaded from internet cause issues, investigate | 1,5 |
+| 2.6.2022 | Write more tests while investigating | 1 |
+| **total**| ---- | **9,5 ** |
 
