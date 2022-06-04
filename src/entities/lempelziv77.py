@@ -1,7 +1,7 @@
 import time
 from services.filemanagement import default_file_manager
 from services.loghandler import LogHandler
-
+from config import DEFAULT_DATA_PATH
 
 class NoCompressedContentError(Exception):
     pass
@@ -79,29 +79,46 @@ class LempelZiv77:
     def lempel_ziv_activate_compression(self):
         """A method to activate and manage different steps of compression
         """
+        fetch_starttime = time.time()
         self.fetch_uncompressed_content()
-        starttime = time.time()
-
+        fetch_endtime = time.time()
+        fetch_total_time = fetch_endtime - fetch_starttime
+        self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
+        
+        compress_starttime = time.time()
         self.compress_content()
+        compress_endtime = time.time()
+        compress_total_time = compress_endtime - compress_starttime
+        self.loghandler.logdata["compression_time"] = f"{compress_total_time:.2f}"
 
-        endtime = time.time()
-        total_time = endtime - starttime
-        self.loghandler.logdata["compression_time"] = f"{total_time:.2f}"
-
+        write_starttime = time.time()
         self.write_binary_content_into_a_file(
             self.compressed_filename, self.bytearray_data)
-
-        self.analyze_compression()
+        write_endtime = time.time()
+        write_total_time = write_endtime - write_starttime
+        self.loghandler.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
     def lempel_ziv_activate_uncompression(self):
         """A method to activate and manage different steps of uncopmpression
         """
-        print("fetching data")
+        fetch_starttime = time.time()
         self.fetch_compressed_content()
-        print("data fetched")
+        fetch_endtime = time.time()
+        fetch_total_time = fetch_endtime - fetch_starttime
+        self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
+
+        compress_starttime = time.time()
         self.lempel_ziv_handle_uncompression()
+        compress_endtime = time.time()
+        compress_total_time = compress_endtime - compress_starttime
+        self.loghandler.logdata["compression_time"] = f"{compress_total_time:.2f}"        
+
+        write_starttime = time.time()
         self.write_txt_content_into_a_file(
             self.uncompressed_filename, self.content)
+        write_endtime = time.time()
+        write_total_time = write_endtime - write_starttime
+        self.loghandler.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
     def lempel_ziv_handle_uncompression(self):
         """A method to handle the steps of data uncompression. First data is transformed
@@ -290,7 +307,7 @@ class LempelZiv77:
                     uncompressed_string += uncompressed_string[-offset]
         self.content = uncompressed_string
 
-    def analyze_compression(self):
+    def analyze_compression(self, filepath = DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
 
@@ -300,7 +317,20 @@ class LempelZiv77:
         self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
         self.loghandler.logdata["compressed_size"] = len(
             self.compressed_content)
-        self.loghandler.create_compression_entry()
+        self.loghandler.create_compression_entry(filepath)
+
+    def analyze_uncompression(self, filepath = DEFAULT_DATA_PATH):
+        """An initial method for creating analysis data on compression.
+        """
+
+        self.loghandler.logdata["compressed_filename"] = self.compressed_filename
+        self.loghandler.logdata["compressed_filename"] = self.uncompressed_filename
+        self.loghandler.logdata["compression_method"] = "Lempel-Ziv 77"
+        self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
+        self.loghandler.logdata["compressed_size"] = len(
+            self.compressed_content)
+        self.loghandler.create_uncompression_entry(filepath)
+
 
 
 if __name__ == "__main__":

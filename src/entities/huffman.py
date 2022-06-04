@@ -1,5 +1,6 @@
 from heapq import heapify, heappush, heappop
 import time
+from config import DEFAULT_DATA_PATH
 from services.filemanagement import default_file_manager
 from services.loghandler import LogHandler
 
@@ -224,7 +225,7 @@ class HuffmanCoding:
         self.content = self.file_manager.fetch_uncompressed_content(
             self.uncompressed_filename)
 
-    def new_fetch_compressed_content(self):
+    def fetch_compressed_content(self):
         """Method responsible for processing the stored content. Logic is as follows:
         Length of the stred tree: 12 bits
         Number of extra bits: 4 bits
@@ -239,6 +240,8 @@ class HuffmanCoding:
             self.compressed_filename)
         for byte in byte_data:
             compressed_content += str(bin(byte)[2:].zfill(8))
+        self.loghandler.logdata["compressed_size"] = len(compressed_content)
+        
 
         tree_length = int(compressed_content[:12], 2)
         extra_bits = int(compressed_content[12:16], 2)
@@ -293,7 +296,7 @@ class HuffmanCoding:
             node.character = int(characters[:8], 2)
             return tree, characters[8:]
 
-    def analyze_compression(self):
+    def analyze_compression(self, filepath = DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
 
@@ -302,7 +305,19 @@ class HuffmanCoding:
         self.loghandler.logdata["compression_method"] = "Huffman coding"
         self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
         self.loghandler.logdata["compressed_size"] = len(self.compressed)
-        self.loghandler.create_compression_entry()
+        self.loghandler.create_compression_entry(filepath)
+    
+    def analyze_uncompression(self, filepath = DEFAULT_DATA_PATH):
+        """An initial method for creating analysis data on uncompression.
+        Note that compressed content length is included in the data in the method
+        that fetches content from a compressed file.
+        """
+
+        self.loghandler.logdata["compressed_filename"] = self.compressed_filename
+        self.loghandler.logdata["uncompressed_filename"] = self.uncompressed_filename
+        self.loghandler.logdata["compression_method"] = "Huffman coding"
+        self.loghandler.logdata["uncompressed_size"] = len(self.uncompressed) * 8
+        self.loghandler.create_uncompression_entry(filepath)
 
     def execute_compression(self):
         """This method calls the methods that handle different
@@ -315,24 +330,33 @@ class HuffmanCoding:
         Step 5: write content to file
         """
 
+        fetch_starttime = time.time()
         self.fetch_uncompressed_content()
+        fetch_endtime = time.time()
+        fetch_total_time = fetch_endtime - fetch_starttime
+        self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
 
-        starttime = time.time()
+        compress_starttime = time.time()
 
         self.calculate_frequencies()
         self.build_huffman_tree()
         self.huffman_encode()
 
-        endtime = time.time()
-        total_time = endtime - starttime
-        self.loghandler.logdata["compression_time"] = f"{total_time:.2f}"
+        compress_endtime = time.time()
+        compress_total_time = compress_endtime - compress_starttime
+        self.loghandler.logdata["compression_time"] = f"{compress_total_time:.2f}"
 
+        write_starttime = time.time()
         self.write_compressed_file(self.compressed_filename, self.compressed)
+        write_endtime = time.time()
+        write_total_time = write_endtime - write_starttime
+        self.loghandler.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
-        longest_value = 0
-        for key, value in self.huffman_coded_values.items():
-            if len(value) > longest_value:
-                longest_value = len(value)
+        # TODO: IS THIS NEEDED? IF NOT, REMOVE
+        # longest_value = 0
+        # for key, value in self.huffman_coded_values.items():
+        #     if len(value) > longest_value:
+        #         longest_value = len(value)
 
     def execute_uncompression(self):
         """This method handles the uncompression of a given content
@@ -343,11 +367,24 @@ class HuffmanCoding:
         Step 4: Write content to file
         """
 
-        self.new_fetch_compressed_content()
+        fetch_starttime = time.time()
+        self.fetch_compressed_content()
+        fetch_endtime = time.time()
+        fetch_total_time = fetch_endtime - fetch_starttime
+        self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
 
+        uncompress_starttime = time.time()
         self.huffman_decode()
+        uncompress_endtime = time.time()
+        uncompress_total_time = uncompress_endtime - uncompress_starttime
+        self.loghandler.logdata["compression_time"] = f"{uncompress_total_time:.2f}"
+
+        write_starttime = time.time()
         self.write_uncompressed_file(
             self.uncompressed_filename, self.uncompressed)
+        write_endtime = time.time()
+        write_total_time = write_endtime - write_starttime
+        self.loghandler.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
     def activate_preorder_traversal(self):
         """A method used by automated tests to verify that the Huffman tree
