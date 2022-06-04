@@ -3,8 +3,13 @@ import os
 from config import DEFAULT_DATA_PATH
 
 class LogHandler:
+    """A class to handle creating log entries. 
+    """
 
     def __init__(self) -> None:
+        """Constructor for the class. Uses the default data path defined
+        in the .env file. 
+        """
         self.filename = os.path.join(DEFAULT_DATA_PATH, "compression.log")
         self.logdata = {
             "original_filename":"",
@@ -16,6 +21,14 @@ class LogHandler:
         }
 
     def create_entry(self, additional_content: str = "") -> None:
+        """Creates a log entry with the given values. Basic information is
+        collected from both compressin methods (Huffman coding, LZ77). Additional
+        log-content can also be given.
+
+        Args:
+            additional_content (str, optional): Additional algorithm specific content.
+            Defaults to "".
+        """
 
         if not os.path.exists(self.filename):
             with open(self.filename, "a", encoding="utf-8") as file:
@@ -40,5 +53,3 @@ class LogHandler:
                 file.write(additional_content)
             file.write("------\n")
             file.write(content)
-
-
