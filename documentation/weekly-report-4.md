@@ -8,6 +8,7 @@
 - Optimization issues remain. Compressing a file with million characters on LZ77 takes 50 minutes on my personal laptop at the moment.  
 - Testing documentation updated
 - How-to-guide updated
+- Tested on University virtual machine that the project works. 
 
 
 ## What have I done this week?
@@ -30,7 +31,7 @@ I have gotten a better understanding on the restrictions of my project. I learne
 '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
 ```
 
-currently I am considering whether it would be justifiable to limit the scope of this project to handling compression on files containing only these characters. My initial thoughts are that these characters provide enough variety to analyze the algorithms in a versatile way. 
+currently I am considering whether it would be justifiable to limit the scope of this project to handling compression on files containing only these characters. My initial thoughts are that these characters provide enough variety to analyze the algorithms in a versatile way. On top of these characters a whitespace ord(32) and a newline ord(10) are included. 
 
 From my counseling session with the course assistant I got more clarity on how to progress the project in the upcoming weeks and on what to focus on with the rest of my time with the course. 
 
@@ -55,12 +56,12 @@ The huffman coding consists of different steps that have different time complexi
 - In the uncompression phase the Huffman tree is traversed. The tree is not balanced, but the path lengths are based on probabilities (frequencies) of characters. I will need to investigate the time complexity of this operation. 
 
 ## Pylint and Pytest - status update
-Some Pylint issues remain open. These will be addressed before the end of the course. 
+At the moment quite a few Pylint issues remain open. The current Pylint score is 9.45. These will be addressed before the end of the course. 
 
 ## Next steps
 - Optimize algorithms
 - Add features to extensive tests
-- Refactor code
+- Refactor code, fix Pylint issues
 - Write documentation
 
 ## Study hours for week #4
@@ -80,5 +81,6 @@ Some Pylint issues remain open. These will be addressed before the end of the co
 | 3.6.2022 | Improve logging and analysis data | 1 |
 | 3.6.2022 | Create initial version of manually operated extensive tests | 2 |
 | 3.6.2022 | Create new GUI - functionalities | 0,5 |
-| 3.6.2022 | Write documentation | 1 |
-| **total**| ---- | **16** |
+| 3.6.2022 | Write documentation | 1,5 |
+| 3.6.2022 | Clean code | 0,5 |
+| **total**| ---- | **17** |
