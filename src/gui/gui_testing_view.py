@@ -157,6 +157,9 @@ class TestingView:
             widgets.destroy()
 
     def _generate_paragraphs_of_ascii(self):
+        """Handles calling the instance of ExtensiveTestHandler to create
+        random ascii-content.
+        """
         paragraphs = simpledialog.askinteger(
             'Paragraphs', "How many paragraphs do you want to create?")
         if not paragraphs or paragraphs < 0 or paragraphs > 10000:
@@ -166,6 +169,9 @@ class TestingView:
             paragraphs)
 
     def _generate_paragraphs_of_english(self):
+        """Handles calling the instance of ExtensiveTestHandler to create
+        random natural English language content.
+        """
         paragraphs = simpledialog.askinteger(
             'Paragraphs', "How many paragraphs do you want to create?")
         if not paragraphs or paragraphs < 0 or paragraphs > 10000:
@@ -174,6 +180,9 @@ class TestingView:
         self.testhandler.create_document_with_natural_language(paragraphs)
 
     def _run_extensive_tests(self):
+        """Handles calling the instance of ExtensiveTestHangler to initiate
+        the extensive tests.
+        """
         max_characters = simpledialog.askinteger(
             "Document length", "Max character length for documents to be included.")
         if not max_characters or max_characters < 0:
@@ -183,6 +192,11 @@ class TestingView:
         self._update_log()
 
     def _show_error(self, content=""):
+        """A messagebox showing an error message.
+
+        Args:
+            content (str, optional): Content describing the error. Defaults to "".
+        """
         messagebox.showinfo(
             title="Error!",
             message=content,
