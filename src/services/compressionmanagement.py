@@ -80,7 +80,8 @@ class CompressionManagement:
         for file in os.listdir(DEFAULT_DATA_PATH):
             if file.endswith(".txt"):
                 self.lempel_ziv_compress(os.path.join(DEFAULT_DATA_PATH, file))
-                self.initial_huffman_compression(os.path.join(DEFAULT_DATA_PATH, file))
+                self.initial_huffman_compression(
+                    os.path.join(DEFAULT_DATA_PATH, file))
         print("DONE!")
 
 

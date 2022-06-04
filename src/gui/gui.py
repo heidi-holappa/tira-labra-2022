@@ -57,7 +57,7 @@ class GUI:
 
     def _handle_compression_view(self):
         self._show_compression_view()
-    
+
     def _show_testing_view(self):
         self._hide_current_view()
         self._current_view = TestingView(
@@ -65,7 +65,6 @@ class GUI:
         )
         self._current_view.pack()
 
-    
     def _handle_testing_view(self):
         self._show_testing_view()
 

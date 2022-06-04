@@ -1,6 +1,7 @@
 import os
 from config import DEFAULT_DATA_PATH
 
+
 class FileManagement:
 
     def __init__(self):
@@ -59,7 +60,6 @@ class FileManagement:
         if not content:
             content = "No log content yet. Compress something to get log data."
         return content
-    
 
 
 default_file_manager = FileManagement()

@@ -81,7 +81,8 @@ class TestLempelZivCompression(unittest.TestCase):
             if content_as_list[i][2] == 0:
                 value = (content_as_list[i][0], content_as_list[i][1], '')
             else:
-                value = (content_as_list[i][0], content_as_list[i][1], chr(content_as_list[i][2]))
+                value = (content_as_list[i][0], content_as_list[i][1], chr(
+                    content_as_list[i][2]))
             if value != content_as_list_from_file[i]:
                 print(content_as_list[i], content_as_list_from_file[i])
                 content_matches = False
@@ -120,10 +121,11 @@ class TestLempelZivCompression(unittest.TestCase):
                 print(content_as_list[i], content_as_list_from_file[i])
                 content_matches = False
         self.assertEqual(True, content_matches)
-    
+
     # Takes app 50 minutes
     def compressed_data_matches_with_a_longer_existing_file(self):
-        filename = os.path.join(DEFAULT_TEST_DATA_PATH, "randon-printable-ascii-data.txt")
+        filename = os.path.join(DEFAULT_TEST_DATA_PATH,
+                                "randon-printable-ascii-data.txt")
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
         self.create_test_file(content)
@@ -138,9 +140,6 @@ class TestLempelZivCompression(unittest.TestCase):
                 print(content_as_list[i], content_as_list_from_file[i])
                 content_matches = False
         self.assertEqual(True, content_matches)
-
-    
-
 
     def create_test_file(self, content: str):
         with open(self.filename, "w") as file:

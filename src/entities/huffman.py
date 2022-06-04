@@ -172,7 +172,7 @@ class HuffmanCoding:
         self.uncompressed = ""
         node = self.root_node
         i = 0
-    
+
         stdout = []
         travelpath = ""
         while i < len(self.compressed):
@@ -196,7 +196,6 @@ class HuffmanCoding:
                 stdout.append(node.character)
                 node = self.root_node
         self.content = self.uncompressed
-        
 
     def write_compressed_file(self, filename, content):
         """Converts content into a bytearray and calls an instance
@@ -236,7 +235,8 @@ class HuffmanCoding:
         Extra bits
         """
         compressed_content = ""
-        byte_data = self.file_manager.fetch_compressed_content(self.compressed_filename)
+        byte_data = self.file_manager.fetch_compressed_content(
+            self.compressed_filename)
         for byte in byte_data:
             compressed_content += str(bin(byte)[2:].zfill(8))
 
@@ -249,12 +249,12 @@ class HuffmanCoding:
         characters = compressed_content[tree_end_index: characters_end_index]
 
         self.compressed = compressed_content[characters_end_index: -extra_bits]
-        
+
         node = HuffmanNode(0, 0)
         self.root_node = node
         self.decompress_huffman_tree(self.root_node, tree, characters)
 
-    # TODO: At the moment a copy of string is created with each recursion step. 
+    # TODO: At the moment a copy of string is created with each recursion step.
     # Consider using pointers more efficiency.
     def decompress_huffman_tree(self, node, tree, characters):
         """A recursive method that handles the decompression of the Huffman tree. Logic
@@ -304,7 +304,6 @@ class HuffmanCoding:
         self.loghandler.logdata["compressed_size"] = len(self.compressed)
         self.loghandler.create_compression_entry()
 
-
     def execute_compression(self):
         """This method calls the methods that handle different
         phases of compressing the wanted string.
@@ -315,11 +314,11 @@ class HuffmanCoding:
         Step 4: compress
         Step 5: write content to file
         """
-        
+
         self.fetch_uncompressed_content()
 
         starttime = time.time()
-                
+
         self.calculate_frequencies()
         self.build_huffman_tree()
         self.huffman_encode()
@@ -335,7 +334,6 @@ class HuffmanCoding:
             if len(value) > longest_value:
                 longest_value = len(value)
 
-
     def execute_uncompression(self):
         """This method handles the uncompression of a given content
 
@@ -344,13 +342,12 @@ class HuffmanCoding:
         Step 3: Decode content
         Step 4: Write content to file
         """
-        
+
         self.new_fetch_compressed_content()
-        
+
         self.huffman_decode()
         self.write_uncompressed_file(
             self.uncompressed_filename, self.uncompressed)
-        
 
     def activate_preorder_traversal(self):
         """A method used by automated tests to verify that the Huffman tree

@@ -2,6 +2,7 @@ import time
 from services.filemanagement import default_file_manager
 from services.loghandler import LogHandler
 
+
 class NoCompressedContentError(Exception):
     pass
 
@@ -86,10 +87,10 @@ class LempelZiv77:
         endtime = time.time()
         total_time = endtime - starttime
         self.loghandler.logdata["compression_time"] = f"{total_time:.2f}"
-        
+
         self.write_binary_content_into_a_file(
             self.compressed_filename, self.bytearray_data)
-        
+
         self.analyze_compression()
 
     def lempel_ziv_activate_uncompression(self):
@@ -133,7 +134,8 @@ class LempelZiv77:
             self.compressed_content += str(bin(offset)[2:].zfill(12))
             self.compressed_content += str(bin(match_length)[2:].zfill(4))
             if offset == 0:
-                self.compressed_content += str(bin(next_character)[2:].zfill(8))
+                self.compressed_content += str(bin(next_character)
+                                               [2:].zfill(8))
         for i in range(0, len(self.compressed_content), 8):
             value = ord(chr(int(self.compressed_content[i:i+8], 2)))
             self._bytearray_list.append(value)
@@ -159,10 +161,10 @@ class LempelZiv77:
         result = self.find_matches_in_sliding_window(
             self.content[window_start_index:window_end_index],
             self.content[current_index:buffer_end_index])
-        return result      
-
+        return result
 
     # NOT CURRENTLY USED, REMOVE IF NOT NEEDED
+
     def find_longest_match(self, current_index: int, window: str, buffer: str) -> tuple:
         """A method to find the longest match in the sliding window
 
@@ -252,8 +254,6 @@ class LempelZiv77:
             longest = (0, 1, ord(stringbuffer[0]))
         return longest
 
-
-
     def transform_fetched_content_to_tuples(self):
         """A method that transforms the fetched data into tuples.
         """
@@ -300,8 +300,10 @@ class LempelZiv77:
         self.loghandler.logdata["compressed_filename"] = self.compressed_filename
         self.loghandler.logdata["compression_method"] = "Lempel-Ziv 77"
         self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
-        self.loghandler.logdata["compressed_size"] = len(self.compressed_content)
+        self.loghandler.logdata["compressed_size"] = len(
+            self.compressed_content)
         self.loghandler.create_compression_entry()
+
 
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")

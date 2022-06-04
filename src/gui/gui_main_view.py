@@ -106,8 +106,8 @@ class MainView:
         button_compress_all.grid(
             row=5,
             column=0,
-            padx= 10, 
-            pady = 0
+            padx=10,
+            pady=0
         )
 
     def compress_all(self):

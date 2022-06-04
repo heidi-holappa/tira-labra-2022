@@ -170,7 +170,7 @@ class CompressionView:
             column=1,
             pady=20
         )
-    
+
     def _construct_log_frame(self):
         analysis_header = ttk.Label(
             master=self._analysis_frame,
@@ -193,7 +193,6 @@ class CompressionView:
         textfield.insert(1.0, log_content)
         textfield["state"] = "normal"
 
-   
     def _handle_compression(self):
         """An initial method for handling compression.
 
