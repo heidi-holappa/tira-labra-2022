@@ -163,8 +163,7 @@ class LempelZiv77:
             self.content[current_index:buffer_end_index])
         return result
 
-    # NOT CURRENTLY USED, REMOVE IF NOT NEEDED
-
+    # TODO: NOT CURRENTLY USED, REMOVE IF NOT NEEDED
     def find_longest_match(self, current_index: int, window: str, buffer: str) -> tuple:
         """A method to find the longest match in the sliding window
 
@@ -195,7 +194,7 @@ class LempelZiv77:
             longest = (0, 1, ord(self.content[current_index]))
         return longest
 
-    # CURRENTLY DEACTIVATED, REMOVE IF NOT NEEDED ANYMORE
+    # TODO: CURRENTLY DEACTIVATED, REMOVE IF NOT NEEDED ANYMORE
     def repeating_length_recursion(self, window: str, string_buffer: str):
         """A recursion that finds the total length of the string match.
 
@@ -224,12 +223,12 @@ class LempelZiv77:
         """An iterative method to find the longest string match in a sliding window.
 
         Args:
-            window (str): sliding window from which to search for matches. 
+            window (str): sliding window from which to search for matches.
             stringbuffer (str): lookahead buffer for which the longest match is searched
             for
 
         Returns:
-            tuple: offset, match length and character, if no match is found. 
+            tuple: offset, match length and character, if no match is found.
         """
         len_window = len(window)
         window = window + stringbuffer
@@ -288,7 +287,6 @@ class LempelZiv77:
                 variable_m = self.compressed_content_as_list[i][1]
                 offset = self.compressed_content_as_list[i][0]
                 for _ in range(variable_m):
-                    # print(offset, len(uncompressed_string), len(self.compressed_content_as_list), i,  self.compressed_content_as_list[i])
                     uncompressed_string += uncompressed_string[-offset]
         self.content = uncompressed_string
 
@@ -307,7 +305,6 @@ class LempelZiv77:
 
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")
-    lz77.content = "ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
+    lz77.content ="ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
     lz77.compress_content()
     lz77.lempel_ziv_uncompress()
-    # print(lz77.compressed_content)

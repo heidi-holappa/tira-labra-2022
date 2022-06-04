@@ -200,7 +200,7 @@ class HuffmanCoding:
     def write_compressed_file(self, filename, content):
         """Converts content into a bytearray and calls an instance
         of FileManagement from Service package to store content as
-        bytes. 
+        bytes.
         """
         content_as_integers = []
         for i in range(0, len(content), 8):
@@ -254,13 +254,14 @@ class HuffmanCoding:
         self.root_node = node
         self.decompress_huffman_tree(self.root_node, tree, characters)
 
-    # TODO: At the moment a copy of a string object is created with each recursive step. Consider using pointers more efficiency.
+    # TODO: At the moment a copy of a string object is created with each recursive step.
+    # TODO: Consider using pointers more efficiency.
     def decompress_huffman_tree(self, node, tree, characters):
         """A recursive method that handles the decompression of the Huffman tree. Logic
         is as follows:
         1) If the next character is '0', insert child nodes and traverse left and right
         2) If the next character is '1', the current node is a leaf node. Insert a character
-        and return indexes of next node/vertice and next character. 
+        and return indexes of next node/vertice and next character.
 
         Args:
             node (HuffmanNode): Node currently under inspection
@@ -367,7 +368,7 @@ class HuffmanCoding:
         return str_result, str_travel_path
 
     def preorder_traversal(self, node, result: list, travel_path: list):
-        """A recursive method that travels the tree in pre-order. 
+        """A recursive method that travels the tree in pre-order.
 
         Args:
             node (HuffmanNode): Node currently under inspection

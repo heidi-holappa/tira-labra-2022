@@ -1,8 +1,7 @@
+import os
 from entities.huffman import HuffmanCoding
 from entities.lempelziv77 import LempelZiv77
 from config import DEFAULT_DATA_PATH
-import os
-
 
 class CompressionManagement:
 

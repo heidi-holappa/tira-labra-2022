@@ -4,12 +4,12 @@ from config import DEFAULT_DATA_PATH
 
 
 class LogHandler:
-    """A class to handle creating log entries. 
+    """A class to handle creating log entries.
     """
 
     def __init__(self) -> None:
         """Constructor for the class. Uses the default data path defined
-        in the .env file. 
+        in the .env file.
         """
         self.filename = os.path.join(DEFAULT_DATA_PATH, "compression.log")
         self.logdata = {
@@ -39,6 +39,7 @@ class LogHandler:
             with open(self.filename, "a", encoding="utf-8") as file:
                 file.close()
 
+        # TODO: REFACTOR. CREATE CONTENT FIRST, THEN JUST SINGLE WRITE.
         with open(self.filename, "r+", encoding="utf-8") as file:
             content = file.read()
             file.seek(0)
@@ -69,8 +70,9 @@ class LogHandler:
             file.write(content)
             file.write("--- END OF ENTRY ---\n")
 
+    # TODO: REFACTOR. CREATE CONTENT FIRST, THEN JUST SINGLE WRITE.
     def create_uncompression_entry(self, additional_content: str = "") -> None:
-        """Writes log data for uncompression event. 
+        """Writes log data for uncompression event.
 
         Args:
             additional_content (str, optional): Optional additional information. Defaults to "".
