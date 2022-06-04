@@ -241,7 +241,6 @@ class HuffmanCoding:
         for byte in byte_data:
             compressed_content += str(bin(byte)[2:].zfill(8))
         self.loghandler.logdata["compressed_size"] = len(compressed_content)
-        
 
         tree_length = int(compressed_content[:12], 2)
         extra_bits = int(compressed_content[12:16], 2)
@@ -296,7 +295,7 @@ class HuffmanCoding:
             node.character = int(characters[:8], 2)
             return tree, characters[8:]
 
-    def analyze_compression(self, filepath = DEFAULT_DATA_PATH):
+    def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
 
@@ -306,8 +305,8 @@ class HuffmanCoding:
         self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
         self.loghandler.logdata["compressed_size"] = len(self.compressed)
         self.loghandler.create_compression_entry(filepath)
-    
-    def analyze_uncompression(self, filepath = DEFAULT_DATA_PATH):
+
+    def analyze_uncompression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on uncompression.
         Note that compressed content length is included in the data in the method
         that fetches content from a compressed file.
@@ -316,7 +315,8 @@ class HuffmanCoding:
         self.loghandler.logdata["compressed_filename"] = self.compressed_filename
         self.loghandler.logdata["uncompressed_filename"] = self.uncompressed_filename
         self.loghandler.logdata["compression_method"] = "Huffman coding"
-        self.loghandler.logdata["uncompressed_size"] = len(self.uncompressed) * 8
+        self.loghandler.logdata["uncompressed_size"] = len(
+            self.uncompressed) * 8
         self.loghandler.create_uncompression_entry(filepath)
 
     def execute_compression(self):

@@ -106,7 +106,8 @@ class TestLempelZivCompression(unittest.TestCase):
         self.assertEqual(True, content_matches)
 
     def test_compressed_data_matches_with_an_existing_file(self):
-        filename = os.path.join(DEFAULT_TEST_DATA_PATH, "natural-language-document-15-paragraphs.txt")
+        filename = os.path.join(DEFAULT_TEST_DATA_PATH,
+                                "natural-language-document-15-paragraphs.txt")
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
         self.create_test_file(content)

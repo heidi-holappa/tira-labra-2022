@@ -3,6 +3,7 @@ from services.filemanagement import default_file_manager
 from services.loghandler import LogHandler
 from config import DEFAULT_DATA_PATH
 
+
 class NoCompressedContentError(Exception):
     pass
 
@@ -84,7 +85,7 @@ class LempelZiv77:
         fetch_endtime = time.time()
         fetch_total_time = fetch_endtime - fetch_starttime
         self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
-        
+
         compress_starttime = time.time()
         self.compress_content()
         compress_endtime = time.time()
@@ -111,7 +112,7 @@ class LempelZiv77:
         self.lempel_ziv_handle_uncompression()
         compress_endtime = time.time()
         compress_total_time = compress_endtime - compress_starttime
-        self.loghandler.logdata["compression_time"] = f"{compress_total_time:.2f}"        
+        self.loghandler.logdata["compression_time"] = f"{compress_total_time:.2f}"
 
         write_starttime = time.time()
         self.write_txt_content_into_a_file(
@@ -307,7 +308,7 @@ class LempelZiv77:
                     uncompressed_string += uncompressed_string[-offset]
         self.content = uncompressed_string
 
-    def analyze_compression(self, filepath = DEFAULT_DATA_PATH):
+    def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
 
@@ -319,7 +320,7 @@ class LempelZiv77:
             self.compressed_content)
         self.loghandler.create_compression_entry(filepath)
 
-    def analyze_uncompression(self, filepath = DEFAULT_DATA_PATH):
+    def analyze_uncompression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
 
@@ -332,9 +333,8 @@ class LempelZiv77:
         self.loghandler.create_uncompression_entry(filepath)
 
 
-
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")
-    lz77.content ="ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
+    lz77.content = "ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
     lz77.compress_content()
     lz77.lempel_ziv_uncompress()

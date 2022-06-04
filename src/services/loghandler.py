@@ -27,7 +27,7 @@ class LogHandler:
         }
 
         self.init_log_file()
-    
+
     def init_log_file(self):
         file_and_path = os.path.join(DEFAULT_DATA_PATH, self.filename)
         if os.path.exists(file_and_path):
@@ -35,16 +35,17 @@ class LogHandler:
             os.remove(file_and_path)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.close()
-    
+
     def archive_log_content(self, filename):
         content = ""
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
-        archive_file_and_path = os.path.join(DEFAULT_DATA_PATH, self.archive_filename)
+        archive_file_and_path = os.path.join(
+            DEFAULT_DATA_PATH, self.archive_filename)
         with open(archive_file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
 
-    def create_compression_entry(self, filepath = DEFAULT_DATA_PATH, additional_content: str = "") -> None:
+    def create_compression_entry(self, filepath=DEFAULT_DATA_PATH, additional_content: str = "") -> None:
         """Creates a log entry with the given values. Basic information is
         collected from both compressin methods (Huffman coding, LZ77). Additional
         log-content can also be given.
@@ -89,7 +90,7 @@ class LogHandler:
             file.write("------ END OF ENTRY ------\n\n")
 
     # TODO: REFACTOR. CREATE CONTENT FIRST, THEN JUST SINGLE WRITE.
-    def create_uncompression_entry(self, filepath = DEFAULT_DATA_PATH, additional_content: str = "") -> None:
+    def create_uncompression_entry(self, filepath=DEFAULT_DATA_PATH, additional_content: str = "") -> None:
         """Writes log data for uncompression event.
 
         Args:
@@ -128,4 +129,3 @@ class LogHandler:
             if additional_content:
                 file.write(additional_content)
             file.write("------ END OF ENTRY ------\n\n")
-            

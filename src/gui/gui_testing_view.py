@@ -97,7 +97,7 @@ class TestingView:
 
         textfield.insert(1.0, log_content)
         textfield["state"] = "normal"
-    
+
     def construct_buttons_frame(self):
         button_generate_english = ttk.Button(
             master=self._buttons_frame,
@@ -156,33 +156,34 @@ class TestingView:
         for widgets in frame.winfo_children():
             widgets.destroy()
 
-
     def _generate_paragraphs_of_ascii(self):
-        paragraphs = simpledialog.askinteger('Paragraphs', "How many paragraphs do you want to create?")
+        paragraphs = simpledialog.askinteger(
+            'Paragraphs', "How many paragraphs do you want to create?")
         if not paragraphs or paragraphs < 0 or paragraphs > 10000:
             self._show_error("Please select a value between 0 and 10,000")
             return
-        self.testhandler.create_document_with_random_printable_ascii(paragraphs)
+        self.testhandler.create_document_with_random_printable_ascii(
+            paragraphs)
 
     def _generate_paragraphs_of_english(self):
-        paragraphs = simpledialog.askinteger('Paragraphs', "How many paragraphs do you want to create?")
+        paragraphs = simpledialog.askinteger(
+            'Paragraphs', "How many paragraphs do you want to create?")
         if not paragraphs or paragraphs < 0 or paragraphs > 10000:
             self._show_error("Please select a value between 0 and 10,000")
             return
         self.testhandler.create_document_with_natural_language(paragraphs)
-    
+
     def _run_extensive_tests(self):
-        max_characters = simpledialog.askinteger("Document length", "Max character length for documents to be included.")
+        max_characters = simpledialog.askinteger(
+            "Document length", "Max character length for documents to be included.")
         if not max_characters or max_characters < 0:
             self._show_error("Please type in a positive integer value.")
             return
         self.testhandler.activate_extensive_tests(max_characters)
         self._update_log()
-    
+
     def _show_error(self, content=""):
         messagebox.showinfo(
             title="Error!",
             message=content,
             icon=messagebox.ERROR)
-
-

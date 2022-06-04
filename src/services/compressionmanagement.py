@@ -3,12 +3,13 @@ from entities.huffman import HuffmanCoding
 from entities.lempelziv77 import LempelZiv77
 from config import DEFAULT_DATA_PATH
 
+
 class CompressionManagement:
 
     def __init__(self):
         self.last_analysis = {}
 
-    def initial_huffman_compression(self, filename: str, filepath = DEFAULT_DATA_PATH):
+    def initial_huffman_compression(self, filename: str, filepath=DEFAULT_DATA_PATH):
         """A method for testing Huffman coding.
 
         Gets a filename as a string to compresses.
@@ -26,7 +27,7 @@ class CompressionManagement:
         huffman_compressor.analyze_compression(filepath)
         # self.last_analysis = huffman_compressor.last_analysis
 
-    def initial_huffman_uncompression(self, filename: str, filepath = DEFAULT_DATA_PATH):
+    def initial_huffman_uncompression(self, filename: str, filepath=DEFAULT_DATA_PATH):
         """An initial method for testing Huffman decoding.
 
         Gets a filename as a string from where to fetch content to uncompress.
@@ -42,7 +43,7 @@ class CompressionManagement:
         huffman_uncompressor.analyze_uncompression(filepath)
         # huffman_uncompressor.huffman_analyze(analysis_filename)
 
-    def lempel_ziv_compress(self, filename: str, filepath = DEFAULT_DATA_PATH):
+    def lempel_ziv_compress(self, filename: str, filepath=DEFAULT_DATA_PATH):
         """A method for testing Lempel-Ziv 77 compression.
 
         Gets a string of content and compresses it.
@@ -59,7 +60,7 @@ class CompressionManagement:
         # lempel_ziv_compressor.lempel_ziv_analyze(analysis_filename)
         # self.last_analysis = lempel_ziv.last_analysis
 
-    def lempel_ziv_uncompress(self, filename: str, filepath = DEFAULT_DATA_PATH):
+    def lempel_ziv_uncompress(self, filename: str, filepath=DEFAULT_DATA_PATH):
         uncompressed_filename = filename[:-3] + "_uncompressed.txt"
         lempel_ziv_uncompressor = LempelZiv77(uncompressed_filename, filename)
         lempel_ziv_uncompressor.lempel_ziv_activate_uncompression()

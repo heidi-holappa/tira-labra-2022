@@ -51,7 +51,7 @@ class FileManagement:
         with open(filename, "wb") as compressed_file:
             compressed_file.write(content)
 
-    def get_log_content(self, filepath = DEFAULT_DATA_PATH):
+    def get_log_content(self, filepath=DEFAULT_DATA_PATH):
         filename = os.path.join(filepath, "compression.log")
         content = ""
         if os.path.exists(filename):
