@@ -106,8 +106,6 @@ class HuffmanCoding:
         """
 
         huffman_tree, characters = self.storable_huffman_tree(self.root_node)
-        # print(huffman_tree)
-        # print(characters)
         tree_length = len(huffman_tree)
         characters_length = len(characters)
         n_of_characters = int(characters_length / 8)
@@ -129,16 +127,6 @@ class HuffmanCoding:
         self.compressed += characters
         self.compressed += encoded_content
         self.compressed += "0" * extra_bits_needed
-        # with open("huffman_compression.log", "a") as logfile:
-        #     logfile.write("----BEGIN LOG ENTRY ----\n")
-        #     logfile.write("----ENCODING----\n")
-        #     logfile.write("Filename: " + self.uncompressed_filename + "\n")
-        #     logfile.write("Huffman tree:\n" + huffman_tree + "\n")
-        #     logfile.write("Characters:\n" + characters + "\n")
-        #     logfile.write("Encoded content:\n" + encoded_content + "\n")
-        #     logfile.write("Extra bits: " + str(extra_bits_needed) + "\n")
-        #     logfile.write("---- END OF LOG ENTRY ----\n\n")
-        # print(bool(len(self.compressed) % 8 == 0))
 
     def storable_huffman_tree(self,
                               node,
@@ -184,10 +172,7 @@ class HuffmanCoding:
         self.uncompressed = ""
         node = self.root_node
         i = 0
-        # print("begin decode")
-        # print(self.compressed)
-        # print("left child: ", bool(node.left_child))
-        # print("right child: ", bool(node.right_child))
+    
         stdout = []
         travelpath = ""
         while i < len(self.compressed):
@@ -211,7 +196,7 @@ class HuffmanCoding:
                 stdout.append(node.character)
                 node = self.root_node
         self.content = self.uncompressed
-        # print(stdout, travelpath)
+        
 
     def write_compressed_file(self, filename, content):
         """Converts content into a bytearray and calls an instance
@@ -223,12 +208,6 @@ class HuffmanCoding:
             content_as_integers.append(int(content[i:i+8], 2))
         byte_array = bytearray(content_as_integers)
         self.file_manager.create_binary_file(filename, byte_array)
-        
-        
-        # with open(filename, "w", encoding="utf-8") as compressed_file:
-        #     # for key, value in self.frequencies.items():
-        #     #     compressed_file.write(f"{str(key)};{value}\n")
-        #     compressed_file.write(content)
 
     def write_uncompressed_file(self, filename, content):
         """This method writes the compressed data into a file.
@@ -243,25 +222,8 @@ class HuffmanCoding:
         """Calls a method from an instant of FileManager object from service package
         to fetch the content of a selected file.
         """
-        # with open(self.uncompressed_filename, encoding="utf-8") as source_content:
-        #     self.content = source_content.read()
         self.content = self.file_manager.fetch_uncompressed_content(
             self.uncompressed_filename)
-
-    # THIS METHOD IS OBSOLETE: DELETE WHEN CERTAIN THAT CAN BE DELETED
-    def fetch_compressed_content(self):
-        """An old method. Will be erased once refactoring is done.
-        """
-        self.frequencies = {}
-        with open(self.compressed_filename, encoding="utf-8") as source_content:
-            for row in source_content:
-                if ";" in row:
-                    row = row.replace("\n", "")
-                    row_values = row.split(";")
-                    self.frequencies[int(row_values[0])] = int(row_values[1])
-                else:
-                    self.compressed = row
-                    print(row)
 
     def new_fetch_compressed_content(self):
         """Method responsible for processing the stored content. Logic is as follows:
@@ -277,43 +239,34 @@ class HuffmanCoding:
         byte_data = self.file_manager.fetch_compressed_content(self.compressed_filename)
         for byte in byte_data:
             compressed_content += str(bin(byte)[2:].zfill(8))
-        # with open(self.compressed_filename, encoding="utf-8") as source_content:
-        #     compressed_content = source_content.read()
+
         tree_length = int(compressed_content[:12], 2)
         extra_bits = int(compressed_content[12:16], 2)
-        # print("extra bits: ", extra_bits)
         n_of_characters = int(compressed_content[16:24], 2)
         tree_end_index = 24 + tree_length
         characters_end_index = 24 + tree_length + 8 * n_of_characters
         tree = compressed_content[24: tree_end_index]
         characters = compressed_content[tree_end_index: characters_end_index]
 
-        # for i in range(0, len(characters), 8):
-        # print(chr(int(characters[i: i+8], 2)))
-
         self.compressed = compressed_content[characters_end_index: -extra_bits]
-        # print(tree)
-        # print(characters)
+        
         node = HuffmanNode(0, 0)
         self.root_node = node
         self.decompress_huffman_tree(self.root_node, tree, characters)
-        # print("Storable Huffman tree check\n", self.storable_huffman_tree(self.root_node))
 
-    
-    # UPDATE DOCSTRING
+    # TODO: At the moment a copy of string is created with each recursion step. 
+    # Consider using pointers more efficiency.
     def decompress_huffman_tree(self, node, tree, characters):
         """A recursive method that handles the decompression of the Huffman tree. Logic
         is as follows:
         1) If the next character is '0', insert child nodes and traverse left and right
         2) If the next character is '1', the current node is a leaf node. Insert a character
-        and return indexes of next node/vertice and next character
+        and return indexes of next node/vertice and next character. 
 
         Args:
             node (HuffmanNode): Node currently under inspection
             tree (str): the structure of the tree
-            tree_idx (int): index of next node/vertice
             characters (str): string of characters as string of binary-type content
-            char_idx (int): index of next character
 
         Returns:
             int, int: indexes of tree and character location
@@ -322,9 +275,6 @@ class HuffmanCoding:
             character = int(characters[:8], 2)
             node.character = character
             return "", ""
-            # print("last character: ", chr(character))
-            # l_node = HuffmanNode(character, 0)
-            # node.right_child = l_node
         if tree[0] == "0":
             left_child = HuffmanNode(0, 0)
             node.left_child = left_child
@@ -342,7 +292,6 @@ class HuffmanCoding:
         if len(characters):
             node.character = int(characters[:8], 2)
             return tree, characters[8:]
-        # print(chr(int(characters[char_idx: char_idx + 8], 2)))
 
     def analyze_compression(self):
         """An initial method for creating analysis data on compression.
@@ -353,7 +302,7 @@ class HuffmanCoding:
         self.loghandler.logdata["compression_method"] = "Huffman coding"
         self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
         self.loghandler.logdata["compressed_size"] = len(self.compressed)
-        self.loghandler.create_entry()
+        self.loghandler.create_compression_entry()
 
 
     def execute_compression(self):
@@ -386,8 +335,6 @@ class HuffmanCoding:
             if len(value) > longest_value:
                 longest_value = len(value)
 
-        # result, travel_path = self.activate_preorder_traversal()
-        # print(result, travel_path)
 
     def execute_uncompression(self):
         """This method handles the uncompression of a given content
@@ -397,17 +344,21 @@ class HuffmanCoding:
         Step 3: Decode content
         Step 4: Write content to file
         """
-        # self.fetch_compressed_content()
+        
         self.new_fetch_compressed_content()
-        # self.build_huffman_tree()
+        
         self.huffman_decode()
         self.write_uncompressed_file(
             self.uncompressed_filename, self.uncompressed)
-        # print(self.huffman_coded_values)
-
-        # self.activate_preorder_traversal()
+        
 
     def activate_preorder_traversal(self):
+        """A method used by automated tests to verify that the Huffman tree
+        is correctly re-created
+
+        Returns:
+            str, str: returns character order and travel path
+        """
         result = []
         travel_path = []
         self.preorder_traversal(self.root_node, result, travel_path)
@@ -420,6 +371,13 @@ class HuffmanCoding:
         return str_result, str_travel_path
 
     def preorder_traversal(self, node, result: list, travel_path: list):
+        """A recursive method that travels the tree in pre-order. 
+
+        Args:
+            node (HuffmanNode): Node currently under inspection
+            result (list): a reference to list collecting return values
+            travel_path (list): a reference to a list collecting travel path values.
+        """
         if not node.left_child and not node.right_child:
             result.append(chr(node.character))
         if node.left_child:
