@@ -211,7 +211,7 @@ class HuffmanCoding:
                 stdout.append(node.character)
                 node = self.root_node
         self.content = self.uncompressed
-        print(stdout, travelpath)
+        # print(stdout, travelpath)
 
     def write_compressed_file(self, filename, content):
         """Converts content into a bytearray and calls an instance
@@ -298,16 +298,6 @@ class HuffmanCoding:
         self.root_node = node
         self.decompress_huffman_tree(self.root_node, tree, characters)
         # print("Storable Huffman tree check\n", self.storable_huffman_tree(self.root_node))
-
-        # with open("huffman_compression.log", "a") as logfile:
-        #     logfile.write("----BEGIN LOG ENTRY ----\n")
-        #     logfile.write("----DECODING----\n")
-        #     logfile.write("Filename: " + self.uncompressed_filename + "\n")
-        #     logfile.write("Huffman tree:\n" + tree + "\n")
-        #     logfile.write("Characters:\n" + characters + "\n")
-        #     logfile.write("Encoded content:\n" + self.compressed + "\n")
-        #     logfile.write("Extra bits: " + str(extra_bits) + "\n")
-        #     logfile.write("---- END OF LOG ENTRY ----\n\n")
 
     
     # UPDATE DOCSTRING
@@ -396,8 +386,8 @@ class HuffmanCoding:
             if len(value) > longest_value:
                 longest_value = len(value)
 
-        result, travel_path = self.activate_preorder_traversal()
-        print(result, travel_path)
+        # result, travel_path = self.activate_preorder_traversal()
+        # print(result, travel_path)
 
     def execute_uncompression(self):
         """This method handles the uncompression of a given content
