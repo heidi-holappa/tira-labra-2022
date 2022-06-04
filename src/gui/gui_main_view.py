@@ -75,14 +75,6 @@ class MainView:
             style="Custom.TButton"
         )
 
-        button_compress_all = ttk.Button(
-            master=self._frame,
-            text="compress all txt-files in default directory",
-            command=self.compress_all,
-            style="Custom.TButton"
-
-        )
-
         button_testing_view = ttk.Button(
             master=self._frame,
             text="Run extensive tests",
@@ -101,13 +93,6 @@ class MainView:
             column=0,
             padx=10,
             pady=10
-        )
-
-        button_compress_all.grid(
-            row=5,
-            column=0,
-            padx=10,
-            pady=0
         )
 
     def compress_all(self):

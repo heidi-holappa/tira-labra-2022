@@ -193,10 +193,10 @@ class CompressionView:
         textfield.insert(1.0, log_content)
         textfield["state"] = "normal"
 
+    # TODO: Consider improving validation
     def _handle_compression(self):
         """An initial method for handling compression.
 
-        Currently only Huffman coding is available. 
         Only validations at the moment are that file is chosen and file extension matches.
         """
         if not self.filename:
@@ -254,6 +254,7 @@ class CompressionView:
             self.compression_management.lempel_ziv_uncompress(
                 self.filename
             )
+        self._update_log()
         self._compression_status_notification(
             "File uncompressed successfully!")
 
