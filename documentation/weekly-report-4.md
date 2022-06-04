@@ -3,16 +3,35 @@
 ## Quick recap on progress
 - Data compressed with both algorithms is now stored as bytes. 
 - Lempel-Ziv 77 compression is now more efficient. Recursive window search replaced with an iterative solution.
+- Learned that algorithms only work correctly on printable ASCII characters. Current understanding is that this is due to data manipulation when writing data to files. Perhaps considering the scope of this project restricting scope to printable ASCII-characters is justifiable? 
+- New tests now test alogirthms on larger files
+- Optimization issues remain. Compressing a file with million characters on LZ77 takes 50 minutes on my personal laptop at the moment.  
 
 
 ## What have I done this week?
+At this time data can be compressed and uncompressed with both algorithms. Compressed data is written as bytes into a compressed file. Logging has been improved and now both compression and uncompression produce log information. Logging also includes assessment on time required for different stages of compression/uncompression. 
+
+I have expanded testing and started building a view for more extensive testing. The idea is that the user can create test data with certain parameters and then run tests. 
 
 
 ## How has the application progressed?
+- Data now stored as bytes
+- Tests expanded
+- Logging improved
 
 ## What did I learn during this week / today?
+I have gotten a better understanding on the restrictions of my project. I learned that my application only works properly on printable ASCII-characters: 
+```
+'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+```
+
+currently I am considering whether it would be justifiable to limit the scope of this project to handling compression on files containing only these characters. My initial thoughts are that these characters provide enough variety to analyze the algorithms in a versatile way. 
+
+From my counseling session with the course assistant I got more clarity on how to progress the project in the upcoming weeks and on what to focus on with the rest of my time with the course. 
 
 ## What remained unclear or caused difficulties? 
+- Can I limit the scope to include just printable ASCII-characters?
+- Suggestions on how to optimize especially the LZ77 algorithm (while still respecting the original design of the algorithm) would be very welcome. 
 
 ## Initial analysis on time complexity
 
@@ -27,8 +46,12 @@ The huffman coding consists of different steps that have different time complexi
 - 
 
 ## Pylint and Pytest - status update
+Some Pylint issues remain open. These will be addressed before the end of the course. 
 
 ## Next steps
+- Optimize algorithms
+- Create more extensive tests
+- Write documentation
 
 ## Study hours for week #4
 
@@ -39,8 +62,10 @@ The huffman coding consists of different steps that have different time complexi
 | 31.5.2022 | Huffman coding now stores data as bytes | 1 |
 | 31.5.2022 | Refactor LZ77, create iterative loop for window | 1 |
 | 31.5.2022 | Create a new service package object to handle log/analysis data | 0,5 |
+| 1.6.2022 | Guidance consultation with the course assistant | 1 |
 | 2.6.2022 | Improve logging, create new tests | 1,5 |
 | 2.6.2022 | Learn that text-files downloaded from internet cause issues, investigate | 1,5 |
 | 2.6.2022 | Write more tests while investigating | 1 |
-| **total**| ---- | **9,5 ** |
-
+| 3.6.2022 | Clean code, address some pylint issues | 1 |
+| 3.6.2022 | Improve logging and analysis data | 1 |
+| **total**| ---- | **12,5 ** |
