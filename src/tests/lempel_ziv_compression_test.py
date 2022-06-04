@@ -121,7 +121,8 @@ class TestLempelZivCompression(unittest.TestCase):
                 content_matches = False
         self.assertEqual(True, content_matches)
     
-    def test_compressed_data_matches_with_a_longer_existing_file(self):
+    # Takes app 50 minutes
+    def compressed_data_matches_with_a_longer_existing_file(self):
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, "randon-printable-ascii-data.txt")
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()

@@ -4,6 +4,7 @@ import random
 import string
 from entities.huffman import HuffmanCoding
 from entities.huffman import HuffmanNode
+from config import DEFAULT_TEST_DATA_PATH
 
 
 class TestHuffmanCompression(unittest.TestCase):
@@ -117,6 +118,29 @@ class TestHuffmanCompression(unittest.TestCase):
                     print("content[i]", content[i], "uncompressed[i]: ",
                           self.huffman_coder.uncompressed[i], "i: ", i)
                     content_matches = False
+        self.assertEqual(True, content_matches)
+
+
+    def test_compressed_data_matches_with_a_longer_existing_file(self):
+        filename = os.path.join(DEFAULT_TEST_DATA_PATH, "randon-printable-ascii-data.txt")
+        with open(filename, "r", encoding="utf-8") as file:
+            content = file.read()
+        self.create_test_file(content)
+        self.huffman_coder.execute_compression()
+        content = self.huffman_coder.content
+        uncompressed_filename = self.filename[:-4] + "_uncompressed.txt"
+        self.huffman_coder.uncompressed_filename = uncompressed_filename
+        self.huffman_coder.execute_uncompression()
+        decoded_content = self.huffman_coder.uncompressed
+        content_matches = True
+        for i in range(len(content)):
+            if i >= len(decoded_content):
+                content_matches = False
+                break
+            if content[i] != decoded_content[i]:
+                # print(content_as_list[i], content_as_list_from_file[i])
+                content_matches = False
+        print(len(content), len(decoded_content))
         self.assertEqual(True, content_matches)
 
     def test_compressed_tree_is_correctly_created(self):
