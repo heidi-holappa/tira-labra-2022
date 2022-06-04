@@ -44,6 +44,7 @@ class GUI:
             self._root,
             self._handle_compression_view,
             self._handle_testing_view,
+            self.start
         )
 
         self._current_view.pack()

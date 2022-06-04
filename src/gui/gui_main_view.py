@@ -12,12 +12,14 @@ class MainView:
         frame: a variable for creating the Frame object
     """
 
-    def __init__(self, root, compression_view, testing_view):
+    def __init__(self, root, compression_view, testing_view, main_view):
         self._root = root
         self._compression_view = compression_view
         self._testing_view = testing_view
+        self._main_view = main_view
         self._frame = None
         self.compression_management = default_compression_management
+        
 
         self._initialize()
 
@@ -101,6 +103,6 @@ class MainView:
     def _create_menubar(self):
         """A method that calls for the construction of default menu bar.
         """
-        create_menu = GuiMenu(self._root)
+        create_menu = GuiMenu(self._root, self._main_view)
         menubar = create_menu.init_menu()
         self._root.config(menu=menubar)
