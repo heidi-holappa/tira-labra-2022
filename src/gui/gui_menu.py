@@ -6,7 +6,7 @@ class GuiMenu:
     """A class to configure and construct the menu for the GUI.
     """
 
-    def __init__(self, root, main_view):
+    def __init__(self, root, main_view, compression_view, testing_view):
         """Constructor for initializing an object of the class.
         Args:
             root (Tk): root component for constructing views
@@ -14,11 +14,15 @@ class GuiMenu:
 
         self._root = root
         self._main_view = main_view
+        self._compression_view = compression_view
+        self._testing_view = testing_view
 
     def init_menu(self):
         menubar = Menu(self._root)
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Main view", command=self._main_view)
+        filemenu.add_command(label="Compression view", command=self._compression_view)
+        filemenu.add_command(label="Extensive testing view", command=self._testing_view)
         filemenu.add_command(label="Exit", command=self.exit)
         menubar.add_cascade(label="File", menu=filemenu)
 

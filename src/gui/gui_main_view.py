@@ -103,6 +103,9 @@ class MainView:
     def _create_menubar(self):
         """A method that calls for the construction of default menu bar.
         """
-        create_menu = GuiMenu(self._root, self._main_view)
+        create_menu = GuiMenu(self._root,
+                            self._main_view,
+                            self._compression_view,
+                            self._testing_view)
         menubar = create_menu.init_menu()
         self._root.config(menu=menubar)
