@@ -6,8 +6,8 @@
 - Learned that algorithms only work correctly on printable ASCII characters. Current understanding is that this is due to data manipulation when writing data to files. Perhaps considering the scope of this project restricting scope to printable ASCII-characters is justifiable? 
 - New tests now test alogirthms on larger files
 - Optimization issues remain. Compressing a file with million characters on LZ77 takes 50 minutes on my personal laptop at the moment.  
-- Testing documentation updated
-- How-to-guide updated
+- [Testing documentation](testing-documentation.md) updated
+- [How-to-guide](how-to-guide.md) updated
 - Tested on University virtual machine that the project works. 
 
 
@@ -24,6 +24,7 @@ I am unsatisfied with the code quality at this time. Adding the initial version 
 - Automated tests expanded
 - Initial manually operated extended tests created. 
 - Logging improved
+- New GUI functionalities created
 
 ## What did I learn during this week / today?
 I have gotten a better understanding on the restrictions of my project. I learned that my application only works properly on printable ASCII-characters: 
