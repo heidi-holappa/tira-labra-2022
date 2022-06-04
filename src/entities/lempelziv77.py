@@ -301,7 +301,7 @@ class LempelZiv77:
         self.loghandler.logdata["compression_method"] = "Lempel-Ziv 77"
         self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
         self.loghandler.logdata["compressed_size"] = len(self.compressed_content)
-        self.loghandler.create_entry()
+        self.loghandler.create_compression_entry()
 
 if __name__ == "__main__":
     lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")
