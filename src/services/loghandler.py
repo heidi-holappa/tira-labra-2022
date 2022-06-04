@@ -11,7 +11,8 @@ class LogHandler:
         """Constructor for the class. Uses the default data path defined
         in the .env file.
         """
-        self.filename = os.path.join(DEFAULT_DATA_PATH, "compression.log")
+        self.filename = "compression.log"
+        self.archive_filename = "compression_archive.log"
         self.logdata = {
             "original_filename": "",
             "compressed_filename": "",
@@ -25,7 +26,25 @@ class LogHandler:
             "data_write_and_process_time": "",
         }
 
-    def create_compression_entry(self, additional_content: str = "") -> None:
+        self.init_log_file()
+    
+    def init_log_file(self):
+        file_and_path = os.path.join(DEFAULT_DATA_PATH, self.filename)
+        if os.path.exists(file_and_path):
+            self.archive_log_content(file_and_path)
+            os.remove(file_and_path)
+        with open(file_and_path, "a", encoding="utf-8") as file:
+            file.close()
+    
+    def archive_log_content(self, filename):
+        content = ""
+        with open(filename, "r", encoding="utf-8") as file:
+            content = file.read()
+        archive_file_and_path = os.path.join(DEFAULT_DATA_PATH, self.archive_filename)
+        with open(archive_file_and_path, "a", encoding="utf-8") as file:
+            file.write(content)
+
+    def create_compression_entry(self, filepath = DEFAULT_DATA_PATH, additional_content: str = "") -> None:
         """Creates a log entry with the given values. Basic information is
         collected from both compressin methods (Huffman coding, LZ77). Additional
         log-content can also be given.
@@ -35,17 +54,17 @@ class LogHandler:
             Defaults to "".
         """
 
-        if not os.path.exists(self.filename):
-            with open(self.filename, "a", encoding="utf-8") as file:
+        log_filename = os.path.join(filepath, self.filename)
+
+        if not os.path.exists(log_filename):
+            with open(log_filename, "a", encoding="utf-8") as file:
                 file.close()
 
         # TODO: REFACTOR. CREATE CONTENT FIRST, THEN JUST SINGLE WRITE.
-        with open(self.filename, "r+", encoding="utf-8") as file:
-            content = file.read()
-            file.seek(0)
+        with open(log_filename, "a", encoding="utf-8") as file:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
-            file.write("\n--- NEW ENTRY ---\n")
+            file.write("------ NEW ENTRY: COMPRESSING DATA ------\n")
             file.write(f"Log entry created: {log_time_strf}\n")
             file.write(f"File accessed: {self.logdata['original_filename']}\n")
             file.write(
@@ -67,26 +86,25 @@ class LogHandler:
                 f"Time used for writing and processing data: {self.logdata['data_write_and_process_time']} seconds\n")
             if additional_content:
                 file.write(additional_content)
-            file.write(content)
-            file.write("--- END OF ENTRY ---\n")
+            file.write("------ END OF ENTRY ------\n\n")
 
     # TODO: REFACTOR. CREATE CONTENT FIRST, THEN JUST SINGLE WRITE.
-    def create_uncompression_entry(self, additional_content: str = "") -> None:
+    def create_uncompression_entry(self, filepath = DEFAULT_DATA_PATH, additional_content: str = "") -> None:
         """Writes log data for uncompression event.
 
         Args:
             additional_content (str, optional): Optional additional information. Defaults to "".
         """
-        if not os.path.exists(self.filename):
-            with open(self.filename, "a", encoding="utf-8") as file:
+        log_filename = os.path.join(filepath, self.filename)
+
+        if not os.path.exists(log_filename):
+            with open(log_filename, "a", encoding="utf-8") as file:
                 file.close()
 
-        with open(self.filename, "r+", encoding="utf-8") as file:
-            content = file.read()
-            file.seek(0)
+        with open(log_filename, "a", encoding="utf-8") as file:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
-            file.write("\n--- NEW ENTRY ---\n")
+            file.write("------ NEW ENTRY: UNCOMPRESSING DATA ------\n")
             file.write(f"Log entry created: {log_time_strf}\n")
             file.write(
                 f"File accessed: {self.logdata['compressed_filename']}\n")
@@ -109,5 +127,5 @@ class LogHandler:
                 f"Time used for writing and processing data: {self.logdata['data_write_and_process_time']} seconds\n")
             if additional_content:
                 file.write(additional_content)
-            file.write(content)
-            file.write("--- END OF ENTRY ---\n")
+            file.write("------ END OF ENTRY ------\n\n")
+            
