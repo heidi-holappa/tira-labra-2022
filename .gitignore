@@ -5,3 +5,4 @@ htmlcov
 sources
 data/*
 !data/test-material?.txt
+documentation/project-notes.md
