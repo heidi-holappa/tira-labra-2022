@@ -254,8 +254,7 @@ class HuffmanCoding:
         self.root_node = node
         self.decompress_huffman_tree(self.root_node, tree, characters)
 
-    # TODO: At the moment a copy of string is created with each recursion step.
-    # Consider using pointers more efficiency.
+    # TODO: At the moment a copy of a string object is created with each recursive step. Consider using pointers more efficiency.
     def decompress_huffman_tree(self, node, tree, characters):
         """A recursive method that handles the decompression of the Huffman tree. Logic
         is as follows:
