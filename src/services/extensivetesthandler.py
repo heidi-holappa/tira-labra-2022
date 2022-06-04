@@ -10,8 +10,13 @@ from config import DEFAULT_TEST_DATA_PATH
 
 
 class ExtensiveTestHandler:
+    """A class that handles the manually operated tests and creation of
+    random test material.
+    """
 
     def __init__(self) -> None:
+        """Constructor for the class.
+        """
         self.document_generator = DocumentGenerator()
         self.file_manager = default_file_manager
         self.compression_management = default_compression_management
@@ -20,6 +25,13 @@ class ExtensiveTestHandler:
             DEFAULT_TEST_DATA_PATH, "compression_archive.log")
 
     def create_document_with_natural_language(self, n: int = 100):
+        """Uses the libary Essential Generators to create random
+        natural content. The created data has to be manipulated as
+        it contains characters not suitable for the current algorithms.
+
+        Args:
+            n (int, optional): Number of paragraphs to be created. Defaults to 100.
+        """
         created_content = ""
         for i in range(n):
             created_content += self.document_generator.paragraph() + "\n\n"
@@ -39,6 +51,11 @@ class ExtensiveTestHandler:
         self.file_manager.create_txt_file(filename, document_content)
 
     def create_document_with_random_printable_ascii(self, n: int = 100):
+        """Creates paragraphs of random ascii-characters.
+
+        Args:
+            n (int, optional): Number of paragraps to create. Defaults to 100.
+        """
         document_content = ""
         characters = string.printable.split()[0]
         for i in range(n):
@@ -51,6 +68,13 @@ class ExtensiveTestHandler:
         self.file_manager.create_txt_file(filename, document_content)
 
     def activate_extensive_tests(self, max_characters: int = 100000):
+        """Activates extensive tests. Formats the log file and picks
+        up files that meet the given limitation for character length.
+        For each file that meets the limitation the tests are then run.
+
+        Args:
+            max_characters (int, optional): Maximum character length for files. Defaults to 100000.
+        """
         if os.path.exists(self.log_file):
             self.archive_log_content()
             os.remove(self.log_file)
@@ -76,6 +100,17 @@ class ExtensiveTestHandler:
         self.log_end(success, fail)
 
     def run_tests_on_file(self, filename: str, content: str):
+        """Runs tests on a given file. Compresses and uncompresses
+        data on both compression algorithms. Validates that uncompressed
+        data matches the original.
+
+        Args:
+            filename (str): File to be compressed
+            content (str): Content of the file
+
+        Returns:
+            bool: Status of test success. If tests fail, return False.
+        """
         filepath = DEFAULT_TEST_DATA_PATH
         tests_succeeded = True
         try:
@@ -116,6 +151,15 @@ class ExtensiveTestHandler:
         return tests_succeeded
 
     def validate_content_matches(self, original_content: str, uncompressed_content: str) -> bool:
+        """Validates that the uncompressed content matches the original
+
+        Args:
+            original_content (str): Original content
+            uncompressed_content (str): Content that has been compressed and then uncompressed.
+
+        Returns:
+            bool: True if validation is successful
+        """
         if len(original_content) != len(uncompressed_content):
             return False
         content_valid = True
@@ -125,6 +169,14 @@ class ExtensiveTestHandler:
         return content_valid
 
     def log_end(self, success, fail):
+        """Once tests are done, a summary of tests is written to the file.
+
+        Uses 'r+' to write to the start of the file.
+
+        Args:
+            success (int): number of successful tests
+            fail (int): number of failed tests
+        """
         with open(self.log_file, 'r+', encoding='utf-8') as file:
             content = file.read()
             file.seek(0)
@@ -139,6 +191,13 @@ class ExtensiveTestHandler:
             file.write("\n\n----- EXTENSIVE TEST SUMMARY ENDS ------\n\n")
 
     def log_entry(self, filename: str, error_content: str, phase: str) -> None:
+        """If a test fails a log entry is created. 
+
+        Args:
+            filename (str): File for which the failure happened.
+            error_content (str): Error content. 
+            phase (str): Clarification on which algorithm the error occured.
+        """
         content = "--------- ERROR NOTIFICATION ---------\n"
         content += f"Filename: {filename}\n"
         content += f"Failed task: {phase}\n"
@@ -148,6 +207,8 @@ class ExtensiveTestHandler:
             file.write(content)
 
     def archive_log_content(self):
+        """Archives log content of previous test run.
+        """
         content = ""
         with open(self.log_file, "r", encoding="utf-8") as file:
             content = file.read()

@@ -48,10 +48,24 @@ class FileManagement:
             uncompressed_file.write(content)
 
     def create_binary_file(self, filename: str, content: bytearray):
+        """Creates a file with binary content
+
+        Args:
+            filename (str): filename of the file to be created
+            content (bytearray): content to be written into the file
+        """
         with open(filename, "wb") as compressed_file:
             compressed_file.write(content)
 
     def get_log_content(self, filepath=DEFAULT_DATA_PATH):
+        """Fetches log content from the given file and path
+
+        Args:
+            filepath (_type_, optional): Directory for the log file. Defaults to DEFAULT_DATA_PATH.
+
+        Returns:
+            str: Returns log file content.
+        """
         filename = os.path.join(filepath, "compression.log")
         content = ""
         if os.path.exists(filename):
