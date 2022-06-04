@@ -24,31 +24,41 @@ From the menu a user can
 * File-menu
   * exit the application
 * Help-menu
-  * access help - documentation
+  * access help -documentation
   * view app information
 
 From the button `compress / uncompress data` user can access compression view. 
 
+From the button `Run extensive tests` user can access manually operated tests. 
+
 ## Data compression view
-At the moment data can be compressed and uncompressed with an initial Huffman coding algorithm. 
+Data can be compressed / uncompressed with Huffman coding algorithm and Lempel-Ziv 77 algorithm. 
 
-![Compression view](images/how-to-guide-compression-view-initial.png)
+![Compression view](images/how-to-guide-compression-view.png)
 
-Start by selecting either an uncompressed txt-file or compressed huf-file. Two example txt-files are included for more convenient testing experience.  
+Start by selecting either an uncompressed txt-file or compressed huf- or lz-file. Four example txt-files are included in the default data folder for more convenient testing experience.  
 
 ![File explorer](images/how-to-guide-compression-view-explorer.png)
 
-One compression / uncompression done an initial crude analysis of result will be showcased. 
+Once compression / uncompression is done, analysis of results will be showcased. 
 
 ![Analysis](images/how-to-guide-compression-view-action-taken.png)
 
-A compressed file is created into the same directory. At the moment the Huffman tree is unefficiently stored as integer-values (and a character separator ';'). This will change as the project progresses. 
+A compressed file is created into the same directory. Data is stored as bytes.  
 
-![An example of compressed file](images/how-to-guide-huffman-compressed.png)
+A log-file containing the showcased analysis on the compression is created. The most recent log-entry is by default in the file compression.log. The older entries are in file compression_archive.log.  
 
-Additionally a log-file containing initial analysis on the compression is created. The information is a bit more detailed than what is shown on the GUI view. Currently differences are minute however. In future there might be a general log-file that stores analysis data on all compressions done. 
 
-![Log-file](images/how-to-guide-huffman-analysis.png)
+![Log-archive](images/how-to-guide-log-file.png)
+
+## Extensive testing view
+An initial version of manually operatable tests are available. Currently user can create random data either in natural English lanaguage or as random printable ASCII-characters. User can then run extensive tests that go through all the files in the default test directory defined in the .env file. When launching the tests user is asked to define what is the maximum character length for the files to be included in testing. For instance, if user inputs 50000 (fifty thousand), files with 50,000 or less characters will be included in the tests.  
+
+![Extensive test view week 4](images/extensive-test-view-week-4.png)
+
+Analysis data shows a summary of the test results. It also sums the number of successful and failed tests.  
+
+![Extensive test summary](images/how-to-guide-extensive-test-summary.png)
 
 ## Configuration
 The application uses dotenv for configuration. User can change the default folder used in File Explorer. 
