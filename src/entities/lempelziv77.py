@@ -144,16 +144,16 @@ class LempelZiv77:
         Offset: 12 bits
         Length of match: 4 bits
         Next character: a byte"""
-        self.compressed_content = ""
+        content_as_bits = []
         for member in self.compressed_content_as_list:
             offset = member[0]
             match_length = member[1]
             next_character = member[2]
-            self.compressed_content += str(bin(offset)[2:].zfill(12))
-            self.compressed_content += str(bin(match_length)[2:].zfill(4))
+            content_as_bits.append(str(bin(offset)[2:].zfill(12)))
+            content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
             if offset == 0:
-                self.compressed_content += str(bin(next_character)
-                                               [2:].zfill(8))
+                content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
+        self.compressed_content = "".join(content_as_bits)
         for i in range(0, len(self.compressed_content), 8):
             value = ord(chr(int(self.compressed_content[i:i+8], 2)))
             self._bytearray_list.append(value)
@@ -288,6 +288,7 @@ class LempelZiv77:
                 i += 16
             self.compressed_content_as_list.append((offset, length, character))
 
+    # TODO: Remove commented lines when not needed
     def lempel_ziv_uncompress(self):
         """A method to handle the uncompression of the data.
 
@@ -297,15 +298,19 @@ class LempelZiv77:
         if len(self.compressed_content_as_list) == 0:
             raise NoCompressedContentError()
         variable_n = len(self.compressed_content_as_list)
-        uncompressed_string = ""
+        # uncompressed_string = ""
+        content = []
         for i in range(variable_n):
             if self.compressed_content_as_list[i][0] == 0:
-                uncompressed_string += self.compressed_content_as_list[i][2]
+                # uncompressed_string += self.compressed_content_as_list[i][2]
+                content.append(self.compressed_content_as_list[i][2])
             else:
                 variable_m = self.compressed_content_as_list[i][1]
                 offset = self.compressed_content_as_list[i][0]
                 for _ in range(variable_m):
-                    uncompressed_string += uncompressed_string[-offset]
+                    # uncompressed_string += uncompressed_string[-offset]
+                    content.append(content[-offset])
+        uncompressed_string = "".join(content)
         self.content = uncompressed_string
 
     def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
