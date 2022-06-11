@@ -75,6 +75,6 @@ In addition following characters can be handled:
 [20] Computerphile: [How Huffman Trees Work](https://youtu.be/umTbivyJoiI)
 [21] Google Developers: [Compressor Head - series](https://youtu.be/Eb7rzMxHyOk)
 
-**Python-specific**
-[22] [Source code for object str](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)
-[23] [An archived blog post by Frederik Lundh](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm) 
+**Python-specific**  
+[22] [Source code for object str](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)  
+[23] [An archived blog post by Frederik Lundh](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm)  
