@@ -63,36 +63,32 @@ class LogHandler:
             with open(log_filename, "a", encoding="utf-8") as file:
                 file.close()
 
-        # TODO: REFACTOR. CREATE CONTENT FIRST, THEN JUST SINGLE WRITE.
         with open(log_filename, "a", encoding="utf-8") as file:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
-            file.write("------ NEW ENTRY: COMPRESSING DATA ------\n")
-            file.write(f"Log entry created: {log_time_strf}\n")
-            file.write(f"File accessed: {self.logdata['original_filename']}\n")
-            file.write(
-                f"File created: {self.logdata['compressed_filename']}\n")
-            file.write(
-                f"Compression method: {self.logdata['compression_method']}\n")
-            file.write(
-                f"Uncompressed_size: {self.logdata['uncompressed_size']} bits\n")
-            file.write(
-                f"Compressed size: {self.logdata['compressed_size']} bits\n")
+            content = f"""------ NEW ENTRY: COMPRESSING DATA ------\n\
+                        Log entry created: {log_time_strf}\n\
+                        File accessed: {self.logdata['original_filename']}\n\
+                        File created: {self.logdata['compressed_filename']}\n\
+                        Compression method: {self.logdata['compression_method']}\n\
+                        Uncompressed_size: {self.logdata['uncompressed_size']} bits\n\
+                        Compressed size: {self.logdata['compressed_size']} bits\n"""
             compression_ratio = self.logdata['compressed_size'] / \
                 self.logdata['uncompressed_size'] * 100
-            file.write(f"Compression ratio: {compression_ratio:.2f}\n")
-            file.write(
-                f"Time used for fetching and processing data: {self.logdata['data_fetch_and_process_time']} seconds\n")
-            file.write(
-                f"Time used for compression: {self.logdata['compression_time']}\n")
-            file.write(
-                f"Time used for writing and processing data: {self.logdata['data_write_and_process_time']} seconds\n")
+            content += f"Compression ratio: {compression_ratio:.2f}\n"
+            content += f"""Time used for fetching and processing data: \
+                    {self.logdata['data_fetch_and_process_time']} seconds\n\
+                    Time used for compression: {self.logdata['compression_time']}\n\
+                    Time used for writing and processing data: \
+                    {self.logdata['data_write_and_process_time']} seconds\n"""
+            file.write(content)
             if additional_content:
                 file.write(additional_content)
             file.write("------ END OF ENTRY ------\n\n")
 
-    # TODO: REFACTOR. CREATE CONTENT FIRST, THEN JUST SINGLE WRITE.
-    def create_uncompression_entry(self, filepath=DEFAULT_DATA_PATH, additional_content: str = "") -> None:
+    def create_uncompression_entry(self,
+                                filepath=DEFAULT_DATA_PATH,
+                                additional_content: str = "") -> None:
         """Writes log data for uncompression event.
 
         Args:
@@ -107,27 +103,22 @@ class LogHandler:
         with open(log_filename, "a", encoding="utf-8") as file:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
-            file.write("------ NEW ENTRY: UNCOMPRESSING DATA ------\n")
-            file.write(f"Log entry created: {log_time_strf}\n")
-            file.write(
-                f"File accessed: {self.logdata['compressed_filename']}\n")
-            file.write(
-                f"File created: {self.logdata['uncompressed_filename']}\n")
-            file.write(
-                f"Compression method: {self.logdata['compression_method']}\n")
-            file.write(
-                f"Compressed size: {self.logdata['compressed_size']} bits\n")
-            file.write(
-                f"Uncompressed_size: {self.logdata['uncompressed_size']} bits\n")
+            content = f"""------ NEW ENTRY: UNCOMPRESSING DATA ------\n\
+                    Log entry created: {log_time_strf}\n"\
+                    File accessed: {self.logdata['compressed_filename']}\n\
+                    File created: {self.logdata['uncompressed_filename']}\n\
+                    Compression method: {self.logdata['compression_method']}\n\
+                    Compressed size: {self.logdata['compressed_size']} bits\n\
+                    Uncompressed_size: {self.logdata['uncompressed_size']} bits\n"""
             compression_ratio = self.logdata['compressed_size'] / \
                 self.logdata['uncompressed_size'] * 100
-            file.write(f"Compression ratio: {compression_ratio:.2f}\n")
-            file.write(
-                f"Time used for fetching and processing data: {self.logdata['data_fetch_and_process_time']} seconds\n")
-            file.write(
-                f"Time used for compression: {self.logdata['compression_time']} seconds\n")
-            file.write(
-                f"Time used for writing and processing data: {self.logdata['data_write_and_process_time']} seconds\n")
+            content += f"""Compression ratio: {compression_ratio:.2f}\n\
+                    Time used for fetching and processing data: \
+                    {self.logdata['data_fetch_and_process_time']} seconds\n\
+                    Time used for compression: {self.logdata['compression_time']} seconds\n\
+                    Time used for writing and processing data: \
+                    {self.logdata['data_write_and_process_time']} seconds\n"""
+            file.write(content)
             if additional_content:
                 file.write(additional_content)
             file.write("------ END OF ENTRY ------\n\n")

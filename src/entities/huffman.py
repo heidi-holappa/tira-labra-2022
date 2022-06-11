@@ -37,8 +37,8 @@ class HuffmanCoding:
         Note that the keys for the dictionary are ord-forms of characters, meaning
         their representation as is their order in ascii 256 code.
         """
-        for i in range(len(self.content)):
-            current = ord(self.content[i])
+        for i in enumerate(self.content):
+            current = ord(self.content[i[0]])
             if current not in self.frequencies:
                 self.frequencies[current] = 0
             self.frequencies[current] += 1
@@ -174,27 +174,20 @@ class HuffmanCoding:
         node = self.root_node
         i = 0
 
-        stdout = []
-        travelpath = ""
         while i < len(self.compressed):
             bit = self.compressed[i]
             if bit == "1" and node.right_child:
                 node = node.right_child
                 if i == len(self.compressed) - 1:
                     self.uncompressed += chr(node.character)
-                    stdout.append(node.character)
-                travelpath += "1"
                 i += 1
             elif bit == "0" and node.left_child:
                 node = node.left_child
                 if i == len(self.compressed) - 1:
                     self.uncompressed += chr(node.character)
-                    stdout.append(node.character)
-                travelpath += "0"
                 i += 1
             else:
                 self.uncompressed += chr(node.character)
-                stdout.append(node.character)
                 node = self.root_node
         self.content = self.uncompressed
 
@@ -257,8 +250,7 @@ class HuffmanCoding:
         self.decompress_huffman_tree(self.root_node, tree, characters)
 
     # TODO: At the moment a copy of a string object is created with each recursive step.
-    # TODO: Consider using pointers more efficiency.
-    def decompress_huffman_tree(self, node, tree, characters):
+    def decompress_huffman_tree(self, node, tree: str, characters: str):
         """A recursive method that handles the decompression of the Huffman tree. Logic
         is as follows:
         1) If the next character is '0', insert child nodes and traverse left and right
@@ -294,6 +286,7 @@ class HuffmanCoding:
         if len(characters):
             node.character = int(characters[:8], 2)
             return tree, characters[8:]
+        return None
 
     def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
@@ -330,10 +323,10 @@ class HuffmanCoding:
         Step 5: write content to file
         """
 
-        fetch_starttime = time.time()
+        starttime = time.time()
         self.fetch_uncompressed_content()
-        fetch_endtime = time.time()
-        fetch_total_time = fetch_endtime - fetch_starttime
+        endtime = time.time()
+        fetch_total_time = endtime - starttime
         self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
 
         compress_starttime = time.time()
@@ -352,12 +345,6 @@ class HuffmanCoding:
         write_total_time = write_endtime - write_starttime
         self.loghandler.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
-        # TODO: IS THIS NEEDED? IF NOT, REMOVE
-        # longest_value = 0
-        # for key, value in self.huffman_coded_values.items():
-        #     if len(value) > longest_value:
-        #         longest_value = len(value)
-
     def execute_uncompression(self):
         """This method handles the uncompression of a given content
 
@@ -367,10 +354,10 @@ class HuffmanCoding:
         Step 4: Write content to file
         """
 
-        fetch_starttime = time.time()
+        starttime = time.time()
         self.fetch_compressed_content()
-        fetch_endtime = time.time()
-        fetch_total_time = fetch_endtime - fetch_starttime
+        endtime = time.time()
+        fetch_total_time = endtime - starttime
         self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
 
         uncompress_starttime = time.time()
@@ -396,9 +383,10 @@ class HuffmanCoding:
         result = []
         travel_path = []
         self.preorder_traversal(self.root_node, result, travel_path)
-        str_result = ""
+        list_result = []
         for char in result:
-            str_result += char
+            list_result.append(char)
+        str_result = "".join(list_result)
         str_travel_path = ""
         for vertice in travel_path:
             str_travel_path += str(vertice)
