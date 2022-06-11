@@ -21,8 +21,10 @@ class GuiMenu:
         menubar = Menu(self._root)
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Main view", command=self._main_view)
-        filemenu.add_command(label="Compression view", command=self._compression_view)
-        filemenu.add_command(label="Extensive testing view", command=self._testing_view)
+        filemenu.add_command(label="Compression view",
+                             command=self._compression_view)
+        filemenu.add_command(label="Extensive testing view",
+                             command=self._testing_view)
         filemenu.add_command(label="Exit", command=self.exit)
         menubar.add_cascade(label="File", menu=filemenu)
 

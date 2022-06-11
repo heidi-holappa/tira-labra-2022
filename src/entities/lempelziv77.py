@@ -180,9 +180,9 @@ class LempelZiv77:
         #     self.content[window_start_index:window_end_index],
         #     self.content[current_index:buffer_end_index])
         result = self.find_matches_in_sliding_window_with_built_in_find(
-                    window_start_index,
-                    current_index,
-                    buffer_end_index)
+            window_start_index,
+            current_index,
+            buffer_end_index)
         return result
 
     # TODO: NOT CURRENTLY USED, REMOVE IF NOT NEEDED
@@ -328,12 +328,13 @@ class LempelZiv77:
         """
         longest = (0, 0, 0)
         for i in range(buffer_start_index+2, buffer_end_index):
-            found_index = self.content[window_start_index:buffer_start_index].find(self.content[buffer_start_index:i])
+            found_index = self.content[window_start_index:buffer_start_index].find(
+                self.content[buffer_start_index:i])
             if found_index != -1:
-                longest = (buffer_start_index - (window_start_index + found_index), i - buffer_start_index, 0)
+                longest = (buffer_start_index - (window_start_index +
+                           found_index), i - buffer_start_index, 0)
             else:
                 break
-                
 
             # if self.content[i_window] == self.content[buffer_start_index]:
             #     result = 1

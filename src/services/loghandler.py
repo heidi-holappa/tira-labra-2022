@@ -46,8 +46,8 @@ class LogHandler:
             file.write(content)
 
     def create_compression_entry(self,
-                                filepath=DEFAULT_DATA_PATH,
-                                additional_content: str = "") -> None:
+                                 filepath=DEFAULT_DATA_PATH,
+                                 additional_content: str = "") -> None:
         """Creates a log entry with the given values. Basic information is
         collected from both compressin methods (Huffman coding, LZ77). Additional
         log-content can also be given.
