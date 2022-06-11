@@ -5,8 +5,12 @@ from config import DEFAULT_DATA_PATH
 
 
 class NoCompressedContentError(Exception):
-    pass
+    """Gives an understandable error incase compression fails because
+    no content is given.
 
+    Args:
+        Exception: A general exeption message that is logged.
+    """
 
 class LempelZiv77:
 
@@ -169,159 +173,29 @@ class LempelZiv77:
             tuple: result of compression (offset, length, next character)
         """
         window_start_index = max(0, current_index - self.window_size)
-        window_end_index = current_index
         buffer_end_index = min(
             current_index + self.buffer_size, len(self.content))
-        # result = self.find_longest_match(
-        #     current_index,
-        #     self.content[window_start_index:window_end_index],
-        #     self.content[current_index:buffer_end_index])
-        # result = self.find_matches_in_sliding_window(
-        #     self.content[window_start_index:window_end_index],
-        #     self.content[current_index:buffer_end_index])
-        result = self.find_matches_in_sliding_window_with_built_in_find(
+        result = self.find_matches_in_sliding_window(
             window_start_index,
             current_index,
             buffer_end_index)
         return result
 
-    # TODO: NOT CURRENTLY USED, REMOVE IF NOT NEEDED
-    def find_longest_match(self, current_index: int, window: str, buffer: str) -> tuple:
-        """A method to find the longest match in the sliding window
-
-        Args:
-            current_index (int): Index from which the sliding window starts
-            window (str): content in the window area
-            buffer (str): content in the lookahead buffer
-
-        Returns:
-            tuple: returns the match (offset, length, next character)
-        """
-        longest = (0, 0, 0)
-        result = 0
-        i = 0
-        while i < len(window):
-            match_length = self.repeating_length_recursion(window[i:], buffer)
-            # match_length = self.find_matches_in_sliding_window(window[i:], buffer)
-            if match_length > result:
-                result = match_length
-                offset = len(window) - i
-                next_character = current_index + match_length
-                if next_character >= len(self.content):
-                    next_character = 0
-                longest = (offset, match_length, ord(
-                    self.content[next_character]))
-            i += 1
-        if result == 0:
-            longest = (0, 1, ord(self.content[current_index]))
-        return longest
-
-    # TODO: CURRENTLY DEACTIVATED, REMOVE IF NOT NEEDED ANYMORE
-    def repeating_length_recursion(self, window: str, string_buffer: str):
-        """A recursion that finds the total length of the string match.
-
-        This method was referenced from Tim Guite's tutorial:
-        https://github.com/TimGuite/lz77/blob/master/python/compress.py
-
-        Maximum recursion depth is the size of the lookahead buffer. Please
-        be aware of this when configuring the buffer value.
-
-        Args:
-            window (str): the window from which matches are looked for
-            string_buffer (str): the lookahead buffer for searching matches.
-
-        Returns:
-            int: lenght of match
-        """
-        if window == "" or string_buffer == "":
-            return 0
-
-        if window[0] == string_buffer[0]:
-            return 1 + self.repeating_length_recursion(
-                window[1:] + string_buffer[0], string_buffer[1:])
-        return 0
-
-    def find_matches_in_sliding_window(self, window: str, stringbuffer: str):
-        """An iterative method to find the longest string match in a sliding window.
-
-        Args:
-            window (str): sliding window from which to search for matches.
-            stringbuffer (str): lookahead buffer for which the longest match is searched
-            for
-
-        Returns:
-            tuple: offset, match length and character, if no match is found.
-        """
-        len_window = len(window)
-        window = window + stringbuffer
-        i_window = 0
-        i_buffer = 0
-        len_buffer = len(stringbuffer)
-        longest = (0, 0, 0)
-        for i_window in range(len_window):
-            result = 0
-            if window[i_window] == stringbuffer[i_buffer]:
-                result = 1
-                for i in range(1, len_buffer):
-                    if window[i_window + i] == stringbuffer[i]:
-                        result += 1
-                    else:
-                        break
-            if result > longest[1]:
-                longest = (len_window - i_window, result, 0)
-            if result == len_buffer - 1:
-                break
-        if longest[1] == 0:
-            longest = (0, 1, ord(stringbuffer[0]))
-        return longest
-
-    def find_matches_in_sliding_window_with_pointers(
+    def find_matches_in_sliding_window(
         self,
         window_start_index: int,
         buffer_start_index: int,
         buffer_end_index: int
     ):
         """An iterative method to find the longest string match in a sliding window.
+        Uses Python's built-in method str.find() to find longest match iteratively.
+        Based on documentation str.find() worst case time complexity is O(n*m),
+        on average time complexity is O(m).
 
         Args:
             window_start_index (int): index from which the sliding window begins.
             buffer_start_index (int): index from which the lookahead buffer start
-            buffer_end_index (int): index in which the buffer and the sliding windows end.            
-
-        Returns:
-            tuple: offset, match length and character, if no match is found.
-        """
-        len_buffer = buffer_end_index - buffer_start_index
-        longest = (0, 0, 0)
-        for i_window in range(window_start_index, buffer_start_index):
-            result = 0
-            if self.content[i_window] == self.content[buffer_start_index]:
-                result = 1
-                for i_buffer in range(1, len_buffer):
-                    if self.content[i_window + i_buffer] == self.content[buffer_start_index + i_buffer]:
-                        result += 1
-                    else:
-                        break
-            if result > longest[1]:
-                longest = (buffer_start_index - i_window, result, 0)
-            if result == len_buffer - 1:
-                break
-        if longest[1] == 0:
-            longest = (0, 1, ord(self.content[buffer_start_index]))
-        return longest
-
-    def find_matches_in_sliding_window_with_built_in_find(
-        self,
-        window_start_index: int,
-        buffer_start_index: int,
-        buffer_end_index: int
-    ):
-        """An iterative method to find the longest string match in a sliding window.
-
-        Args:
-            window_start_index (int): index from which the sliding window begins.
-            buffer_start_index (int): index from which the lookahead buffer start
-            buffer_end_index (int): index in which the buffer and the sliding windows end.            
+            buffer_end_index (int): index in which the buffer and the sliding windows end.
 
         Returns:
             tuple: offset, match length and character, if no match is found.
@@ -336,17 +210,6 @@ class LempelZiv77:
             else:
                 break
 
-            # if self.content[i_window] == self.content[buffer_start_index]:
-            #     result = 1
-            #     for i_buffer in range(1, len_buffer):
-            #         if self.content[i_window + i_buffer] == self.content[buffer_start_index + i_buffer]:
-            #             result += 1
-            #         else:
-            #             break
-            # if result > longest[1]:
-            #     longest = (buffer_start_index - i_window, result, 0)
-            # if result == len_buffer - 1:
-            #     break
         if longest[1] == 0:
             longest = (0, 1, ord(self.content[buffer_start_index]))
         return longest
@@ -368,7 +231,6 @@ class LempelZiv77:
                 i += 16
             self.compressed_content_as_list.append((offset, length, character))
 
-    # TODO: Remove commented lines when not needed
     def lempel_ziv_uncompress(self):
         """A method to handle the uncompression of the data.
 
@@ -378,17 +240,14 @@ class LempelZiv77:
         if len(self.compressed_content_as_list) == 0:
             raise NoCompressedContentError()
         variable_n = len(self.compressed_content_as_list)
-        # uncompressed_string = ""
         content = []
         for i in range(variable_n):
             if self.compressed_content_as_list[i][0] == 0:
-                # uncompressed_string += self.compressed_content_as_list[i][2]
                 content.append(self.compressed_content_as_list[i][2])
             else:
                 variable_m = self.compressed_content_as_list[i][1]
                 offset = self.compressed_content_as_list[i][0]
                 for _ in range(variable_m):
-                    # uncompressed_string += uncompressed_string[-offset]
                     content.append(content[-offset])
         uncompressed_string = "".join(content)
         self.content = uncompressed_string
@@ -419,7 +278,4 @@ class LempelZiv77:
 
 
 if __name__ == "__main__":
-    lz77 = LempelZiv77("filename.txt", "compressed_filename.txt")
-    lz77.content = "ABCABCCCCDJSAJDSALOIWQEUIOQWENXCMXNCXZKJSHDASJDKLJASÖDLASOIEQUWOIEQWJLKDSJAÖLKDS"
-    lz77.compress_content()
-    lz77.lempel_ziv_uncompress()
+    pass

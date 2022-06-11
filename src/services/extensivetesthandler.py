@@ -24,7 +24,7 @@ class ExtensiveTestHandler:
         self.log_archive = os.path.join(
             DEFAULT_TEST_DATA_PATH, "compression_archive.log")
 
-    def create_document_with_natural_language(self, n: int = 100):
+    def create_document_with_natural_language(self, n_of_paragraphs: int = 100):
         """Uses the libary Essential Generators to create random
         natural content. The created data has to be manipulated as
         it contains characters not suitable for the current algorithms.
@@ -33,7 +33,7 @@ class ExtensiveTestHandler:
             n (int, optional): Number of paragraphs to be created. Defaults to 100.
         """
         created_content = ""
-        for i in range(n):
+        for _ in range(n_of_paragraphs):
             created_content += self.document_generator.paragraph() + "\n\n"
         document_content = ""
         characters = string.printable.split()[0]
@@ -45,12 +45,12 @@ class ExtensiveTestHandler:
         for char in created_content:
             if ord(char) in ascii_order_set:
                 document_content += char
-        file = f"natural-language-document-{n}-paragraphs.txt"
+        file = f"natural-language-document-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)
         print("creating file ", filename)
         self.file_manager.create_txt_file(filename, document_content)
 
-    def create_document_with_random_printable_ascii(self, n: int = 100):
+    def create_document_with_random_printable_ascii(self, n_of_paragraphs: int = 100):
         """Creates paragraphs of random ascii-characters.
 
         Args:
@@ -58,11 +58,11 @@ class ExtensiveTestHandler:
         """
         document_content = ""
         characters = string.printable.split()[0]
-        for i in range(n):
-            m = randint(500, 1000)
+        for _ in range(n_of_paragraphs):
+            characters_in_paragraph = randint(500, 1000)
             document_content += "".join([choice(characters)
-                                        for i in range(m)]) + "\n\n"
-        file = f"random-printable-ascii-{n}-paragraphs.txt"
+                                        for _ in range(characters_in_paragraph)]) + "\n\n"
+        file = f"random-printable-ascii-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)
         print("creating file ", filename)
         self.file_manager.create_txt_file(filename, document_content)
@@ -111,6 +111,36 @@ class ExtensiveTestHandler:
         Returns:
             bool: Status of test success. If tests fail, return False.
         """
+        tests_succeeded = True
+        tests_succeeded = self.test_huffman_compression(filename, content)
+        tests_succeeded = self.test_lempelziv_compression(filename, content)
+        return tests_succeeded
+
+    def test_lempelziv_compression(self, filename: str, content: str):
+        filepath = DEFAULT_TEST_DATA_PATH
+        tests_succeeded = True
+
+        try:
+            self.compression_management.lempel_ziv_compress(filename, filepath)
+            self.compression_management.lempel_ziv_uncompress(
+                filename[:-3] + "lz", filepath)
+            with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
+                lz77_uncompressed_content = file.read()
+            result = self.validate_content_matches(
+                content, lz77_uncompressed_content)
+            if not result:
+                tests_succeeded = False
+                self.log_entry(filename,
+                               "Failure: Original and uncompressed contents in previous \
+                                test did not match.",
+                               "Lempel-Ziv77 compression or uncompression")
+        except Exception as exption:
+            tests_succeeded = False
+            self.log_entry(filename, str(
+                exption), "Lempel-Ziv77 compression or uncompression")
+        return tests_succeeded
+
+    def test_huffman_compression(self, filename: str, content: str):
         filepath = DEFAULT_TEST_DATA_PATH
         tests_succeeded = True
         try:
@@ -125,29 +155,13 @@ class ExtensiveTestHandler:
             if not result:
                 tests_succeeded = False
                 self.log_entry(filename,
-                               "Failure: Original and uncompressed contents in previous test did not match.",
+                               "Failure: Original and uncompressed contents in previous \
+                                test did not match.",
                                "Huffman compression or uncompression")
-        except Exception as e:
+        except Exception as exption:
             self.log_entry(filename, str(
-                e), "Huffman compression or uncompression")
+                exption), "Huffman compression or uncompression")
             tests_succeeded = False
-        try:
-            self.compression_management.lempel_ziv_compress(filename, filepath)
-            self.compression_management.lempel_ziv_uncompress(
-                filename[:-3] + "lz", filepath)
-            with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
-                lz77_uncompressed_content = file.read()
-            result = self.validate_content_matches(
-                content, lz77_uncompressed_content)
-            if not result:
-                tests_succeeded = False
-                self.log_entry(filename,
-                               "Failure: Original and uncompressed contents in previous test did not match.",
-                               "Lempel-Ziv77 compression or uncompression")
-        except Exception as e:
-            tests_succeeded = False
-            self.log_entry(filename, str(
-                e), "Lempel-Ziv77 compression or uncompression")
         return tests_succeeded
 
     def validate_content_matches(self, original_content: str, uncompressed_content: str) -> bool:
@@ -163,8 +177,8 @@ class ExtensiveTestHandler:
         if len(original_content) != len(uncompressed_content):
             return False
         content_valid = True
-        for char in range(len(original_content)):
-            if original_content[char] != uncompressed_content[char]:
+        for char in enumerate(original_content):
+            if original_content[char[0]] != uncompressed_content[char[0]]:
                 content_valid = False
         return content_valid
 
@@ -182,20 +196,21 @@ class ExtensiveTestHandler:
             file.seek(0)
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
-            file.write("------ EXTENSIVE TEST SUMMARY  -------\n")
-            file.write(f"------ TIME: {log_time_strf} ------\n")
-            file.write(f"Successful tests: {success}\n")
-            file.write(f"Failed tests: {fail}\n\n")
-            file.write(f"------ DETAILED SUMMARY ------\n\n")
+            analysis = f"""------ EXTENSIVE TEST SUMMARY  -------\n\
+                        ------ TIME: {log_time_strf} ------\n\
+                        Successful tests: {success}\n\
+                        Failed tests: {fail}\n\n\
+                        ------ DETAILED SUMMARY ------\n\n"""
+            file.write(analysis)
             file.write(content)
             file.write("\n\n----- EXTENSIVE TEST SUMMARY ENDS ------\n\n")
 
     def log_entry(self, filename: str, error_content: str, phase: str) -> None:
-        """If a test fails a log entry is created. 
+        """If a test fails a log entry is created.
 
         Args:
             filename (str): File for which the failure happened.
-            error_content (str): Error content. 
+            error_content (str): Error content.
             phase (str): Clarification on which algorithm the error occured.
         """
         content = "--------- ERROR NOTIFICATION ---------\n"
