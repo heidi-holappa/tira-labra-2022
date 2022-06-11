@@ -7,7 +7,7 @@ It is still needed to analyze how well my implementations match the original alg
 ### Lempel-Ziv 77 
 The Lempel Ziv compression algorithm goes through the whole content once. At each index a search is executed, where string content for the length of the window is looked through. Matches for the length between 3 to buffer size are looked for iteratively with Python's built-in str.find() method. The process is repeated for each index of the content n that is being compressed, so the time complexity is n * search time. 
 
-Based on Python's documentation this method uses Boyer-Moore and Horspool - algorithms, and has the worst case time complexity of O(n*m), average time complexity of O(n) and lower case time complexity of O(n / m), in which n equals the size of the string from where a match is looked for ([source 1](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm), [source 2](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)). 
+Based on Python's documentation this method uses Boyer-Moore, Sunday and Horspool - algorithms, and has the worst case time complexity of O(n*m), average time complexity of O(n) and lower case time complexity of O(n / m), in which n equals the size of the string from where a match is looked for ([source 1](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm), [source 2](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)). 
 
 From this an estimate of the total time complexity can be created. A rough worst case time complexity would be O(k * m * n * n) = O(k * m * n^2), in which
 - k = characters in content that is compressed
@@ -28,16 +28,13 @@ The huffman coding consists of different steps that have different time complexi
 As written above, this is still under investigation.
 
 # Known Quality Issues and Suggestions for Improvement
-- Especially Lempel-Ziv 77 needs optimization. Have to investigate how to optimize it within the specifications of original LZ77 structure. 
-- Data manipulation to byte form is quite naive due to lack of experience. The efficiency issues are most clearly visible in the LZ77 uncompression phase.
-- Code needs refactoring and cleaning up. Repetitive code, confusing design choices.
-- GUI needs more work
+- Data manipulation to byte form is quite naive due to lack of experience. The efficiency issues are most clearly visible in the LZ77 uncompression phase. Also the compression ratio is affected by this. 
 - More extensive tests need to be written. Preferably also graphical representations of results.
 - Currently only printable ASCII-charcters can be handled:
 ```
 '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
 ```
-I addition following characters can be handled:
+In addition following characters can be handled:
 - (32) # whitespace
 - (10) # line-break
 - (228) # ä
@@ -77,3 +74,7 @@ I addition following characters can be handled:
 [19] Tom Scott: [How Computers Compress Text: Huffman coding and Huffman Trees](https://youtu.be/JsTptu56GM8)  
 [20] Computerphile: [How Huffman Trees Work](https://youtu.be/umTbivyJoiI)
 [21] Google Developers: [Compressor Head - series](https://youtu.be/Eb7rzMxHyOk)
+
+**Python-specific**
+[22] [Source code for object str](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)
+[23] [An archived blog post by Frederik Lundh](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm) 
