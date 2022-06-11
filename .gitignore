@@ -6,3 +6,5 @@ sources
 data/*
 !data/test-material?.txt
 documentation/project-notes.md
+test-data/compression.log
+test-data/compression_archive.log
