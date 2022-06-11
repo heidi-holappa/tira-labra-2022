@@ -67,20 +67,20 @@ class LogHandler:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
             content = f"""------ NEW ENTRY: COMPRESSING DATA ------\n\
-                        Log entry created: {log_time_strf}\n\
-                        File accessed: {self.logdata['original_filename']}\n\
-                        File created: {self.logdata['compressed_filename']}\n\
-                        Compression method: {self.logdata['compression_method']}\n\
-                        Uncompressed_size: {self.logdata['uncompressed_size']} bits\n\
-                        Compressed size: {self.logdata['compressed_size']} bits\n"""
+Log entry created: {log_time_strf}\n\
+File accessed: {self.logdata['original_filename']}\n\
+File created: {self.logdata['compressed_filename']}\n\
+Compression method: {self.logdata['compression_method']}\n\
+Uncompressed_size: {self.logdata['uncompressed_size']} bits\n\
+Compressed size: {self.logdata['compressed_size']} bits\n"""
             compression_ratio = self.logdata['compressed_size'] / \
                 self.logdata['uncompressed_size'] * 100
             content += f"Compression ratio: {compression_ratio:.2f}\n"
             content += f"""Time used for fetching and processing data: \
-                    {self.logdata['data_fetch_and_process_time']} seconds\n\
-                    Time used for compression: {self.logdata['compression_time']}\n\
-                    Time used for writing and processing data: \
-                    {self.logdata['data_write_and_process_time']} seconds\n"""
+{self.logdata['data_fetch_and_process_time']} seconds\n\
+Time used for compression: {self.logdata['compression_time']}\n\
+Time used for writing and processing data: \
+{self.logdata['data_write_and_process_time']} seconds\n"""
             file.write(content)
             if additional_content:
                 file.write(additional_content)
@@ -104,20 +104,20 @@ class LogHandler:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
             content = f"""------ NEW ENTRY: UNCOMPRESSING DATA ------\n\
-                    Log entry created: {log_time_strf}\n"\
-                    File accessed: {self.logdata['compressed_filename']}\n\
-                    File created: {self.logdata['uncompressed_filename']}\n\
-                    Compression method: {self.logdata['compression_method']}\n\
-                    Compressed size: {self.logdata['compressed_size']} bits\n\
-                    Uncompressed_size: {self.logdata['uncompressed_size']} bits\n"""
+Log entry created: {log_time_strf}\n"\
+File accessed: {self.logdata['compressed_filename']}\n\
+File created: {self.logdata['uncompressed_filename']}\n\
+Compression method: {self.logdata['compression_method']}\n\
+Compressed size: {self.logdata['compressed_size']} bits\n\
+Uncompressed_size: {self.logdata['uncompressed_size']} bits\n"""
             compression_ratio = self.logdata['compressed_size'] / \
                 self.logdata['uncompressed_size'] * 100
             content += f"""Compression ratio: {compression_ratio:.2f}\n\
-                    Time used for fetching and processing data: \
-                    {self.logdata['data_fetch_and_process_time']} seconds\n\
-                    Time used for compression: {self.logdata['compression_time']} seconds\n\
-                    Time used for writing and processing data: \
-                    {self.logdata['data_write_and_process_time']} seconds\n"""
+Time used for fetching and processing data: \
+{self.logdata['data_fetch_and_process_time']} seconds\n\
+Time used for compression: {self.logdata['compression_time']} seconds\n\
+Time used for writing and processing data: \
+{self.logdata['data_write_and_process_time']} seconds\n"""
             file.write(content)
             if additional_content:
                 file.write(additional_content)

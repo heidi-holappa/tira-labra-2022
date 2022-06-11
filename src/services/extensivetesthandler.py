@@ -197,10 +197,10 @@ class ExtensiveTestHandler:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
             analysis = f"""------ EXTENSIVE TEST SUMMARY  -------\n\
-                        ------ TIME: {log_time_strf} ------\n\
-                        Successful tests: {success}\n\
-                        Failed tests: {fail}\n\n\
-                        ------ DETAILED SUMMARY ------\n\n"""
+------ TIME: {log_time_strf} ------\n\
+Successful tests: {success}\n\
+Failed tests: {fail}\n\n\
+------ DETAILED SUMMARY ------\n\n"""
             file.write(analysis)
             file.write(content)
             file.write("\n\n----- EXTENSIVE TEST SUMMARY ENDS ------\n\n")
