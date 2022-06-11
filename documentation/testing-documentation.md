@@ -8,7 +8,7 @@
 ## Coverage Report for Unittests
 The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. Currently the branch coverage is 86 percent. Especially the service package classes need more extensive tests at this point.  
 
-![Coverage report - week 4](images/coverage-report-week-5-image.png)
+![Coverage report - week 4](images/coverage-report-week-5.png)
 
 
 ## What Has Been Tested and How?

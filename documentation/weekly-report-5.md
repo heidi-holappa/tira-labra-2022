@@ -78,6 +78,8 @@ I propose adding two things to Pylint's ignore list:
 ## Pylint and Pytest - status update
 Most Pylint issues have been addressed and at the time of writing this Pylint-score is 9.89. Five open issues exists. In the previous section I had a question regarding couple of these issues. At the moment of writing the branch coverage is at 86 percent. Especially the service classes need more extensive tests. Now that the algorithms are more optimized, I can next week write tests for even larger files. 
 
+![Coverage-report](images/coverage-report-week-5.png)
+
 ## Next steps
 - Improve tests
 - Refactor code 
@@ -98,4 +100,5 @@ Most Pylint issues have been addressed and at the time of writing this Pylint-sc
 | 11.6.2022 | Write documentation | 0,5 |
 | 11.6.2022 | Fix Pylint issues | 1,5 |
 | 11.6.2022 | Test that everything works after refactoring on local and university VM | 0,5 |
-| **total**| ---- | **15** |
+| 11.6.2022 | Update testing and execution documentations | 0,5 |
+| **total**| ---- | **15,5** |
