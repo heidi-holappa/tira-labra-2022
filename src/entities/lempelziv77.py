@@ -176,9 +176,13 @@ class LempelZiv77:
         #     current_index,
         #     self.content[window_start_index:window_end_index],
         #     self.content[current_index:buffer_end_index])
-        result = self.find_matches_in_sliding_window(
-            self.content[window_start_index:window_end_index],
-            self.content[current_index:buffer_end_index])
+        # result = self.find_matches_in_sliding_window(
+        #     self.content[window_start_index:window_end_index],
+        #     self.content[current_index:buffer_end_index])
+        result = self.find_matches_in_sliding_window_with_built_in_find(
+                    window_start_index,
+                    current_index,
+                    buffer_end_index)
         return result
 
     # TODO: NOT CURRENTLY USED, REMOVE IF NOT NEEDED
@@ -269,6 +273,81 @@ class LempelZiv77:
                 break
         if longest[1] == 0:
             longest = (0, 1, ord(stringbuffer[0]))
+        return longest
+
+    def find_matches_in_sliding_window_with_pointers(
+        self,
+        window_start_index: int,
+        buffer_start_index: int,
+        buffer_end_index: int
+    ):
+        """An iterative method to find the longest string match in a sliding window.
+
+        Args:
+            window_start_index (int): index from which the sliding window begins.
+            buffer_start_index (int): index from which the lookahead buffer start
+            buffer_end_index (int): index in which the buffer and the sliding windows end.            
+
+        Returns:
+            tuple: offset, match length and character, if no match is found.
+        """
+        len_buffer = buffer_end_index - buffer_start_index
+        longest = (0, 0, 0)
+        for i_window in range(window_start_index, buffer_start_index):
+            result = 0
+            if self.content[i_window] == self.content[buffer_start_index]:
+                result = 1
+                for i_buffer in range(1, len_buffer):
+                    if self.content[i_window + i_buffer] == self.content[buffer_start_index + i_buffer]:
+                        result += 1
+                    else:
+                        break
+            if result > longest[1]:
+                longest = (buffer_start_index - i_window, result, 0)
+            if result == len_buffer - 1:
+                break
+        if longest[1] == 0:
+            longest = (0, 1, ord(self.content[buffer_start_index]))
+        return longest
+
+    def find_matches_in_sliding_window_with_built_in_find(
+        self,
+        window_start_index: int,
+        buffer_start_index: int,
+        buffer_end_index: int
+    ):
+        """An iterative method to find the longest string match in a sliding window.
+
+        Args:
+            window_start_index (int): index from which the sliding window begins.
+            buffer_start_index (int): index from which the lookahead buffer start
+            buffer_end_index (int): index in which the buffer and the sliding windows end.            
+
+        Returns:
+            tuple: offset, match length and character, if no match is found.
+        """
+        longest = (0, 0, 0)
+        for i in range(buffer_start_index+2, buffer_end_index):
+            found_index = self.content[window_start_index:buffer_start_index].find(self.content[buffer_start_index:i])
+            if found_index != -1:
+                longest = (buffer_start_index - (window_start_index + found_index), i - buffer_start_index, 0)
+            else:
+                break
+                
+
+            # if self.content[i_window] == self.content[buffer_start_index]:
+            #     result = 1
+            #     for i_buffer in range(1, len_buffer):
+            #         if self.content[i_window + i_buffer] == self.content[buffer_start_index + i_buffer]:
+            #             result += 1
+            #         else:
+            #             break
+            # if result > longest[1]:
+            #     longest = (buffer_start_index - i_window, result, 0)
+            # if result == len_buffer - 1:
+            #     break
+        if longest[1] == 0:
+            longest = (0, 1, ord(self.content[buffer_start_index]))
         return longest
 
     def transform_fetched_content_to_tuples(self):
