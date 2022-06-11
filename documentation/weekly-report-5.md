@@ -6,6 +6,7 @@
 - Created more diverse test material
 - Cleaned code based on pylint feedback
 - Multiple questions for the course assistant below in section "What remained unclear or caused difficulties"
+- Made small updates to [Execution document](execution-documentation.md) and [Testing document](testing-documentation.md)
 
 ## What have I done this week?
 The first days of the week I had to commit to preparing to the exam of Data Structures and Algorithms II, so unfortunately I had no time to work on this project. From the rest of the study hours for the week I had to spend multiple hours on research this time, but I think it was beneficial! I was able to optimize the compression time of LZ77 significantly. 
