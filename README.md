@@ -6,7 +6,7 @@ The initial proposal is to do a comparison on two well known algorithms, Huffman
 
 ## Project documentation
 
-* [Execution documentaiton](/documentation/execution-documention.md)
+* [Execution documentation](/documentation/execution-documentation.md)
 * [Requirements specification](/documentation/requirements-specification.md)
 * [Testing documentation](/documentation/testing-documentation.md)
 * [How-to-Guide](/documentation/how-to-guide.md)
