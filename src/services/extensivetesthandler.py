@@ -1,4 +1,5 @@
 import os
+import time
 import glob
 import string
 from random import randint, choice
@@ -75,6 +76,7 @@ class ExtensiveTestHandler:
         Args:
             max_characters (int, optional): Maximum character length for files. Defaults to 100000.
         """
+        extensive_test_starttime = time.time()
         if os.path.exists(self.log_file):
             self.archive_log_content()
             os.remove(self.log_file)
@@ -97,7 +99,11 @@ class ExtensiveTestHandler:
             os.remove(filename)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.lz')):
             os.remove(filename)
-        self.log_end(success, fail)
+        
+        extensive_test_endtime = time.time()
+        test_total_time = extensive_test_endtime - extensive_test_starttime
+        total = f"{test_total_time:.2f}"
+        self.log_end(success, fail, total)
 
     def run_tests_on_file(self, filename: str, content: str):
         """Runs tests on a given file. Compresses and uncompresses
@@ -182,7 +188,7 @@ class ExtensiveTestHandler:
                 content_valid = False
         return content_valid
 
-    def log_end(self, success, fail):
+    def log_end(self, success, fail, total_time):
         """Once tests are done, a summary of tests is written to the file.
 
         Uses 'r+' to write to the start of the file.
@@ -198,6 +204,7 @@ class ExtensiveTestHandler:
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
             analysis = f"""------ EXTENSIVE TEST SUMMARY  -------\n\
 ------ TIME: {log_time_strf} ------\n\
+Total runtime: {total_time} seconds\n\
 Successful tests: {success}\n\
 Failed tests: {fail}\n\n\
 ------ DETAILED SUMMARY ------\n\n"""
