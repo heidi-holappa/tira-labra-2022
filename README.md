@@ -6,6 +6,7 @@ The initial proposal is to do a comparison on two well known algorithms, Huffman
 
 ## Project documentation
 
+* [Execution documentaiton](/documentation/execution-documention.md)
 * [Requirements specification](/documentation/requirements-specification.md)
 * [Testing documentation](/documentation/testing-documentation.md)
 * [How-to-Guide](/documentation/how-to-guide.md)
@@ -13,6 +14,7 @@ The initial proposal is to do a comparison on two well known algorithms, Huffman
 * [Weekly report #2](documentation/weekly-report-2.md)
 * [Weekly report #3](documentation/weekly-report-3.md)
 * [Weekly report #4](documentation/weekly-report-4.md)
+* [Weekly report #5](documentation/weekly-report-5.md)
 * [Project architecture (extra document)](/documentation/architecture.md)
 
 ## Installation
