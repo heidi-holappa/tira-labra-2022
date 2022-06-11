@@ -2,19 +2,20 @@
 
 ## Quick recap on progress
 - Read a lot and had piffanies
-- Created more diverse test material
-- Multiple questions for the course assistant below in section "What remained unclear or caused difficulties"
 - LZ77 optimized, great improvement in compression time! 
-
+- Created more diverse test material
+- Cleaned code based on pylint feedback
+- Multiple questions for the course assistant below in section "What remained unclear or caused difficulties"
 
 ## What have I done this week?
 The first days of the week I had to commit to preparing to the exam of Data Structures and Algorithms II, so unfortunately I had no time to work on this project. From the rest of the study hours for the week I had to spend multiple hours on research this time, but I think it was beneficial! I was able to optimize the compression time of LZ77 significantly. 
 
-I also created and downloaded new test material for even more diverse testing. 
+I also cleaned the code based on pylint feedback and created and downloaded new test material for even more diverse testing. 
 
 ## How has the application progressed?
 - New test material created
 - LZ77 optimized
+- Code refactored and most pylint issues fixed
 
 ## What did I learn during this week / today?
 
@@ -24,9 +25,9 @@ From reading material I first and foremost learned that LZ77 isn't a compression
 ### LZ77 optimization breakthrough - now using built in find()-method
 Based on my discussion with the course assistant I refactored LZ77 to use pointers instead of copies from the string containing the content to be compressed. This had a two fold impact on the compression time of larger files. For some natural language files the compression rate was improved, but for files with more random content the effect was opposite.  
 
-This lead me into thinking that perhaps using Python's built in find()-method would be a good idea. I then created a new version that uses find() and it had atremendous impact. For instance the compression time for the book 'Seitsemän veljestä" that has over 600,000 characters dropped from 70 seconds to 1.5 seconds! Another plus side is that based on documentation the find()-method uses Boyer-Moore and Horspool -algorithms, which have a proven time complexity, which helps me give a more precise estimation on the time complexity of my LZ77 implementation. 
+This lead me into thinking that perhaps using Python's built in find()-method would be a good idea. I then created a new version that uses find() and it had a tremendous impact. For instance the compression time for the book 'Seitsemän veljestä" that has over 600,000 characters dropped from 70 seconds to 1.5 seconds! Another plus side is that based on documentation the find()-method uses known algorithms, such as Boyer-Moore and Horspool, which have a widely agreed upon time complexity, which helps me give a more precise estimation on the time complexity of my LZ77 implementation. 
 
-As a down side, at least temproarily, I removed the concept of the into-buffer-sliding window from the execution, as it would require moving the index in the case when the match continues into the lookahead buffer. If there is time, I will try to include this within the new implementation. Removing this feature will have an effect on compression ratio, though the compression time efficiency was greatly increased. 
+As a down side, at least temproarily, I removed the concept of the into-buffer-sliding window from the execution, as it would require moving the index in the case when the match continues into the lookahead buffer. If there is time, I will try to include this within the new implementation. Removing this feature will have an effect on compression ratio, though the compression time efficiency was greatly increased. Perhaps it is a compromise that needs to be done. 
 
 
 ## What remained unclear or caused difficulties? 
@@ -65,7 +66,15 @@ As for the space complexity of LZ77 I currently have very flimsy understanding. 
 
 I would greatly appreciate any feedback on how to proceed with these time and space complexity estimations. 
 
+### Pylint and ignore
+I propose adding two things to Pylint's ignore list:
+- R0902: Too many instance attributes (11/8) (too-many-instance-attributes)
+  - In the entities classes I have 11 instance attributes and I propose that refactoring them perhaps isn't that crucial considering the objectives of this course. Can I ignore theses issues? 
+- W0703: Catching too general exception Exception (broad-except)
+  - The manual extensive tests have a broad except to catch some information in the events that the compression fails for any given reason. I propose that given the scope of this project this is useful, as the compression works with limited character set and tests can easily fail in different ways due to a file containing unsupported characters. Or should I try to diagnose the most common errors and create more specific exceptions? 
+
 ## Pylint and Pytest - status update
+Most Pylint issues have been addressed and at the time of writing this Pylint-score is 9.89. Five open issues exists. In the previous section I had a question regarding couple of these issues. 
 
 ## Next steps
 - Improve tests
@@ -85,4 +94,6 @@ I would greatly appreciate any feedback on how to proceed with these time and sp
 | 11.6.2022 | Optimize LZ77 string match search | 2 |
 | 11.6.2022 | Study time complexity of LZ77 | 1 |
 | 11.6.2022 | Write documentation | 0,5 |
-| **total**| ---- | **13** |
+| 11.6.2022 | Fix Pylint issues | 1,5 |
+| 11.6.2022 | Test that everything works after refactoring on local and university VM | 0,5 |
+| **total**| ---- | **15** |
