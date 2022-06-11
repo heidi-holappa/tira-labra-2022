@@ -5,9 +5,17 @@ The general structure of the application can be overviewed in the [how-to-guide]
 It is still needed to analyze how well my implementations match the original algorithms to get a better understanding of the time complexity. Below are initial observations. 
 
 ### Lempel-Ziv 77 
-The Lempel Ziv compression algorithm goes through the whole content once. At each index a search is executed, where string content for the length of the window is looked through. Each index in the window is compared to the first index of the lookahead buffer. If they are a match, then the lookahead buffer is iteratively looked through for the length of the match. In the worst scenario the who content consists of one character (i.e. "AAA...A"). In such a case in each step the window and the lookahead buffer are all looked through, thus the time complexity being (content * window * lookahead buffer). 
+The Lempel Ziv compression algorithm goes through the whole content once. At each index a search is executed, where string content for the length of the window is looked through. Matches for the length between 3 to buffer size are looked for iteratively with Python's built-in str.find() method. The process is repeated for each index of the content n that is being compressed, so the time complexity is n * search time. 
 
-In uncompression content is added to the end of the string iteratively. If a match exists, it is looked for in the existing string. Otherwise the next character is available in the stored data. In the worst case a match of the length of the buffer is found at every index > buffer size. In this scenario for each step a buffer lenght of sting data is copied and added to the end of the string. 
+Based on Python's documentation this method uses Boyer-Moore and Horspool - algorithms, and has the worst case time complexity of O(n*m), average time complexity of O(n) and lower case time complexity of O(n / m), in which n equals the size of the string from where a match is looked for ([source 1](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm), [source 2](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)). 
+
+From this an estimate of the total time complexity can be created. A rough worst case time complexity would be O(k * m * n * n) = O(k * m * n^2), in which
+- k = characters in content that is compressed
+- m = characters in sliding window
+- n = characters in lookahead buffer
+
+In uncompression content is added to the end of the string iteratively. If a match exists, it is looked for in the existing string. Otherwise the next character is available in the stored data. In the worst case a match of the length of the buffer is found at every index > buffer size. In this scenario for each step a buffer lenght of sting data is copied and added to the end of the string. This takes O(n) of time, where n is the number of characters in the uncompressed content. 
+
 
 ### Huffman coding
 The huffman coding consists of different steps that have different time complexities. 
@@ -29,8 +37,15 @@ As written above, this is still under investigation.
 ```
 '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
 ```
-
-
+I addition following characters can be handled:
+- (32) # whitespace
+- (10) # line-break
+- (228) # ä
+- (196) # Ä
+- (197) # Å
+- (229) # å
+- (246) # ö
+- (214) # Ö
 
 # Sources
 

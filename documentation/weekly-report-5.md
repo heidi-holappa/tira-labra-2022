@@ -49,6 +49,8 @@ Does this sound like a good approach for LZ77 compression optimization?
 
 As for Huffman coding I have no ideas at the moment. I have read a bit on 'canonical Huffman tree', but I do not yet understand the concept well enough to know, whether it'd provide any benefits in this particular issue. Any suggestions or hints would be very welcome! 
 
+I tried what compression ratio the pre-installed compressor on Fuxi-laptop gives for the file test-data/random-printable-ascii-100-paragraphs.txt. The original size is 74.7 kB and compressed size is 62.3 kB, so the compression ratio is 0.83 (I have included the compressed zip-file for easier verification). This makes me consider that perhaps I can not meet to desired 40-60 percent compressed size for all files as professionally built applications do not achieve that. I would very much like to hear thoughts on this! 
+
 ### Algorithms ineffective with random word content
 Both algorithms are sub-optimal with randomly generated words of natural language. I assume the issues are connected to the same reasons as the ones mentioned above, perhaps as randomly created string of natural language words lacks the same structure (and repetitiveness) as coherent textual content. At the moment I am unsure whether this is a limitation of these two method, or is it something I could perhaps optimize. I would very much appreciate any feedback or tips on how to proceed with this. 
 
@@ -74,7 +76,7 @@ I propose adding two things to Pylint's ignore list:
   - The manual extensive tests have a broad except to catch some information in the events that the compression fails for any given reason. I propose that given the scope of this project this is useful, as the compression works with limited character set and tests can easily fail in different ways due to a file containing unsupported characters. Or should I try to diagnose the most common errors and create more specific exceptions? 
 
 ## Pylint and Pytest - status update
-Most Pylint issues have been addressed and at the time of writing this Pylint-score is 9.89. Five open issues exists. In the previous section I had a question regarding couple of these issues. 
+Most Pylint issues have been addressed and at the time of writing this Pylint-score is 9.89. Five open issues exists. In the previous section I had a question regarding couple of these issues. At the moment of writing the branch coverage is at 86 percent. Especially the service classes need more extensive tests. Now that the algorithms are more optimized, I can next week write tests for even larger files. 
 
 ## Next steps
 - Improve tests
