@@ -28,4 +28,5 @@
 | 12.6.2022 | Fetch more test material | 0,5 |
 | 12.6.2022 | Experiment compression with 15 MB file | 1 |
 | 12.6.2022 | Add tests, add quick tests to launching of the app | 0,5 |
-| **total**| ---- | **3** |
+| 12.6.2022 | Add content validation to extensive testing | 0,5 |
+| **total**| ---- | **3,5** |
