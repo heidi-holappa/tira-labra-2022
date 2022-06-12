@@ -28,3 +28,20 @@ To run the application type the following command:
 ```
 poetry run invoke start
 ```
+
+## Other useful commands
+
+To run quick tests from terminal use the command
+```
+poetry run invoke test
+```
+
+To run tests on larger files (> 1 MB) use the command
+```
+poetry run invoke extended-test
+```
+
+To generate a coverage report use the command
+```
+poetry run invoke coverage-report
+```
