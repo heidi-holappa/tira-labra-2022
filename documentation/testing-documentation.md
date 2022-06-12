@@ -1,4 +1,21 @@
 # Testing documentation
+The application has automated unittests and a functionalities that allow user to create test material and run an extended test-set on selected materials. 
+
+## Automated tests
+The automated tests are also divided into two categories. Lighter tests are ran every time the application is launched. User can additionally manually launch more extensive tests from the terminal. The more extensive automated tests include testing algorithms on larger files and can take multiple minutes to run through. 
+
+To run lighter test-set in the terminal, use the command
+```
+poetry run invoke test
+```
+
+To run the tests created for larger files use the command
+```
+poetry run invoke extended-test
+```
+
+## Extensive tests view in GUI
+In the extensive tests -view user can create new test material or run tests on files of selected size. When the tests are run, all files in the configured directory (default = test-data) that match the size user defined are included and tested. The directory can be configured in the .env -file. User can also add data to the folder for testing purposes. 
 
 ## Tests to be added (to-do-list):
 * Expand tests on service classes
