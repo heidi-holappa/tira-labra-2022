@@ -1,3 +1,4 @@
+import pytest
 import unittest
 import os
 import random
@@ -123,9 +124,28 @@ class TestLempelZivCompression(unittest.TestCase):
                 content_matches = False
         self.assertEqual(True, content_matches)
 
-    def compressed_data_matches_with_a_longer_existing_file(self):
+    def test_compressed_data_matches_with_a_longer_existing_file(self):
         filename = os.path.join(DEFAULT_TEST_DATA_PATH,
-                                "randon-printable-ascii-data.txt")
+                                "random-printable-ascii-100-paragraphs.txt")
+        with open(filename, "r", encoding="utf-8") as file:
+            content = file.read()
+        self.create_test_file(content)
+        self.lz77_coder.lempel_ziv_activate_compression()
+        content_as_list = self.lz77_coder.compressed_content_as_list
+        self.lz77_decoder.lempel_ziv_activate_uncompression()
+        content_as_list_from_file = self.lz77_coder.compressed_content_as_list
+        content_matches = True
+        os.remove(self.uncompressed_filename)
+        for i in range(len(content_as_list)):
+            if content_as_list[i] != content_as_list_from_file[i]:
+                print(content_as_list[i], content_as_list_from_file[i])
+                content_matches = False
+        self.assertEqual(True, content_matches)
+
+    @pytest.mark.extendedtest
+    def test_compressed_data_matches_with_a_very_long_existing_file(self):
+        filename = os.path.join(DEFAULT_TEST_DATA_PATH,
+                                "gutenberg-top-10.txt")
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
         self.create_test_file(content)
