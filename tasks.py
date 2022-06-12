@@ -2,11 +2,16 @@ from invoke import task
 
 @task
 def start(ctx):
+    ctx.run("pytest src -m 'not extendedtest'", pty=True)
     ctx.run("python3 src/launch.py", pty=True)
 
 @task
 def test(ctx):
-    ctx.run("pytest src", pty=True)
+    ctx.run("pytest src -m 'not extendedtest'", pty=True)
+
+@task
+def extended_test(ctx):
+    ctx.run("pytest src -m 'extendedtest'", pty=True)
 
 @task
 def coverage(ctx):
