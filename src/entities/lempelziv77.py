@@ -59,8 +59,11 @@ class LempelZiv77:
         Args:
             byte_data (bytes): Stored content as bytes of data
         """
+
+        data_as_list = []
         for byte in byte_data:
-            self.compressed_content += str(bin(byte)[2:].zfill(8))
+            data_as_list.append(str(bin(byte)[2:].zfill(8)))
+        self.compressed_content = "".join(data_as_list)
 
     def write_txt_content_into_a_file(self, filename, content_to_write):
         """Calls file management to write content to a file

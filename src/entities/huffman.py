@@ -121,13 +121,16 @@ class HuffmanCoding:
         bits = 12 + 4 + tree_length + characters_length + content_length
         extra_bits_needed = 8 - bits % 8
 
-        self.compressed += f"{bin(tree_length)[2:].zfill(12)}"
-        self.compressed += f"{bin(extra_bits_needed)[2:].zfill(4)}"
-        self.compressed += f"{bin(n_of_characters)[2:].zfill(8)}"
-        self.compressed += huffman_tree
-        self.compressed += characters
-        self.compressed += encoded_content
-        self.compressed += "0" * extra_bits_needed
+        content_as_list = []
+
+        content_as_list.append(f"{bin(tree_length)[2:].zfill(12)}")
+        content_as_list.append(f"{bin(extra_bits_needed)[2:].zfill(4)}")
+        content_as_list.append(f"{bin(n_of_characters)[2:].zfill(8)}")
+        content_as_list.append(huffman_tree)
+        content_as_list.append(characters)
+        content_as_list.append(encoded_content)
+        content_as_list.append("0" * extra_bits_needed)
+        self.compressed = "".join(content_as_list)
 
     def storable_huffman_tree(self,
                               node,
@@ -171,6 +174,7 @@ class HuffmanCoding:
         the character from that node is added to the uncompressed string.
         """
         self.uncompressed = ""
+        uncompressed_as_list = []
         node = self.root_node
         i = 0
 
@@ -179,17 +183,18 @@ class HuffmanCoding:
             if bit == "1" and node.right_child:
                 node = node.right_child
                 if i == len(self.compressed) - 1:
-                    self.uncompressed += chr(node.character)
+                    uncompressed_as_list.append(chr(node.character))
                 i += 1
             elif bit == "0" and node.left_child:
                 node = node.left_child
                 if i == len(self.compressed) - 1:
-                    self.uncompressed += chr(node.character)
+                    uncompressed_as_list.append(chr(node.character))
                 i += 1
             else:
-                self.uncompressed += chr(node.character)
+                uncompressed_as_list.append(chr(node.character))
                 node = self.root_node
-        self.content = self.uncompressed
+        self.uncompressed = "".join(uncompressed_as_list)
+        self.content = uncompressed_as_list
 
     def write_compressed_file(self, filename, content):
         """Converts content into a bytearray and calls an instance
