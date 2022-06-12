@@ -1,8 +1,11 @@
 # Weekly Report #6
 
 ## Quick recap on progress
-- Continued optimazion. A 15MB file containing the Top 10 books from Project Gutenberg can be compressed and uncompressed in a reasonable time. 
-- Changed UI-layout
+- Continued optimization. A 15MB file containing the Top 10 books from Project Gutenberg can be compressed and uncompressed in a reasonable time. 
+- Tests are now divided into two different groups:
+  - Fast tests: these are now ran every time the application starts
+  - Extended tests: tests for large files (size over 1MB). 
+- Changed UI-layout, simplified compression/uncompression functionalities.
 
 ## What have I done this week?
 
