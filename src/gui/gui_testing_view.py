@@ -4,7 +4,7 @@ from config import DEFAULT_TEST_DATA_PATH
 from services.compressionmanagement import default_compression_management
 from services.filemanagement import default_file_manager
 from services.extensivetesthandler import default_test_handler
-
+from services.extensivetesthandler import InvalidCharactersError
 
 class TestingView:
 
@@ -188,7 +188,10 @@ class TestingView:
         if not max_characters or max_characters < 0:
             self._show_error("Please type in a positive integer value.")
             return
-        self.testhandler.activate_extensive_tests(max_characters)
+        try: 
+            self.testhandler.activate_extensive_tests(max_characters)
+        except InvalidCharactersError as charerror:
+            self._show_error(charerror.args[0])
         self._update_log()
 
     def _show_error(self, content=""):

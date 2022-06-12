@@ -9,6 +9,13 @@ from services.filemanagement import default_file_manager
 from services.compressionmanagement import default_compression_management
 from config import DEFAULT_TEST_DATA_PATH
 
+class InvalidCharactersError(Exception):
+    """Raises an error if file in test-folder contains invalid characters.
+
+    Args:
+        Exception: general exception
+    """
+    pass
 
 class ExtensiveTestHandler:
     """A class that handles the manually operated tests and creation of
@@ -25,6 +32,21 @@ class ExtensiveTestHandler:
         self.log_archive = os.path.join(
             DEFAULT_TEST_DATA_PATH, "compression_archive.log")
 
+    def create_printable_characters(self):
+        characters = string.printable.split()[0]
+        ascii_order_set = set()
+        for char in characters:
+            ascii_order_set.add(ord(char))
+        ascii_order_set.add(32)
+        ascii_order_set.add(10)
+        ascii_order_set.add(228) # ä
+        ascii_order_set.add(196) # Ä
+        ascii_order_set.add(197) # Å
+        ascii_order_set.add(229) # å
+        ascii_order_set.add(246) # ö
+        ascii_order_set.add(214) # Ö
+        return ascii_order_set
+
     def create_document_with_natural_language(self, n_of_paragraphs: int = 100):
         """Uses the libary Essential Generators to create random
         natural content. The created data has to be manipulated as
@@ -37,12 +59,7 @@ class ExtensiveTestHandler:
         for _ in range(n_of_paragraphs):
             created_content += self.document_generator.paragraph() + "\n\n"
         document_content = ""
-        characters = string.printable.split()[0]
-        ascii_order_set = set()
-        for char in characters:
-            ascii_order_set.add(ord(char))
-        ascii_order_set.add(32)
-        ascii_order_set.add(10)
+        ascii_order_set = self.create_printable_characters()
         for char in created_content:
             if ord(char) in ascii_order_set:
                 document_content += char
@@ -76,6 +93,16 @@ class ExtensiveTestHandler:
         Args:
             max_characters (int, optional): Maximum character length for files. Defaults to 100000.
         """
+        ascii_order_set = self.create_printable_characters()
+        for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
+            with open(filename, 'r', encoding="utf-8") as file:
+                content = file.read()
+                for char in content:
+                    if ord(char) not in ascii_order_set:
+                        file_split = filename.split("/")
+                        print(f"Error! {file_split[-1]} includes non-supported characters")
+                        raise InvalidCharactersError(f"Error! {file_split[-1]} includes non-supported characters. Non-supported character: {char}")
+        
         extensive_test_starttime = time.time()
         if os.path.exists(self.log_file):
             self.archive_log_content()
