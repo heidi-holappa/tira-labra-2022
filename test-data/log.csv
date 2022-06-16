@@ -1,0 +1,5 @@
+<action>;<algorithm>;<time of test>;<filename>;<result>;<compression time>;<ratio>;<Huffman: max frequency>;<Huffman: min-frequency>;<LZ: average match length>
+1;12:24 15:20;random-ascii.txt;1;0.75;158.7
+
+
+
