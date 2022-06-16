@@ -34,7 +34,7 @@ class GraphManagement:
         pyplt.title("Frequency variance for Huffman compression")
         filename = os.path.join(self.graph_folder, "huffman-frequency-variance.png")
         pyplt.savefig(filename)
-        return filename
+        return "images/huffman-frequency-variance.png"
 
     def construct_lempel_ziv_average_length_bar_chart(self, x_values):
         pyplt.figure(3)
@@ -53,7 +53,7 @@ class GraphManagement:
         pyplt.title("Average match length for Lempel-Ziv 77")
         filename = os.path.join(self.graph_folder, "lempel-ziv-avg-match.png")
         pyplt.savefig(filename)
-        return filename
+        return "images/lempel-ziv-avg-match.png"
 
     
     def construct_compression_ratio_bar_chart(self, x_values, y_values, labels):
@@ -82,7 +82,7 @@ class GraphManagement:
         pyplt.legend(legend_labels, loc=2)
         filename = os.path.join(self.graph_folder, "compression-ratio-comparison.png")
         pyplt.savefig(filename)
-        return filename
+        return "images/compression-ratio-comparison.png"
 
 
 default_graph_manager = GraphManagement()
