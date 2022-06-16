@@ -1,4 +1,5 @@
 from tkinter import ttk, constants, Frame, IntVar, filedialog, messagebox, Text, simpledialog
+import webbrowser
 from config import DEFAULT_DATA_PATH
 from config import DEFAULT_TEST_DATA_PATH
 from services.compressionmanagement import default_compression_management
@@ -183,16 +184,19 @@ class TestingView:
         """Handles calling the instance of ExtensiveTestHangler to initiate
         the extensive tests.
         """
+        min_characters = simpledialog.askinteger(
+            "Document length", "Input minimum character count for documents to be included.")
         max_characters = simpledialog.askinteger(
-            "Document length", "Max character length for documents to be included.")
-        if not max_characters or max_characters < 0:
-            self._show_error("Please type in a positive integer value.")
+            "Document length", "Input maximum character count for documents to be included.")
+        if not max_characters or max_characters < 0 or not min_characters or min_characters < 0:
+            self._show_error("Please type in a positive integer value. To both questions. Try again.")
             return
         try: 
-            self.testhandler.activate_extensive_tests(max_characters)
+            self.testhandler.activate_extensive_tests(min_characters, max_characters)
         except InvalidCharactersError as charerror:
             self._show_error(charerror.args[0])
         self._update_log()
+        self._show_success_message()
 
     def _show_error(self, content=""):
         """A messagebox showing an error message.
@@ -204,3 +208,21 @@ class TestingView:
             title="Error!",
             message=content,
             icon=messagebox.ERROR)
+    
+    def _show_success_message(self):
+        """Constructs a messagebox confirming that tests have been successfully ran.
+        User can open HTML-log-file if they so choose from the message box.
+        """
+        title = "Tests run successfully"
+        message = "Would you like to see the HTML-log file in your default browser?"
+        show_html_log = messagebox.askyesno(title, message)
+        if show_html_log:
+            self._open_html_log()
+
+
+    def _open_html_log(self):
+        """A method that opens the HTML-log-file in webbrowser.
+        """
+        webbrowser.open_new(
+            self.testhandler.html_log_file)
+
