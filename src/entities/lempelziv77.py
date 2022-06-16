@@ -1,4 +1,6 @@
+from statistics import mean
 import time
+from entities.logentry import LogEntry
 from services.filemanagement import default_file_manager
 from services.loghandler import LogHandler
 from config import DEFAULT_DATA_PATH
@@ -18,7 +20,10 @@ class LempelZiv77:
     compression algorithm.
     """
 
-    def __init__(self, uncompressed_filename: str, compressed_filename: str):
+    def __init__(self, 
+            uncompressed_filename: str,
+            compressed_filename: str,
+            logentry: LogEntry = LogEntry()):
         """Construction for the class
 
         Args:
@@ -37,7 +42,7 @@ class LempelZiv77:
         self.file_manager = default_file_manager
         self._bytearray_list = []
         self.bytearray_data = None
-        self.loghandler = LogHandler()
+        self.logentry = logentry
 
     def fetch_uncompressed_content(self):
         """Calls FileManagement from service package to fetch uncompressed content
@@ -91,20 +96,20 @@ class LempelZiv77:
         self.fetch_uncompressed_content()
         fetch_endtime = time.time()
         fetch_total_time = fetch_endtime - fetch_starttime
-        self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
+        self.logentry.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
 
         compress_starttime = time.time()
         self.compress_content()
         compress_endtime = time.time()
         compress_total_time = compress_endtime - compress_starttime
-        self.loghandler.logdata["compression_time"] = f"{compress_total_time:.2f}"
+        self.logentry.logdata["compression_time"] = f"{compress_total_time:.2f}"
 
         write_starttime = time.time()
         self.write_binary_content_into_a_file(
             self.compressed_filename, self.bytearray_data)
         write_endtime = time.time()
         write_total_time = write_endtime - write_starttime
-        self.loghandler.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
+        self.logentry.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
     def lempel_ziv_activate_uncompression(self):
         """A method to activate and manage different steps of uncopmpression
@@ -113,20 +118,20 @@ class LempelZiv77:
         self.fetch_compressed_content()
         fetch_endtime = time.time()
         fetch_total_time = fetch_endtime - fetch_starttime
-        self.loghandler.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
+        self.logentry.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
 
         compress_starttime = time.time()
         self.lempel_ziv_handle_uncompression()
         compress_endtime = time.time()
         compress_total_time = compress_endtime - compress_starttime
-        self.loghandler.logdata["compression_time"] = f"{compress_total_time:.2f}"
+        self.logentry.logdata["compression_time"] = f"{compress_total_time:.2f}"
 
         write_starttime = time.time()
         self.write_txt_content_into_a_file(
             self.uncompressed_filename, self.content)
         write_endtime = time.time()
         write_total_time = write_endtime - write_starttime
-        self.loghandler.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
+        self.logentry.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
     def lempel_ziv_handle_uncompression(self):
         """A method to handle the steps of data uncompression. First data is transformed
@@ -255,29 +260,40 @@ class LempelZiv77:
         uncompressed_string = "".join(content)
         self.content = uncompressed_string
 
+    def calculate_mean_length_for_log(self):
+        lengths = []
+        for entry in self.compressed_content_as_list:
+            lengths.append(entry[1])
+        self.logentry.logdata["lz_avg_match_length"] = str(mean(lengths))
+        
+
+
     def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
 
-        self.loghandler.logdata["original_filename"] = self.uncompressed_filename
-        self.loghandler.logdata["compressed_filename"] = self.compressed_filename
-        self.loghandler.logdata["compression_method"] = "Lempel-Ziv 77"
-        self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
-        self.loghandler.logdata["compressed_size"] = len(
-            self.compressed_content)
-        self.loghandler.create_compression_entry(filepath)
+        self.logentry.logdata["original_filename"] = self.uncompressed_filename.split("/")[-1]
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
+        self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
+        self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
+        self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
+        self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
+        self.logentry.logdata["action"] = "0"
+        self.calculate_mean_length_for_log()
+        
 
     def analyze_uncompression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
-
-        self.loghandler.logdata["compressed_filename"] = self.compressed_filename
-        self.loghandler.logdata["compressed_filename"] = self.uncompressed_filename
-        self.loghandler.logdata["compression_method"] = "Lempel-Ziv 77"
-        self.loghandler.logdata["uncompressed_size"] = len(self.content) * 8
-        self.loghandler.logdata["compressed_size"] = len(
-            self.compressed_content)
-        self.loghandler.create_uncompression_entry(filepath)
+        
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
+        self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split("/")[-1]
+        self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
+        self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
+        self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
+        self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
+        self.logentry.logdata["action"] = "1"
+        self.calculate_mean_length_for_log()
 
 
 if __name__ == "__main__":
