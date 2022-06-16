@@ -300,10 +300,10 @@ class HuffmanCoding:
     def log_add_frequencies(self):
         freqs = []
         for freq in self.frequencies.values():
-            freqs.append(freq)
+            freqs.append(freq / len(self.content) * 100)
         self.logentry.logdata["huffman_max_frequency"] = str(max(freqs))
         self.logentry.logdata["huffman_min_frequency"] = str(min(freqs))
-        self.logentry.logdata["huffman_freq_variance"] = str(variance(freqs))
+        self.logentry.logdata["huffman_freq_variance"] = f"{(variance(freqs)):.2f}"
 
     def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
