@@ -7,6 +7,7 @@ from datetime import datetime
 from essential_generators import DocumentGenerator
 from services.filemanagement import default_file_manager
 from services.compressionmanagement import default_compression_management
+from services.loghandler import default_loghandler
 from config import DEFAULT_TEST_DATA_PATH
 
 class InvalidCharactersError(Exception):
@@ -28,7 +29,9 @@ class ExtensiveTestHandler:
         self.document_generator = DocumentGenerator()
         self.file_manager = default_file_manager
         self.compression_management = default_compression_management
+        self.loghandler = default_loghandler
         self.log_file = os.path.join(DEFAULT_TEST_DATA_PATH, "compression.log")
+        self.html_log_file = os.path.join(DEFAULT_TEST_DATA_PATH, "compression-log.html")
         self.log_archive = os.path.join(
             DEFAULT_TEST_DATA_PATH, "compression_archive.log")
 
@@ -85,7 +88,7 @@ class ExtensiveTestHandler:
         print("creating file ", filename)
         self.file_manager.create_txt_file(filename, document_content)
 
-    def activate_extensive_tests(self, max_characters: int = 100000):
+    def activate_extensive_tests(self, min_characters: int = 0, max_characters: int = 100000):
         """Activates extensive tests. Formats the log file and picks
         up files that meet the given limitation for character length.
         For each file that meets the limitation the tests are then run.
@@ -114,7 +117,7 @@ class ExtensiveTestHandler:
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
             with open(filename, 'r', encoding="utf-8") as file:
                 content = file.read()
-                if len(content) <= max_characters:
+                if len(content) >= min_characters and len(content) <= max_characters:
                     result = self.run_tests_on_file(filename, content)
                     if result:
                         success += 1
@@ -131,6 +134,7 @@ class ExtensiveTestHandler:
         test_total_time = extensive_test_endtime - extensive_test_starttime
         total = f"{test_total_time:.2f}"
         self.log_end(success, fail, total)
+        self.html_log_end(success, fail, total)
 
     def run_tests_on_file(self, filename: str, content: str):
         """Runs tests on a given file. Compresses and uncompresses
@@ -173,6 +177,7 @@ class ExtensiveTestHandler:
                 exption), "Lempel-Ziv77 compression or uncompression")
         return tests_succeeded
 
+    # TODO: Refactor error handling to log files
     def test_huffman_compression(self, filename: str, content: str):
         filepath = DEFAULT_TEST_DATA_PATH
         tests_succeeded = True
@@ -191,8 +196,14 @@ class ExtensiveTestHandler:
                                "Failure: Original and uncompressed contents in previous \
                                 test did not match.",
                                "Huffman compression or uncompression")
+                self.html_log_entry(filename,
+                               "Failure: Original and uncompressed contents in previous \
+                                test did not match.",
+                               "Huffman compression or uncompression")
         except Exception as exption:
             self.log_entry(filename, str(
+                exption), "Huffman compression or uncompression")
+            self.html_log_entry(filename, str(
                 exption), "Huffman compression or uncompression")
             tests_succeeded = False
         return tests_succeeded
@@ -254,6 +265,45 @@ Failed tests: {fail}\n\n\
         content += "------ END OF ERROR NOTIFICATION ------\n\n"
         with open(self.log_file, "a", encoding="utf-8") as file:
             file.write(content)
+
+    def html_log_entry(self, filename: str, error_content: str, phase: str) -> None:
+        """If a test fails a log entry is created.
+
+        Args:
+            filename (str): File for which the failure happened.
+            error_content (str): Error content.
+            phase (str): Clarification on which algorithm the error occured.
+        """
+        content = "<H2> ERROR NOTIFICATION </H2><br>\n"
+        content += f"<b>Filename:</b> {filename}<br>\n"
+        content += f"<b>Failed task:</b> {phase}<br>\n"
+        content += f"<b>Description:</b> {error_content}<br>\n"
+        with open(self.html_log_file, "a", encoding="utf-8") as file:
+            file.write(content)
+
+    def html_log_end(self, success, fail, total_time):
+        """Once tests are done, a summary of tests is written to the file.
+
+        Uses 'r+' to write to the start of the file.
+
+        Args:
+            success (int): number of successful tests
+            fail (int): number of failed tests
+        """
+        # with open(self.log_file, 'r', encoding='utf-8') as file:
+        #     content = file.read()
+        #     content_as_list = content.split("\n")
+        # with open(self.html_log_file, 'w', encoding="utf-8") as file:
+        #     log_time = datetime.now()
+        #     log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
+        self.loghandler.create_html_file(total_time, success, fail)
+            
+            # file.write(analysis)
+            # bar_huffman = content_as_list[0].split(";")
+            # bar_lempelziv = content_as_list[1].split(";")
+            # for row in content_as_list[2:]:
+            #     file.write(row + "<br>\n")
+
 
     def archive_log_content(self):
         """Archives log content of previous test run.
