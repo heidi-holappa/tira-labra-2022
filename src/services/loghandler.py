@@ -1,8 +1,9 @@
 from datetime import datetime
+from operator import le
 import os
 from config import DEFAULT_DATA_PATH
 from config import DEFAULT_TEST_DATA_PATH
-
+from services.graphmanagement import default_graph_manager
 
 class LogHandler:
     """A class to handle creating log entries.
@@ -16,6 +17,7 @@ class LogHandler:
         self.html_filename = os.path.join(DEFAULT_TEST_DATA_PATH,"compression-log.html")
         self.archive_filename = os.path.join(DEFAULT_TEST_DATA_PATH,"compression_archive.log")
         self.data_csv = os.path.join(DEFAULT_TEST_DATA_PATH,"uncompress-log.csv")
+        self.graph_management = default_graph_manager
         self.logdata = {
             "original_filename": "",
             "compressed_filename": "",
@@ -127,11 +129,81 @@ extended tests overwrites the report.</p><br>\n\n"
             file.write(compression_table)
             file.write("<br>\n")
             file.write(uncompression_table)
-    
+            file.write("<h2>Graphs</h2>\n\
+<p>Below you can review visual comparison of test results. The labels indicate the \
+number of the file in question. Filenames can be found with the number from the tables \
+above.</p>\n")
+            bar_chart_filename = self.create_compression_ratio_bar_chart()
+            file.write(f"<img src='{bar_chart_filename}' alt='Compression ratio comparison'>\
+Bar chart with compression ratios</img><br>\n")
+            huffman_frequency_bar_chart = self.create_huffman_frequency_bar_chart()
+            file.write(f"<img src='{huffman_frequency_bar_chart}' alt='Huffman frequency variances'>\
+</img><br>\n")
+            lempel_ziv_avg_match = self.create_lempel_ziv_bar_chart()
+            file.write(f"<img src='{lempel_ziv_avg_match}' alt='Lempel-Ziv average match length'>\
+</img><br>\n")
+
+   
+    def create_compression_ratio_bar_chart(self):
+        with open(self.data_csv, "r", encoding="utf-8") as file:
+            content = file.read()
+            data_as_rows = content.split("\n")[:-1]
+        huffman_ratio = []
+        lempelziv_ratio = []
+        labels = []
+        for row in data_as_rows:
+            data = row.split(";")
+            if data[15] == "0":
+                if data[0][0] == "H":
+                    huffman_ratio.append(float(data[6]))
+                else:
+                    lempelziv_ratio.append(float(data[6]))
+                if data[1] not in labels:
+                    labels.append(data[1])
+        filename = self.graph_management.construct_compression_ratio_bar_chart(
+                                        huffman_ratio,
+                                        lempelziv_ratio,
+                                        labels)
+        return filename
+
+    def create_huffman_frequency_bar_chart(self):
+        with open(self.data_csv, "r", encoding="utf-8") as file:
+            content = file.read()
+            data_as_rows = content.split("\n")[:-1]
+        huffman_frequency_variance = []
+        labels = []
+        for row in data_as_rows:
+            data = row.split(";")
+            if data[15] == "0":
+                if data[0][0] == "H":
+                    huffman_frequency_variance.append(float(data[13]))
+        filename = self.graph_management.construct_huffman_frequency_variance_bar_chart(
+                                        huffman_frequency_variance)
+        return filename
+
+    def create_lempel_ziv_bar_chart(self):
+        with open(self.data_csv, "r", encoding="utf-8") as file:
+            content = file.read()
+            data_as_rows = content.split("\n")[:-1]
+        lempel_ziv_avg_match = []
+        labels = []
+        for row in data_as_rows:
+            data = row.split(";")
+            if data[15] == "0":
+                if data[0][0] == "L":
+                    lempel_ziv_avg_match.append(float(data[14]))
+        filename = self.graph_management.construct_lempel_ziv_average_length_bar_chart(
+                                                lempel_ziv_avg_match)
+        return filename
+        
+        
+
+
     def create_html_compression_table(self):
         compression_log = "\
 <table border='1'>\n\
     <tr>\n\
+        <th>#</th>\n\
         <th>Filename</th>\n\
         <th>Algorithm</th>\n\
         <th>Original size</th>\n\
@@ -145,15 +217,18 @@ extended tests overwrites the report.</p><br>\n\n"
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
         with open(self.html_filename, "a", encoding="utf-8") as file:
+            file_number = -1
             for row in data_as_rows:
                 data = row.split(";")
                 if data[15] == "0":
+                    file_number += 1
                     if float(data[6]) <= 0.6:
                         color = "green"
                     else:
                         color = "red"
                     compression_log += f"\
     <tr>\n\
+        <th>{file_number // 2 + 1}</th>\n\
         <td>{data[1]}</td>\n\
         <td>{data[0]}</td>\n\
         <td>{data[4]}</td>\n\
@@ -170,6 +245,7 @@ extended tests overwrites the report.</p><br>\n\n"
         uncompression_log = "\
 <table border='1'>\n\
     <tr cellspacing='3'>\n\
+        <th>#</th>\n\
         <th>Filename</th>\n\
         <th>Algorithm</th>\n\
         <th>Original size</th>\n\
@@ -183,15 +259,18 @@ extended tests overwrites the report.</p><br>\n\n"
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
         with open(self.html_filename, "a", encoding="utf-8") as file:
+            file_number = -1
             for row in data_as_rows:
                 data = row.split(";")
                 if data[15] == "1":
+                    file_number += 1
                     if float(data[6]) <= 0.6:
                         color = "green"
                     else:
                         color = "red"
                     uncompression_log += f"\
     <tr>\n\
+        <th>{file_number // 2 + 1}</th>\n\
         <td>{data[2]}</td>\n\
         <td>{data[0]}</td>\n\
         <td>{data[4]}</td>\n\
