@@ -6,6 +6,7 @@
   - Fast tests: these are now ran every time the application starts
   - Extended tests: tests for large files (size over 1MB). 
 - Changed UI-layout, simplified compression/uncompression functionalities.
+- Created a new log-file for manually driven extended tests. Log-file is now an HTML-file and includes graphs and tables. 
 
 ## What have I done this week?
 
@@ -33,4 +34,5 @@
 | 14.6.2022 | Create initial version of HTML-log documentation | 2 |
 | 15.6.2022 | Finalize first version of HTML-formatted log | 2 |
 | 16.6.2022 | Peer-review | 2 |
-| **total**| ---- | **11,5** |
+| 16.6.2022 | Add graphs to HTML-formatted log | 3 |
+| **total**| ---- | **14,5** |
