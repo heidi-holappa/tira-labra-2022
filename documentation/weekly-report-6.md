@@ -29,4 +29,8 @@
 | 12.6.2022 | Experiment compression with 15 MB file | 1 |
 | 12.6.2022 | Add tests, add quick tests to launching of the app | 0,5 |
 | 12.6.2022 | Add content validation to extensive testing | 0,5 |
-| **total**| ---- | **3,5** |
+| 13.6.2022 | Refactor logging, study creating graphs with Python | 2 |
+| 14.6.2022 | Create initial version of HTML-log documentation | 2 |
+| 15.6.2022 | Finalize first version of HTML-formatted log | 2 |
+| 16.6.2022 | Peer-review | 2 |
+| **total**| ---- | **11,5** |
