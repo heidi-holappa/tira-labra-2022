@@ -38,7 +38,7 @@ class GuiMenu:
     def exit(self):
         """Method that destroys the root component and exits the application.
         """
-        self._root.destroy()
+        self._root.quit()
 
     def _open_help(self):
         """A method that opens the requirements specification in the operating system's default browser.
