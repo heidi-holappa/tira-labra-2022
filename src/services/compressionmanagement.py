@@ -28,6 +28,7 @@ class CompressionManagement:
         huffman_compressor = HuffmanCoding(filename, compressed_filename, logentry)
         huffman_compressor.execute_compression()
         huffman_compressor.analyze_compression(filepath)
+        self.add_size_and_compression_ratio_to_logentry(filename, compressed_filename, logentry)
         default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
         self.loghandler.create_compression_entry(logentry.logdata)
 
@@ -46,6 +47,7 @@ class CompressionManagement:
         huffman_uncompressor = HuffmanCoding(uncompressed_filename, filename, logentry)
         huffman_uncompressor.execute_uncompression()
         huffman_uncompressor.analyze_uncompression(filepath)
+        self.add_size_and_compression_ratio_to_logentry(uncompressed_filename, filename, logentry)
         default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
         self.loghandler.create_uncompression_entry(logentry.logdata)
 
@@ -63,6 +65,7 @@ class CompressionManagement:
         lempel_ziv_compressor = LempelZiv77(filename, compressed_filename, logentry)
         lempel_ziv_compressor.lempel_ziv_activate_compression()
         lempel_ziv_compressor.analyze_compression(filepath)
+        self.add_size_and_compression_ratio_to_logentry(filename, compressed_filename, logentry)
         default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
         self.loghandler.create_compression_entry(logentry.logdata)
     
@@ -73,6 +76,7 @@ class CompressionManagement:
         lempel_ziv_uncompressor = LempelZiv77(uncompressed_filename, filename, logentry)
         lempel_ziv_uncompressor.lempel_ziv_activate_uncompression()
         lempel_ziv_uncompressor.analyze_uncompression(filepath)
+        self.add_size_and_compression_ratio_to_logentry(uncompressed_filename, filename, logentry)
         default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
         self.loghandler.create_uncompression_entry(logentry.logdata)
 
@@ -96,6 +100,15 @@ class CompressionManagement:
                 self.initial_huffman_compression(
                     os.path.join(DEFAULT_DATA_PATH, file))
         print("DONE!")
+
+    def add_size_and_compression_ratio_to_logentry(self, uncompressed_filename, compressed_filename, logentry):
+        file_stat = os.stat(uncompressed_filename)
+        filesize = file_stat.st_size
+        compressed_file_stat = os.stat(compressed_filename)
+        compressed_filesize = compressed_file_stat.st_size
+        logentry.logdata["uncompressed_size"] = str(filesize)
+        logentry.logdata["compressed_size"] = str(compressed_filesize)
+        logentry.logdata["compression_ratio"] = f"{compressed_filesize / filesize:.2f}"
 
 
 default_compression_management = CompressionManagement()
