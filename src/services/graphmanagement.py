@@ -46,7 +46,7 @@ class GraphManagement:
             x_values,
             width=0.2,
             tick_label= freq_bar_labels,
-            color = ["#e50053"]
+            color = ["#255cae"]
             )
         pyplt.xlabel("File number")
         pyplt.ylabel("Average length")
@@ -76,7 +76,7 @@ class GraphManagement:
             tick_label= bar_labels,
             color = ["#255cae"]
             )
-        pyplt.xlabel("Filename")
+        pyplt.xlabel("File number")
         pyplt.ylabel("Compression ratio")
         pyplt.title("Compression ratio comparison")
         pyplt.legend(legend_labels, loc=2)
