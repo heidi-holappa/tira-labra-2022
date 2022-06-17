@@ -291,13 +291,13 @@ class CompressionView:
         if not self.file_to_uncompress:
             self._file_error("Select a file to uncompress")
             return
-        if not (self.file_to_uncompress[-3:] == "huf" or self.file_to_uncompress[-2:] == "zv"):
-            self._file_error("Can only uncompress .huf and .zv - files.")
+        if not (self.file_to_uncompress[-3:] == "huf" or self.file_to_uncompress[-2:] == "lz"):
+            self._file_error("Can only uncompress .huf and .lz - files.")
             return
         if self.file_to_uncompress[-3:] == "huf":
             self.compression_management.initial_huffman_uncompression(
                 self.file_to_uncompress)
-        if self.file_to_uncompress[-2:] == 2:
+        if self.file_to_uncompress[-2:] == "lz":
             self.compression_management.lempel_ziv_uncompress(
                 self.file_to_uncompress
             )
