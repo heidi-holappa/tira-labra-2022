@@ -15,6 +15,7 @@ The initial proposal is to do a comparison on two well known algorithms, Huffman
 * [Weekly report #3](documentation/weekly-report-3.md)
 * [Weekly report #4](documentation/weekly-report-4.md)
 * [Weekly report #5](documentation/weekly-report-5.md)
+* [Weekly report #6](documentation/weekly-report-6.md)
 * [Project architecture (extra document)](/documentation/architecture.md)
 
 ## Installation
