@@ -137,7 +137,7 @@ class LempelZiv77:
         """A method to handle the steps of data uncompression. First data is transformed
         to tuples. Then the content is uncompressed.
         """
-        self.transform_fetched_content_to_tuples()
+        self.construct_tuples_from_fetched_content()
         self.lempel_ziv_uncompress()
 
     def compress_content(self):
@@ -149,8 +149,9 @@ class LempelZiv77:
             result = self.init_window_search(i)
             self.compressed_content_as_list.append(result)
             i += result[1]
-        self.create_binary_version_of_content()
+        self.construct_binary_version_of_content()
 
+    # TODO: Remove when new version works
     def create_binary_version_of_content(self):
         """A method to create binary type content of the data. The logic is the following:
         Offset: 12 bits
@@ -165,6 +166,32 @@ class LempelZiv77:
             content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
             if offset == 0:
                 content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
+        self.compressed_content = "".join(content_as_bits)
+        for i in range(0, len(self.compressed_content), 8):
+            value = ord(chr(int(self.compressed_content[i:i+8], 2)))
+            self._bytearray_list.append(value)
+        self.bytearray_data = bytearray(self._bytearray_list)
+
+    def construct_binary_version_of_content(self):
+        """A method to create binary type content of the data. The logic is the following:
+        Offset: 12 bits
+        Length of match: 4 bits
+        Next character: a byte"""
+        content_as_bits = []
+        for member in self.compressed_content_as_list:
+            offset = member[0]
+            match_length = member[1]
+            next_character = member[2]
+            if offset == 0:
+                content_as_bits.append("0")
+                content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
+            else:
+                content_as_bits.append("1")
+                content_as_bits.append(str(bin(offset)[2:].zfill(12)))
+                content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
+        content_as_bits.append("00000000")
+        remaining_bits = str( (8 - len(content_as_bits) % 8) * "0")
+        content_as_bits.append(remaining_bits)
         self.compressed_content = "".join(content_as_bits)
         for i in range(0, len(self.compressed_content), 8):
             value = ord(chr(int(self.compressed_content[i:i+8], 2)))
@@ -222,6 +249,7 @@ class LempelZiv77:
             longest = (0, 1, ord(self.content[buffer_start_index]))
         return longest
 
+    # TODO: Remove when new version works
     def transform_fetched_content_to_tuples(self):
         """A method that transforms the fetched data into tuples.
         """
@@ -237,6 +265,27 @@ class LempelZiv77:
             else:
                 character = ""
                 i += 16
+            self.compressed_content_as_list.append((offset, length, character))
+
+    def construct_tuples_from_fetched_content(self):
+        """A method that transforms the fetched data into tuples.
+        """
+
+        self.compressed_content_as_list = []
+        i = 0
+        while i < len(self.compressed_content):
+            if self.compressed_content[i] == "0":
+                if self.compressed_content[i+1:i+9] == "00000000":
+                    break
+                offset = 0
+                length = 1
+                character = chr(int(self.compressed_content[i+1:i+9], 2))
+                i += 9
+            else:
+                offset = int(self.compressed_content[i+1:i+13], 2)
+                length = int(self.compressed_content[i+13:i+17], 2)
+                character = ""
+                i += 17
             self.compressed_content_as_list.append((offset, length, character))
 
     def lempel_ziv_uncompress(self):
@@ -267,7 +316,7 @@ class LempelZiv77:
         self.logentry.logdata["lz_avg_match_length"] = str(mean(lengths))
         
 
-
+    # TODO: Remove size calculation when sure new solution works.
     def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
@@ -275,13 +324,14 @@ class LempelZiv77:
         self.logentry.logdata["original_filename"] = self.uncompressed_filename.split("/")[-1]
         self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
         self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
-        self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
-        self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
-        self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
+        # self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
+        # self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
+        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
         self.logentry.logdata["action"] = "0"
         self.calculate_mean_length_for_log()
         
 
+    # TODO: Remove size calculation when sure new solution works.
     def analyze_uncompression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
@@ -289,9 +339,9 @@ class LempelZiv77:
         self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
         self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split("/")[-1]
         self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
-        self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
-        self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
-        self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
+        # self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
+        # self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
+        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
         self.logentry.logdata["action"] = "1"
         self.calculate_mean_length_for_log()
 
