@@ -8,15 +8,6 @@ class GraphManagement:
     def __init__(self):        
         self.graph_folder = DEFAULT_TEST_GRAPH_FOLDER
 
-
-    def construct_line_graph(self, x_values, y_values):
-        pyplt.plot(x_values, y_values)
-        pyplt.xlabel("x-axis")
-        pyplt.ylabel("y-axis")
-        pyplt.title("title")
-        # pyplt.savefig("line-graph.png")
-        pyplt.show()
-
     def construct_huffman_frequency_variance_bar_chart(self, x_values):
         pyplt.figure(1)
         freq_index = np.arange(len(x_values))
