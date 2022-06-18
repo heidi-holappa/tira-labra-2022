@@ -7,6 +7,9 @@
   - Extended tests: tests for large files (size over 1MB). 
 - Changed UI-layout, simplified compression/uncompression functionalities.
 - Created a new log-file for manually driven extended tests. Log-file is now an HTML-file and includes graphs and tables. 
+- Documentation updated:
+  - [Execution documentation](execution-documentation.md)
+  - [Architecture documentation](architecture.md)
 
 ## What have I done this week?
 This week I spent quite a lot of time on building a HTML-log-file. It was a learning experience, but I'm satisfied with the result. The most time went on learning how to construct graphs using Python and on deciding what measurements to include in the report. I am pleased with what I have done so far, but hope to get good tips on how to improve what I now have from the demo-session next week.  
@@ -68,4 +71,7 @@ I have a few questions for this week as well:
 | 16.6.2022 | Peer-review | 2 |
 | 16.6.2022 | Add graphs to HTML-formatted log | 3 |
 | 17.6.2022 | Re-build LZ77 bit-transformation | 2 |
-| **total**| ---- | **16,5** |
+| 18.6.2022 | Add LZ77 mean offset to HTML-log | 1 |
+| 18.6.2022 | Change LZ77 str.find to str.rfind and study effects | 0.5 |
+| 18.6.2022 | Write documentation | 1 |
+| **total**| ---- | **19** |
