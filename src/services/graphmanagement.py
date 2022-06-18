@@ -46,6 +46,25 @@ class GraphManagement:
         pyplt.savefig(filename)
         return "images/lempel-ziv-avg-match.png"
 
+    def construct_lempel_ziv_average_offset_bar_chart(self, x_values):
+        pyplt.figure(4)
+        freq_index = np.arange(len(x_values))
+        numbered_labels = list(np.arange(1, len(x_values) + 1))
+        freq_bar_labels = numbered_labels
+        pyplt.bar(
+            freq_index,
+            x_values,
+            width=0.2,
+            tick_label= freq_bar_labels,
+            color = ["#255cae"]
+            )
+        pyplt.xlabel("File number")
+        pyplt.ylabel("Average offset")
+        pyplt.title("Average offset for Lempel-Ziv 77")
+        filename = os.path.join(self.graph_folder, "lempel-ziv-avg-offset.png")
+        pyplt.savefig(filename)
+        return "images/lempel-ziv-avg-offset.png"
+
     
     def construct_compression_ratio_bar_chart(self, x_values, y_values, labels):
         pyplt.figure(2)

@@ -142,6 +142,9 @@ Bar chart with compression ratios</img><br>\n")
             lempel_ziv_avg_match = self.create_lempel_ziv_bar_chart()
             file.write(f"<img src='{lempel_ziv_avg_match}' alt='Lempel-Ziv average match length'>\
 </img><br>\n")
+            lempel_ziv_avg_offset = self.create_lempel_ziv_offset_bar_chart()
+            file.write(f"<img src='{lempel_ziv_avg_offset}' alt='Lempel-Ziv average offset length'>\
+</img><br>\n")
 
    
     def create_compression_ratio_bar_chart(self):
@@ -153,7 +156,7 @@ Bar chart with compression ratios</img><br>\n")
         labels = []
         for row in data_as_rows:
             data = row.split(";")
-            if data[15] == "0":
+            if data[16] == "0":
                 if data[0][0] == "H":
                     huffman_ratio.append(float(data[6]))
                 else:
@@ -174,7 +177,7 @@ Bar chart with compression ratios</img><br>\n")
         labels = []
         for row in data_as_rows:
             data = row.split(";")
-            if data[15] == "0":
+            if data[16] == "0":
                 if data[0][0] == "H":
                     huffman_frequency_variance.append(float(data[13]))
         filename = self.graph_management.construct_huffman_frequency_variance_bar_chart(
@@ -189,14 +192,27 @@ Bar chart with compression ratios</img><br>\n")
         labels = []
         for row in data_as_rows:
             data = row.split(";")
-            if data[15] == "0":
+            if data[16] == "0":
                 if data[0][0] == "L":
                     lempel_ziv_avg_match.append(float(data[14]))
         filename = self.graph_management.construct_lempel_ziv_average_length_bar_chart(
                                                 lempel_ziv_avg_match)
         return filename
         
-        
+    def create_lempel_ziv_offset_bar_chart(self):
+        with open(self.data_csv, "r", encoding="utf-8") as file:
+            content = file.read()
+            data_as_rows = content.split("\n")[:-1]
+        lempel_ziv_avg_offset = []
+        labels = []
+        for row in data_as_rows:
+            data = row.split(";")
+            if data[16] == "0":
+                if data[0][0] == "L":
+                    lempel_ziv_avg_offset.append(float(data[15]))
+        filename = self.graph_management.construct_lempel_ziv_average_offset_bar_chart(
+                                                lempel_ziv_avg_offset)
+        return filename
 
 
     def create_html_compression_table(self):
@@ -220,7 +236,7 @@ Bar chart with compression ratios</img><br>\n")
             file_number = -1
             for row in data_as_rows:
                 data = row.split(";")
-                if data[15] == "0":
+                if data[16] == "0":
                     file_number += 1
                     if float(data[6]) <= 0.6:
                         color = "green"
@@ -262,7 +278,7 @@ Bar chart with compression ratios</img><br>\n")
             file_number = -1
             for row in data_as_rows:
                 data = row.split(";")
-                if data[15] == "1":
+                if data[16] == "1":
                     file_number += 1
                     if float(data[6]) <= 0.6:
                         color = "green"
