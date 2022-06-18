@@ -17,6 +17,7 @@ class LogEntry:
             "huffman_min_frequency": "",
             "huffman_freq_variance": "",
             "lz_avg_match_length": "",
+            "lz_mean_offset": "",
             "action": ""
         }
 
