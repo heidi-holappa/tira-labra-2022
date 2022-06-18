@@ -45,9 +45,12 @@ I have a few questions for this week as well:
   - Compression time (+ data management time)
   - Huffman coding frequency variance: this indicates how much variance there is in the Huffman frequencies. As a crude rule the more variance there is, the more efficient the compression is, as the more frequent characters have shorter branches in the tree
   - Lempel-Ziv 77 average match length: As a crude rule the higher the match length, the better the compression rate. 
-
+- A lot of the new service classes include writing or reading from a file. Should these classes be also tested? What would be a good approach to this? Perhaps I could configure a different folder for testing read and write operations so that none of the existing files are altered or deleted? 
 
 ## Pylint and Pytest - status update
+This week I have written a lot of new functionalities in the service classes and these are still missing tests. Because of this, the branch coverage has now decreased to 61 percent. 
+
+![Coverage-report](images/coverage-report-week-6.png)
 
 ## Next steps
 - I caused a bug in the app this week. The app doesn't close properly if the used does not use the menu to exit. I need to fix this bug before the deadline

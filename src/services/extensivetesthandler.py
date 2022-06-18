@@ -17,7 +17,6 @@ class InvalidCharactersError(Exception):
     Args:
         Exception: general exception
     """
-    pass
 
 
 class ExtensiveTestHandler:
@@ -99,6 +98,29 @@ class ExtensiveTestHandler:
         Args:
             max_characters (int, optional): Maximum character length for files. Defaults to 100000.
         """
+
+        self.validate_test_files()
+        extensive_test_starttime = time.time()
+        if os.path.exists(self.log_file):
+            self.archive_log_content()
+        success = 0
+        fail = 0
+        for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
+            with open(filename, 'r', encoding="utf-8") as file:
+                content = file.read()
+                if len(content) >= min_characters and len(content) <= max_characters:
+                    if self.run_tests_on_file(filename, content):
+                        success += 1
+                    else:
+                        fail += 1
+        self.remove_extensive_test_files()
+        extensive_test_endtime = time.time()
+        test_total_time = extensive_test_endtime - extensive_test_starttime
+        total = f"{test_total_time:.2f}"
+        self.log_end(success, fail, total)
+        self.html_log_end(success, fail, total)
+
+    def validate_test_files(self):
         ascii_order_set = self.create_printable_characters()
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
             with open(filename, 'r', encoding="utf-8") as file:
@@ -109,25 +131,10 @@ class ExtensiveTestHandler:
                         print(
                             f"Error! {file_split[-1]} includes non-supported characters")
                         raise InvalidCharactersError(
-                            f"Error! {file_split[-1]} includes non-supported characters. Non-supported character: {char}")
+                            f"Error! {file_split[-1]} includes non-supported characters. \
+Non-supported character: {char}")
 
-        extensive_test_starttime = time.time()
-        if os.path.exists(self.log_file):
-            self.archive_log_content()
-            os.remove(self.log_file)
-        with open(self.log_file, "a", encoding="utf-8") as file:
-            file.close()
-        success = 0
-        fail = 0
-        for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
-            with open(filename, 'r', encoding="utf-8") as file:
-                content = file.read()
-                if len(content) >= min_characters and len(content) <= max_characters:
-                    result = self.run_tests_on_file(filename, content)
-                    if result:
-                        success += 1
-                    else:
-                        fail += 1
+    def remove_extensive_test_files(self):
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*_uncompressed.txt')):
             os.remove(filename)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.huf')):
@@ -135,11 +142,7 @@ class ExtensiveTestHandler:
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.lz')):
             os.remove(filename)
 
-        extensive_test_endtime = time.time()
-        test_total_time = extensive_test_endtime - extensive_test_starttime
-        total = f"{test_total_time:.2f}"
-        self.log_end(success, fail, total)
-        self.html_log_end(success, fail, total)
+
 
     def run_tests_on_file(self, filename: str, content: str):
         """Runs tests on a given file. Compresses and uncompresses
@@ -159,13 +162,12 @@ class ExtensiveTestHandler:
         return tests_succeeded
 
     def test_lempelziv_compression(self, filename: str, content: str):
-        filepath = DEFAULT_TEST_DATA_PATH
         tests_succeeded = True
 
         try:
-            self.compression_management.lempel_ziv_compress(filename, filepath)
+            self.compression_management.lempel_ziv_compress(filename)
             self.compression_management.lempel_ziv_uncompress(
-                filename[:-3] + "lz", filepath)
+                filename[:-3] + "lz")
             with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
                 lz77_uncompressed_content = file.read()
             result = self.validate_content_matches(
@@ -184,13 +186,12 @@ class ExtensiveTestHandler:
 
     # TODO: Refactor error handling to log files
     def test_huffman_compression(self, filename: str, content: str):
-        filepath = DEFAULT_TEST_DATA_PATH
         tests_succeeded = True
         try:
             self.compression_management.initial_huffman_compression(
-                filename, filepath)
+                filename)
             self.compression_management.initial_huffman_uncompression(
-                filename[:-3] + "huf", filepath)
+                filename[:-3] + "huf")
             with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
                 huffman_uncompressed_content = file.read()
             result = self.validate_content_matches(
@@ -317,6 +318,9 @@ Failed tests: {fail}\n\n\
             content = file.read()
         with open(self.log_archive, "a", encoding="utf-8") as file:
             file.write(content)
+        os.remove(self.log_file)
+        with open(self.log_file, "a", encoding="utf-8") as file:
+            file.close()
 
 
 default_test_handler = ExtensiveTestHandler()

@@ -1,7 +1,5 @@
 from datetime import datetime
-from operator import le
 import os
-from config import DEFAULT_DATA_PATH
 from config import DEFAULT_TEST_DATA_PATH
 from services.graphmanagement import default_graph_manager
 
@@ -138,8 +136,8 @@ above.</p>\n")
             file.write(f"<img src='{bar_chart_filename}' alt='Compression ratio comparison'>\
 Bar chart with compression ratios</img><br>\n")
             huffman_frequency_bar_chart = self.create_huffman_frequency_bar_chart()
-            file.write(f"<img src='{huffman_frequency_bar_chart}' alt='Huffman frequency variances'>\
-</img><br>\n")
+            file.write(f"<img src='{huffman_frequency_bar_chart}' \
+alt='Huffman frequency variances'></img><br>\n")
             lempel_ziv_avg_match = self.create_lempel_ziv_bar_chart()
             file.write(f"<img src='{lempel_ziv_avg_match}' alt='Lempel-Ziv average match length'>\
 </img><br>\n")
@@ -174,7 +172,6 @@ Bar chart with compression ratios</img><br>\n")
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
         huffman_frequency_variance = []
-        labels = []
         for row in data_as_rows:
             data = row.split(";")
             if data[16] == "0":
@@ -189,7 +186,6 @@ Bar chart with compression ratios</img><br>\n")
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
         lempel_ziv_avg_match = []
-        labels = []
         for row in data_as_rows:
             data = row.split(";")
             if data[16] == "0":
@@ -204,7 +200,6 @@ Bar chart with compression ratios</img><br>\n")
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
         lempel_ziv_avg_offset = []
-        labels = []
         for row in data_as_rows:
             data = row.split(";")
             if data[16] == "0":
