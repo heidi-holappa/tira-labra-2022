@@ -8,6 +8,9 @@ The automated tests are also divided into two categories. Lighter tests are ran 
 | -------- | -------- | -------- | -------- |
 | Services | FileManagement | File creation works | |
 | Services | FileManagement | Only valid files are compressed / uncompressed | |
+| Services | ExtensiveTestHandler | All supported characters are included | |
+| Services | ExtensiveTestHandler | Randomly created content only includes supported charcters | |
+| Services | ExtensiveTestHandler | Content validation works as intended | |
 | Entities | HuffmanCoding | frequencies are calculated correctly | |
 | Entities | HuffmanCoding | Huffman tree is built correctly | |
 | Entities | HuffmanCoding | uncompressed file content matches the original file content with different types of content. ||
