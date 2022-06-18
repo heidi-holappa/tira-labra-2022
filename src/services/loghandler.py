@@ -32,9 +32,7 @@ class LogHandler:
             "data_fetch_and_process_time": "",
             "data_write_and_process_time": "",
         }
-
         self.init_log_file()
-        self.init_html_file()
 
     def init_log_file(self):
 

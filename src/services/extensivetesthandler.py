@@ -99,6 +99,7 @@ class ExtensiveTestHandler:
             max_characters (int, optional): Maximum character length for files. Defaults to 100000.
         """
 
+        self.loghandler.init_html_file()
         self.validate_test_files()
         extensive_test_starttime = time.time()
         if os.path.exists(self.log_file):
