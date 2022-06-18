@@ -123,7 +123,15 @@ We can simplify the data to be stored even further by deciding that when a chara
 (C)
 (3, 3)
 ```
-Then, depending on the space requirements of the offset and length, we can decide if it is worth it to store short matches. It can take more space to store (1, 1) that it would take to store the character 'A.'
+Then, depending on the space requirements of the offset and length, we can decide if it is worth it to store short matches. It can take more space to store (1, 1) that it would take to store the character 'A.'  
+
+One detail worth mentioning is that in many applications of the Lempel-Ziv 77 a **sliding window** is used. This means that the match can continue into the lookahead buffer. For instance in the following case
+
+```
+  Window    |  Lookahead buffer
+    ABC          ABCABC
+```
+The offset would be 3 but the length could be more than that, for example 9. As we can see, we can parse the next characters from the content that we a constructing. Because this application uses Python's built-it `str.rfind` to find optimal matches, this marvelous idea was omitted from the implementation. This idea is explained in more detail for instance in [this article](https://towardsdatascience.com/how-data-compression-works-exploring-lz77-3a2c2e06c097)
 
 ### Writing compressed content to a file
 Currently the data is written to file as bytes. First data is tranformed into a bytearray and then written. This is my first time working with bit transformation and the solution is most likely quite naive and perhaps inefficient. Data is now first turned into a string of 1's and 0' and then divided into bytes (8 bits). This data is then stored as bytes to a file.
