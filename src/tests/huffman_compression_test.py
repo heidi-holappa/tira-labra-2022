@@ -139,7 +139,6 @@ class TestHuffmanCompression(unittest.TestCase):
                 content_matches = False
                 break
             if content[i] != decoded_content[i]:
-                # print(content_as_list[i], content_as_list_from_file[i])
                 content_matches = False
         print(len(content), len(decoded_content))
         self.assertEqual(True, content_matches)
