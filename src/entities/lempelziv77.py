@@ -223,7 +223,7 @@ class LempelZiv77:
         buffer_end_index: int
     ):
         """An iterative method to find the longest string match in a sliding window.
-        Uses Python's built-in method str.find() to find longest match iteratively.
+        Uses Python's built-in method str.rfind() to find longest match iteratively.
         Based on documentation str.find() worst case time complexity is O(n*m),
         on average time complexity is O(m).
 
@@ -237,7 +237,7 @@ class LempelZiv77:
         """
         longest = (0, 0, 0)
         for i in range(buffer_start_index+2, buffer_end_index):
-            found_index = self.content[window_start_index:buffer_start_index].find(
+            found_index = self.content[window_start_index:buffer_start_index].rfind(
                 self.content[buffer_start_index:i])
             if found_index != -1:
                 longest = (buffer_start_index - (window_start_index +
@@ -309,11 +309,14 @@ class LempelZiv77:
         uncompressed_string = "".join(content)
         self.content = uncompressed_string
 
-    def calculate_mean_length_for_log(self):
+    def calculate_mean_length_and_mean_offset_for_log(self):
         lengths = []
+        offsets = []
         for entry in self.compressed_content_as_list:
+            offsets.append(entry[0])
             lengths.append(entry[1])
         self.logentry.logdata["lz_avg_match_length"] = str(mean(lengths))
+        self.logentry.logdata["lz_mean_offset"] = str(mean(offsets))
         
 
     # TODO: Remove size calculation when sure new solution works.
@@ -328,7 +331,7 @@ class LempelZiv77:
         # self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
         # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
         self.logentry.logdata["action"] = "0"
-        self.calculate_mean_length_for_log()
+        self.calculate_mean_length_and_mean_offset_for_log()
         
 
     # TODO: Remove size calculation when sure new solution works.
@@ -343,7 +346,7 @@ class LempelZiv77:
         # self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
         # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
         self.logentry.logdata["action"] = "1"
-        self.calculate_mean_length_for_log()
+        self.calculate_mean_length_and_mean_offset_for_log()
 
 
 if __name__ == "__main__":
