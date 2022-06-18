@@ -14,16 +14,17 @@ class NoCompressedContentError(Exception):
         Exception: A general exeption message that is logged.
     """
 
+
 class LempelZiv77:
 
     """Class responsible for compressing/uncompressing data with LZ77
     compression algorithm.
     """
 
-    def __init__(self, 
-            uncompressed_filename: str,
-            compressed_filename: str,
-            logentry: LogEntry = LogEntry()):
+    def __init__(self,
+                 uncompressed_filename: str,
+                 compressed_filename: str,
+                 logentry: LogEntry = LogEntry()):
         """Construction for the class
 
         Args:
@@ -190,7 +191,7 @@ class LempelZiv77:
                 content_as_bits.append(str(bin(offset)[2:].zfill(12)))
                 content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
         content_as_bits.append("00000000")
-        remaining_bits = str( (8 - len(content_as_bits) % 8) * "0")
+        remaining_bits = str((8 - len(content_as_bits) % 8) * "0")
         content_as_bits.append(remaining_bits)
         self.compressed_content = "".join(content_as_bits)
         for i in range(0, len(self.compressed_content), 8):
@@ -317,34 +318,38 @@ class LempelZiv77:
             lengths.append(entry[1])
         self.logentry.logdata["lz_avg_match_length"] = str(mean(lengths))
         self.logentry.logdata["lz_mean_offset"] = str(mean(offsets))
-        
 
     # TODO: Remove size calculation when sure new solution works.
+
     def analyze_compression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
 
-        self.logentry.logdata["original_filename"] = self.uncompressed_filename.split("/")[-1]
-        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
+        self.logentry.logdata["original_filename"] = self.uncompressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
+            "/")[-1]
         self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
         # self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
         # self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
-        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
+        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}"
         self.logentry.logdata["action"] = "0"
         self.calculate_mean_length_and_mean_offset_for_log()
-        
 
     # TODO: Remove size calculation when sure new solution works.
+
     def analyze_uncompression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on compression.
         """
-        
-        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
-        self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split("/")[-1]
+
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split(
+            "/")[-1]
         self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
         # self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
         # self.logentry.logdata["compressed_size"] = str(len(self.compressed_content))
-        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}" 
+        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed_content) / (len(self.content) * 8)):.2f}"
         self.logentry.logdata["action"] = "1"
         self.calculate_mean_length_and_mean_offset_for_log()
 

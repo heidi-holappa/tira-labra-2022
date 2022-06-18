@@ -25,11 +25,14 @@ class CompressionManagement:
         """
         compressed_filename = filename[:-3] + "huf"
         logentry = LogEntry()
-        huffman_compressor = HuffmanCoding(filename, compressed_filename, logentry)
+        huffman_compressor = HuffmanCoding(
+            filename, compressed_filename, logentry)
         huffman_compressor.execute_compression()
         huffman_compressor.analyze_compression(filepath)
-        self.add_size_and_compression_ratio_to_logentry(filename, compressed_filename, logentry)
-        default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
+        self.add_size_and_compression_ratio_to_logentry(
+            filename, compressed_filename, logentry)
+        default_loghandler.write_csv_entry_to_file(
+            logentry.get_logdata_as_csv_row())
         self.loghandler.create_compression_entry(logentry.logdata)
 
     def initial_huffman_uncompression(self, filename: str, filepath=DEFAULT_DATA_PATH):
@@ -44,11 +47,14 @@ class CompressionManagement:
         uncompressed_filename = filename[:-4] + "_uncompressed.txt"
         # analysis_filename = filename[:-4] + "_uncompression_analysis.log"
         logentry = LogEntry()
-        huffman_uncompressor = HuffmanCoding(uncompressed_filename, filename, logentry)
+        huffman_uncompressor = HuffmanCoding(
+            uncompressed_filename, filename, logentry)
         huffman_uncompressor.execute_uncompression()
         huffman_uncompressor.analyze_uncompression(filepath)
-        self.add_size_and_compression_ratio_to_logentry(uncompressed_filename, filename, logentry)
-        default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
+        self.add_size_and_compression_ratio_to_logentry(
+            uncompressed_filename, filename, logentry)
+        default_loghandler.write_csv_entry_to_file(
+            logentry.get_logdata_as_csv_row())
         self.loghandler.create_uncompression_entry(logentry.logdata)
 
     def lempel_ziv_compress(self, filename: str, filepath=DEFAULT_DATA_PATH):
@@ -62,22 +68,27 @@ class CompressionManagement:
 
         compressed_filename = filename[:-3] + "lz"
         logentry = LogEntry()
-        lempel_ziv_compressor = LempelZiv77(filename, compressed_filename, logentry)
+        lempel_ziv_compressor = LempelZiv77(
+            filename, compressed_filename, logentry)
         lempel_ziv_compressor.lempel_ziv_activate_compression()
         lempel_ziv_compressor.analyze_compression(filepath)
-        self.add_size_and_compression_ratio_to_logentry(filename, compressed_filename, logentry)
-        default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
+        self.add_size_and_compression_ratio_to_logentry(
+            filename, compressed_filename, logentry)
+        default_loghandler.write_csv_entry_to_file(
+            logentry.get_logdata_as_csv_row())
         self.loghandler.create_compression_entry(logentry.logdata)
-    
 
     def lempel_ziv_uncompress(self, filename: str, filepath=DEFAULT_DATA_PATH):
         uncompressed_filename = filename[:-3] + "_uncompressed.txt"
         logentry = LogEntry()
-        lempel_ziv_uncompressor = LempelZiv77(uncompressed_filename, filename, logentry)
+        lempel_ziv_uncompressor = LempelZiv77(
+            uncompressed_filename, filename, logentry)
         lempel_ziv_uncompressor.lempel_ziv_activate_uncompression()
         lempel_ziv_uncompressor.analyze_uncompression(filepath)
-        self.add_size_and_compression_ratio_to_logentry(uncompressed_filename, filename, logentry)
-        default_loghandler.write_csv_entry_to_file(logentry.get_logdata_as_csv_row())
+        self.add_size_and_compression_ratio_to_logentry(
+            uncompressed_filename, filename, logentry)
+        default_loghandler.write_csv_entry_to_file(
+            logentry.get_logdata_as_csv_row())
         self.loghandler.create_uncompression_entry(logentry.logdata)
 
     def validate_file_extension(self, extension: str, accepted_extensions: str) -> bool:

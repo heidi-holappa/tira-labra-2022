@@ -3,9 +3,10 @@ import matplotlib.pyplot as pyplt
 import numpy as np
 from config import DEFAULT_TEST_GRAPH_FOLDER
 
+
 class GraphManagement:
 
-    def __init__(self):        
+    def __init__(self):
         self.graph_folder = DEFAULT_TEST_GRAPH_FOLDER
 
     def construct_huffman_frequency_variance_bar_chart(self, x_values):
@@ -17,13 +18,14 @@ class GraphManagement:
             freq_index,
             x_values,
             width=0.2,
-            tick_label= freq_bar_labels,
-            color = ["#e50053"]
-            )
+            tick_label=freq_bar_labels,
+            color=["#e50053"]
+        )
         pyplt.xlabel("File number")
         pyplt.ylabel("Variance")
         pyplt.title("Frequency variance for Huffman compression")
-        filename = os.path.join(self.graph_folder, "huffman-frequency-variance.png")
+        filename = os.path.join(
+            self.graph_folder, "huffman-frequency-variance.png")
         pyplt.savefig(filename)
         return "images/huffman-frequency-variance.png"
 
@@ -36,9 +38,9 @@ class GraphManagement:
             freq_index,
             x_values,
             width=0.2,
-            tick_label= freq_bar_labels,
-            color = ["#255cae"]
-            )
+            tick_label=freq_bar_labels,
+            color=["#255cae"]
+        )
         pyplt.xlabel("File number")
         pyplt.ylabel("Average length")
         pyplt.title("Average match length for Lempel-Ziv 77")
@@ -55,9 +57,9 @@ class GraphManagement:
             freq_index,
             x_values,
             width=0.2,
-            tick_label= freq_bar_labels,
-            color = ["#255cae"]
-            )
+            tick_label=freq_bar_labels,
+            color=["#255cae"]
+        )
         pyplt.xlabel("File number")
         pyplt.ylabel("Average offset")
         pyplt.title("Average offset for Lempel-Ziv 77")
@@ -65,7 +67,6 @@ class GraphManagement:
         pyplt.savefig(filename)
         return "images/lempel-ziv-avg-offset.png"
 
-    
     def construct_compression_ratio_bar_chart(self, x_values, y_values, labels):
         pyplt.figure(2)
         x_index = np.arange(len(labels))
@@ -76,21 +77,22 @@ class GraphManagement:
             x_index,
             x_values,
             width=0.2,
-            tick_label= bar_labels,
-            color = ["#e50053"]
-            )
+            tick_label=bar_labels,
+            color=["#e50053"]
+        )
         pyplt.bar(
             x_index + 0.2,
             y_values,
             width=0.2,
-            tick_label= bar_labels,
-            color = ["#255cae"]
-            )
+            tick_label=bar_labels,
+            color=["#255cae"]
+        )
         pyplt.xlabel("File number")
         pyplt.ylabel("Compression ratio")
         pyplt.title("Compression ratio comparison")
         pyplt.legend(legend_labels, loc=2)
-        filename = os.path.join(self.graph_folder, "compression-ratio-comparison.png")
+        filename = os.path.join(
+            self.graph_folder, "compression-ratio-comparison.png")
         pyplt.savefig(filename)
         return "images/compression-ratio-comparison.png"
 

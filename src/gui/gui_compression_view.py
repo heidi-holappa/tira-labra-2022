@@ -131,10 +131,6 @@ class CompressionView:
         self._construct_log_frame()
         self._construct_buttons()
 
-
-
-
-
     def _construct_buttons(self):
 
         button_select_file_to_compress = ttk.Button(
@@ -193,14 +189,14 @@ class CompressionView:
         button_select_file_to_compress.grid(
             sticky=constants.NSEW
         )
-        
+
         radiobutton_label.grid(
             pady=10,
             sticky=constants.W)
-        
+
         radiobutton_huffman.grid(
             sticky=constants.W)
-        
+
         radiobutton_lempelziv77.grid(
             sticky=constants.W)
 
@@ -261,7 +257,8 @@ class CompressionView:
             self.compression_management.initial_huffman_compression(
                 self.file_to_compress)
         if compression_method == 2:
-            self.compression_management.lempel_ziv_compress(self.file_to_compress)
+            self.compression_management.lempel_ziv_compress(
+                self.file_to_compress)
         self._update_log()
         self._compression_status_notification("File compressed successfully!")
 
@@ -312,15 +309,17 @@ class CompressionView:
         """
 
         self.file_to_compress = filedialog.askopenfilename(initialdir=DEFAULT_DATA_PATH,
-                                                   title="Select a File",
-                                                   filetypes=(
-                                                       ("Supported types", ".txt"),
-                                                       ("all files", ".*")
-                                                   )
-                                                   )
+                                                           title="Select a File",
+                                                           filetypes=(
+                                                               ("Supported types",
+                                                                ".txt"),
+                                                               ("all files", ".*")
+                                                           )
+                                                           )
         filename_split = self.file_to_compress.split("/")
         filename = filename_split[-1]
-        self.label_file_explorer_compress.configure(text=f"File Opened: {filename}")
+        self.label_file_explorer_compress.configure(
+            text=f"File Opened: {filename}")
 
     def _handle_get_file_to_uncompress(self):
         """A method to handle filedialog opening.
@@ -329,16 +328,19 @@ class CompressionView:
         """
 
         self.file_to_uncompress = filedialog.askopenfilename(initialdir=DEFAULT_DATA_PATH,
-                                                   title="Select a File",
-                                                   filetypes=(
-                                                       ("Supported types", ".huf"),
-                                                       ("Supported types", ".lz"),
-                                                       ("all files", ".*")
-                                                   )
-                                                   )
+                                                             title="Select a File",
+                                                             filetypes=(
+                                                                 ("Supported types",
+                                                                  ".huf"),
+                                                                 ("Supported types",
+                                                                  ".lz"),
+                                                                 ("all files", ".*")
+                                                             )
+                                                             )
         filename_split = self.file_to_uncompress.split("/")
         filename = filename_split[-1]
-        self.label_file_explorer_uncompress.configure(text=f"File Opened: {filename}")
+        self.label_file_explorer_uncompress.configure(
+            text=f"File Opened: {filename}")
 
     def _file_error(self, content: str):
         """A general method to handle showing messageboxes with an error

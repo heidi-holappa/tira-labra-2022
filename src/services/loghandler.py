@@ -5,6 +5,7 @@ from config import DEFAULT_DATA_PATH
 from config import DEFAULT_TEST_DATA_PATH
 from services.graphmanagement import default_graph_manager
 
+
 class LogHandler:
     """A class to handle creating log entries.
     """
@@ -14,9 +15,12 @@ class LogHandler:
         in the .env file.
         """
         self.filename = os.path.join(DEFAULT_TEST_DATA_PATH, "compression.log")
-        self.html_filename = os.path.join(DEFAULT_TEST_DATA_PATH,"compression-log.html")
-        self.archive_filename = os.path.join(DEFAULT_TEST_DATA_PATH,"compression_archive.log")
-        self.data_csv = os.path.join(DEFAULT_TEST_DATA_PATH,"uncompress-log.csv")
+        self.html_filename = os.path.join(
+            DEFAULT_TEST_DATA_PATH, "compression-log.html")
+        self.archive_filename = os.path.join(
+            DEFAULT_TEST_DATA_PATH, "compression_archive.log")
+        self.data_csv = os.path.join(
+            DEFAULT_TEST_DATA_PATH, "uncompress-log.csv")
         self.graph_management = default_graph_manager
         self.logdata = {
             "original_filename": "",
@@ -35,7 +39,7 @@ class LogHandler:
         self.init_html_file()
 
     def init_log_file(self):
-        
+
         if os.path.exists(self.filename):
             os.remove(self.filename)
         with open(self.filename, "a", encoding="utf-8") as file:
@@ -51,7 +55,6 @@ class LogHandler:
             os.remove(self.data_csv)
         with open(self.data_csv, "a", encoding="utf-8") as file:
             file.close()
-            
 
     def archive_log_content(self, filename):
         content = ""
@@ -78,11 +81,9 @@ class LogHandler:
         if not os.path.exists(self.filename):
             with open(self.filename, "a", encoding="utf-8") as file:
                 file.close()
-        
-        
-        
+
         compression_ratio = int(logdata['compressed_size']) / \
-                int(logdata['uncompressed_size']) * 100
+            int(logdata['uncompressed_size']) * 100
 
         with open(self.filename, "a", encoding="utf-8") as file:
             log_time = datetime.now()
@@ -103,10 +104,10 @@ Time used for writing and processing data: \
             file.write(content)
             file.write("------ END OF ENTRY ------\n\n")
 
-    def create_html_file(self, 
-                        total_time,
-                        success,
-                        fail):
+    def create_html_file(self,
+                         total_time,
+                         success,
+                         fail):
         log_time = datetime.now()
         log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
         with open(self.html_filename, "a", encoding="utf_8") as file:
@@ -146,7 +147,6 @@ Bar chart with compression ratios</img><br>\n")
             file.write(f"<img src='{lempel_ziv_avg_offset}' alt='Lempel-Ziv average offset length'>\
 </img><br>\n")
 
-   
     def create_compression_ratio_bar_chart(self):
         with open(self.data_csv, "r", encoding="utf-8") as file:
             content = file.read()
@@ -164,9 +164,9 @@ Bar chart with compression ratios</img><br>\n")
                 if data[1] not in labels:
                     labels.append(data[1])
         filename = self.graph_management.construct_compression_ratio_bar_chart(
-                                        huffman_ratio,
-                                        lempelziv_ratio,
-                                        labels)
+            huffman_ratio,
+            lempelziv_ratio,
+            labels)
         return filename
 
     def create_huffman_frequency_bar_chart(self):
@@ -181,7 +181,7 @@ Bar chart with compression ratios</img><br>\n")
                 if data[0][0] == "H":
                     huffman_frequency_variance.append(float(data[13]))
         filename = self.graph_management.construct_huffman_frequency_variance_bar_chart(
-                                        huffman_frequency_variance)
+            huffman_frequency_variance)
         return filename
 
     def create_lempel_ziv_bar_chart(self):
@@ -196,9 +196,9 @@ Bar chart with compression ratios</img><br>\n")
                 if data[0][0] == "L":
                     lempel_ziv_avg_match.append(float(data[14]))
         filename = self.graph_management.construct_lempel_ziv_average_length_bar_chart(
-                                                lempel_ziv_avg_match)
+            lempel_ziv_avg_match)
         return filename
-        
+
     def create_lempel_ziv_offset_bar_chart(self):
         with open(self.data_csv, "r", encoding="utf-8") as file:
             content = file.read()
@@ -211,9 +211,8 @@ Bar chart with compression ratios</img><br>\n")
                 if data[0][0] == "L":
                     lempel_ziv_avg_offset.append(float(data[15]))
         filename = self.graph_management.construct_lempel_ziv_average_offset_bar_chart(
-                                                lempel_ziv_avg_offset)
+            lempel_ziv_avg_offset)
         return filename
-
 
     def create_html_compression_table(self):
         compression_log = "\
@@ -256,7 +255,7 @@ Bar chart with compression ratios</img><br>\n")
     </tr>\n"
         compression_log += "</table>\n"
         return compression_log
-    
+
     def create_html_uncompression_table(self):
         uncompression_log = "\
 <table border='1'>\n\
@@ -301,7 +300,7 @@ Bar chart with compression ratios</img><br>\n")
         return uncompression_log
 
     def create_uncompression_entry(self,
-                                logdata: dict) -> None:
+                                   logdata: dict) -> None:
         """Writes log data for uncompression event.
 
         Args:
@@ -332,5 +331,6 @@ Time used for writing and processing data: \
 {logdata['data_write_and_process_time']} seconds\n"""
             file.write(content)
             file.write("------ END OF ENTRY ------\n\n")
+
 
 default_loghandler = LogHandler()

@@ -11,10 +11,10 @@ class HuffmanCoding:
     """Constructor for the class
     """
 
-    def __init__(self, 
-            uncompressed_filename,
-            compressed_filename,
-            logentry: LogEntry = LogEntry()):
+    def __init__(self,
+                 uncompressed_filename,
+                 compressed_filename,
+                 logentry: LogEntry = LogEntry()):
         self.uncompressed_filename = uncompressed_filename
         self.compressed_filename = compressed_filename
         self.content = ""
@@ -227,7 +227,7 @@ class HuffmanCoding:
         self.content = self.file_manager.fetch_uncompressed_content(
             self.uncompressed_filename)
 
-    # TODO: Remove commented section when sure new solution works. 
+    # TODO: Remove commented section when sure new solution works.
     def fetch_compressed_content(self):
         """Method responsible for processing the stored content. Logic is as follows:
         Length of the stored tree: 12 bits
@@ -311,15 +311,17 @@ class HuffmanCoding:
         """An initial method for creating analysis data on compression.
         """
 
-        self.logentry.logdata["original_filename"] = self.uncompressed_filename.split("/")[-1]
-        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
+        self.logentry.logdata["original_filename"] = self.uncompressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
+            "/")[-1]
         self.logentry.logdata["compression_method"] = "Huffman coding"
         # self.logentry.logdata["uncompressed_size"] = str(len(self.content) * 8)
         # self.logentry.logdata["compressed_size"] = str(len(self.compressed))
-        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed) / (len(self.content) * 8)):.2f}" 
+        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed) / (len(self.content) * 8)):.2f}"
         self.logentry.logdata["action"] = "0"
         self.log_add_frequencies()
-        
+
     # TODO: Remove size calculation when sure new solution works.
     def analyze_uncompression(self, filepath=DEFAULT_DATA_PATH):
         """An initial method for creating analysis data on uncompression.
@@ -327,11 +329,13 @@ class HuffmanCoding:
         that fetches content from a compressed file.
         """
 
-        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split("/")[-1]
-        self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split("/")[-1]
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split(
+            "/")[-1]
         self.logentry.logdata["compression_method"] = "Huffman coding"
         # self.logentry.logdata["uncompressed_size"] = str(len(self.uncompressed) * 8)
-        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed) / (len(self.content) * 8)):.2f}" 
+        # self.logentry.logdata["compression_ratio"] = f"{(len(self.compressed) / (len(self.content) * 8)):.2f}"
         self.logentry.logdata["action"] = "1"
 
     def execute_compression(self):

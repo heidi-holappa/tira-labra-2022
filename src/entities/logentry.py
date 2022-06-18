@@ -21,14 +21,13 @@ class LogEntry:
             "action": ""
         }
 
-
     def get_logdata_as_csv_row(self):
         logdata_as_list = []
         for value in self.logdata.values():
             logdata_as_list.append(value)
         csv_data = ";".join(logdata_as_list)
         return csv_data
-    
+
     def get_test_data_as_csv_row(self):
         logdata_as_list = []
         for key, value in self.logdata.items():
@@ -58,4 +57,3 @@ class LogEntry:
     # l.logdata["lz_avg_match_length"] = "0"
     # print(l.get_logdata_as_csv_row())
     # print(l.get_test_data_as_csv_row())
-    

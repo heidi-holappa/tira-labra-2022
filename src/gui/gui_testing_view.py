@@ -7,6 +7,7 @@ from services.filemanagement import default_file_manager
 from services.extensivetesthandler import default_test_handler
 from services.extensivetesthandler import InvalidCharactersError
 
+
 class TestingView:
 
     def __init__(self, root):
@@ -189,10 +190,12 @@ class TestingView:
         max_characters = simpledialog.askinteger(
             "Document length", "Input maximum character count for documents to be included.")
         if not max_characters or max_characters < 0 or not min_characters or min_characters < 0:
-            self._show_error("Please type in a positive integer value. To both questions. Try again.")
+            self._show_error(
+                "Please type in a positive integer value. To both questions. Try again.")
             return
-        try: 
-            self.testhandler.activate_extensive_tests(min_characters, max_characters)
+        try:
+            self.testhandler.activate_extensive_tests(
+                min_characters, max_characters)
         except InvalidCharactersError as charerror:
             self._show_error(charerror.args[0])
         self._update_log()
@@ -208,7 +211,7 @@ class TestingView:
             title="Error!",
             message=content,
             icon=messagebox.ERROR)
-    
+
     def _show_success_message(self):
         """Constructs a messagebox confirming that tests have been successfully ran.
         User can open HTML-log-file if they so choose from the message box.
@@ -219,10 +222,8 @@ class TestingView:
         if show_html_log:
             self._open_html_log()
 
-
     def _open_html_log(self):
         """A method that opens the HTML-log-file in webbrowser.
         """
         webbrowser.open_new(
             self.testhandler.html_log_file)
-

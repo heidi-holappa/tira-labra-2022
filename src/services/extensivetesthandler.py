@@ -10,6 +10,7 @@ from services.compressionmanagement import default_compression_management
 from services.loghandler import default_loghandler
 from config import DEFAULT_TEST_DATA_PATH
 
+
 class InvalidCharactersError(Exception):
     """Raises an error if file in test-folder contains invalid characters.
 
@@ -17,6 +18,7 @@ class InvalidCharactersError(Exception):
         Exception: general exception
     """
     pass
+
 
 class ExtensiveTestHandler:
     """A class that handles the manually operated tests and creation of
@@ -31,7 +33,8 @@ class ExtensiveTestHandler:
         self.compression_management = default_compression_management
         self.loghandler = default_loghandler
         self.log_file = os.path.join(DEFAULT_TEST_DATA_PATH, "compression.log")
-        self.html_log_file = os.path.join(DEFAULT_TEST_DATA_PATH, "compression-log.html")
+        self.html_log_file = os.path.join(
+            DEFAULT_TEST_DATA_PATH, "compression-log.html")
         self.log_archive = os.path.join(
             DEFAULT_TEST_DATA_PATH, "compression_archive.log")
 
@@ -42,12 +45,12 @@ class ExtensiveTestHandler:
             ascii_order_set.add(ord(char))
         ascii_order_set.add(32)
         ascii_order_set.add(10)
-        ascii_order_set.add(228) # ä
-        ascii_order_set.add(196) # Ä
-        ascii_order_set.add(197) # Å
-        ascii_order_set.add(229) # å
-        ascii_order_set.add(246) # ö
-        ascii_order_set.add(214) # Ö
+        ascii_order_set.add(228)  # ä
+        ascii_order_set.add(196)  # Ä
+        ascii_order_set.add(197)  # Å
+        ascii_order_set.add(229)  # å
+        ascii_order_set.add(246)  # ö
+        ascii_order_set.add(214)  # Ö
         return ascii_order_set
 
     def create_document_with_natural_language(self, n_of_paragraphs: int = 100):
@@ -103,9 +106,11 @@ class ExtensiveTestHandler:
                 for char in content:
                     if ord(char) not in ascii_order_set:
                         file_split = filename.split("/")
-                        print(f"Error! {file_split[-1]} includes non-supported characters")
-                        raise InvalidCharactersError(f"Error! {file_split[-1]} includes non-supported characters. Non-supported character: {char}")
-        
+                        print(
+                            f"Error! {file_split[-1]} includes non-supported characters")
+                        raise InvalidCharactersError(
+                            f"Error! {file_split[-1]} includes non-supported characters. Non-supported character: {char}")
+
         extensive_test_starttime = time.time()
         if os.path.exists(self.log_file):
             self.archive_log_content()
@@ -129,7 +134,7 @@ class ExtensiveTestHandler:
             os.remove(filename)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.lz')):
             os.remove(filename)
-        
+
         extensive_test_endtime = time.time()
         test_total_time = extensive_test_endtime - extensive_test_starttime
         total = f"{test_total_time:.2f}"
@@ -197,9 +202,9 @@ class ExtensiveTestHandler:
                                 test did not match.",
                                "Huffman compression or uncompression")
                 self.html_log_entry(filename,
-                               "Failure: Original and uncompressed contents in previous \
+                                    "Failure: Original and uncompressed contents in previous \
                                 test did not match.",
-                               "Huffman compression or uncompression")
+                                    "Huffman compression or uncompression")
         except Exception as exption:
             self.log_entry(filename, str(
                 exption), "Huffman compression or uncompression")
@@ -297,13 +302,12 @@ Failed tests: {fail}\n\n\
         #     log_time = datetime.now()
         #     log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
         self.loghandler.create_html_file(total_time, success, fail)
-            
-            # file.write(analysis)
-            # bar_huffman = content_as_list[0].split(";")
-            # bar_lempelziv = content_as_list[1].split(";")
-            # for row in content_as_list[2:]:
-            #     file.write(row + "<br>\n")
 
+        # file.write(analysis)
+        # bar_huffman = content_as_list[0].split(";")
+        # bar_lempelziv = content_as_list[1].split(";")
+        # for row in content_as_list[2:]:
+        #     file.write(row + "<br>\n")
 
     def archive_log_content(self):
         """Archives log content of previous test run.
