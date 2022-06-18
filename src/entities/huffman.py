@@ -230,7 +230,7 @@ class HuffmanCoding:
     # TODO: Remove commented section when sure new solution works. 
     def fetch_compressed_content(self):
         """Method responsible for processing the stored content. Logic is as follows:
-        Length of the stred tree: 12 bits
+        Length of the stored tree: 12 bits
         Number of extra bits: 4 bits
         Number of ASCII-characters: byte
         Tree
