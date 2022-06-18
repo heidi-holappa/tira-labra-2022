@@ -10,6 +10,7 @@
 - Documentation updated:
   - [Execution documentation](execution-documentation.md)
   - [Architecture documentation](architecture.md)
+  - [Testing documentation](testing-documentation.md)
 
 ## What have I done this week?
 This week I spent quite a lot of time on building a HTML-log-file. It was a learning experience, but I'm satisfied with the result. The most time went on learning how to construct graphs using Python and on deciding what measurements to include in the report. I am pleased with what I have done so far, but hope to get good tips on how to improve what I now have from the demo-session next week.  
