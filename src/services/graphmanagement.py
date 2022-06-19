@@ -2,12 +2,17 @@ import os
 import matplotlib.pyplot as pyplt
 import numpy as np
 from config import DEFAULT_TEST_GRAPH_FOLDER
-
+from config import IMG_COMPRESS_RATIO
+from config import IMG_HUFFMAN_FREQ
+from config import IMG_LZ_MEAN_MATCH
+from config import IMG_LZ_MEAN_OFFSET
 
 class GraphManagement:
 
     def __init__(self):
         self.graph_folder = DEFAULT_TEST_GRAPH_FOLDER
+        img_folder_split = DEFAULT_TEST_GRAPH_FOLDER.split("/")
+        self.img_folder = img_folder_split[-1] + "/"
 
     def construct_huffman_frequency_variance_bar_chart(self, x_values):
         pyplt.figure(1)
@@ -25,9 +30,10 @@ class GraphManagement:
         pyplt.ylabel("Variance")
         pyplt.title("Frequency variance for Huffman compression")
         filename = os.path.join(
-            self.graph_folder, "huffman-frequency-variance.png")
+            self.graph_folder, IMG_HUFFMAN_FREQ)
         pyplt.savefig(filename)
-        return "images/huffman-frequency-variance.png"
+        html_path = self.img_folder + IMG_HUFFMAN_FREQ
+        return html_path
 
     def construct_lempel_ziv_average_length_bar_chart(self, x_values):
         pyplt.figure(3)
@@ -44,9 +50,10 @@ class GraphManagement:
         pyplt.xlabel("File number")
         pyplt.ylabel("Average length")
         pyplt.title("Average match length for Lempel-Ziv 77")
-        filename = os.path.join(self.graph_folder, "lempel-ziv-avg-match.png")
+        filename = os.path.join(self.graph_folder, IMG_LZ_MEAN_MATCH)
         pyplt.savefig(filename)
-        return "images/lempel-ziv-avg-match.png"
+        html_path = self.img_folder + IMG_LZ_MEAN_MATCH
+        return html_path
 
     def construct_lempel_ziv_average_offset_bar_chart(self, x_values):
         pyplt.figure(4)
@@ -63,9 +70,10 @@ class GraphManagement:
         pyplt.xlabel("File number")
         pyplt.ylabel("Average offset")
         pyplt.title("Average offset for Lempel-Ziv 77")
-        filename = os.path.join(self.graph_folder, "lempel-ziv-avg-offset.png")
+        filename = os.path.join(self.graph_folder, IMG_LZ_MEAN_OFFSET)
         pyplt.savefig(filename)
-        return "images/lempel-ziv-avg-offset.png"
+        html_path = self.img_folder + IMG_LZ_MEAN_OFFSET
+        return html_path
 
     def construct_compression_ratio_bar_chart(self, x_values, y_values, labels):
         pyplt.figure(2)
@@ -92,9 +100,10 @@ class GraphManagement:
         pyplt.title("Compression ratio comparison")
         pyplt.legend(legend_labels, loc=2)
         filename = os.path.join(
-            self.graph_folder, "compression-ratio-comparison.png")
+            self.graph_folder, IMG_COMPRESS_RATIO)
         pyplt.savefig(filename)
-        return "images/compression-ratio-comparison.png"
+        html_path = self.img_folder + IMG_COMPRESS_RATIO
+        return html_path
 
 
 default_graph_manager = GraphManagement()
