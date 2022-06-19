@@ -47,6 +47,7 @@ I had high hopes for the Lempel-Ziv 77 compression ratio improving with the chan
 ## What remained unclear or caused difficulties? 
 I have a few questions for this week as well:
 - A lot of the new service classes include writing or reading from a file. Should these classes be also tested? What would be a good approach to this? Perhaps I could configure a different folder for testing read and write operations so that none of the existing files are altered or deleted? Or should I ignore these files from testing?
+- **UPDATE 19.6.2022**: This issue has been resolved. Application now uses different configurations for tests. 
 - I would very much appreciate suggestions on how to improve the compression ratio. It'd be great to get the ratio closer to 40-50 percent on Lempel-Ziv 77, but I am short on ideas. 
 - My current measures for compression efficiency are as listed below. Are these good measures considering the purpose of this course? Is something essential missing?
   - Compression ratio
