@@ -17,7 +17,7 @@ DEFAULT_TEST_DATA_PATH = os.path.join(dirname, '..', testing_path)
 DEFAULT_TEST_GRAPH_FOLDER = os.path.join(dirname, '..', graph_directory)
 
 HTML_LOG = os.getenv("HTML_LOG_FILE") or "compression-log.html"
-CSV_LOG = os.getenv("CSV_LOG") or "compression-log.csv"
+CSV_LOG = os.getenv("LOG_CSV_FILE") or "compression-log.csv"
 ARCHIVE_LOG = os.getenv("LOG_ARCHIVE_FILE") or "compression_archive.log"
 TKINTER_LOG = os.getenv("TKINTER_LOG_CONTENT") or "compression.log"
 
