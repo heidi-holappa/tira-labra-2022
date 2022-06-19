@@ -9,6 +9,7 @@ from services.filemanagement import default_file_manager
 from services.compressionmanagement import default_compression_management
 from services.loghandler import default_loghandler
 from config import DEFAULT_TEST_DATA_PATH
+from config import CSV_LOG, HTML_LOG, TKINTER_LOG, ARCHIVE_LOG
 
 
 class InvalidCharactersError(Exception):
@@ -31,11 +32,11 @@ class ExtensiveTestHandler:
         self.file_manager = default_file_manager
         self.compression_management = default_compression_management
         self.loghandler = default_loghandler
-        self.log_file = os.path.join(DEFAULT_TEST_DATA_PATH, "compression.log")
+        self.log_file = os.path.join(DEFAULT_TEST_DATA_PATH, TKINTER_LOG)
         self.html_log_file = os.path.join(
-            DEFAULT_TEST_DATA_PATH, "compression-log.html")
+            DEFAULT_TEST_DATA_PATH, HTML_LOG)
         self.log_archive = os.path.join(
-            DEFAULT_TEST_DATA_PATH, "compression_archive.log")
+            DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
 
     def create_printable_characters(self):
         characters = string.printable.split()[0]

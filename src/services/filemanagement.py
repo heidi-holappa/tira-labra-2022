@@ -1,6 +1,6 @@
 import os
 from config import DEFAULT_DATA_PATH
-
+from config import TKINTER_LOG
 
 class FileManagement:
 
@@ -66,7 +66,7 @@ class FileManagement:
         Returns:
             str: Returns log file content.
         """
-        filename = os.path.join(filepath, "compression.log")
+        filename = os.path.join(filepath, TKINTER_LOG)
         content = ""
         if os.path.exists(filename):
             with open(filename, "r", encoding="utf-8") as file:
