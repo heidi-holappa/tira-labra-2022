@@ -67,6 +67,7 @@ There are more open Pylint-issues this week than last, but the score is fairly h
 - I caused a bug in the app this week. The app doesn't close properly if the used does not use the menu to exit. I need to fix this bug before the deadline
 - Improve code quality
 - Expand tests, goal is to reach branch coverage 80 percent. 
+  - **UPDATE 19.6.2022:** goal reached, but tests still need to be expanded. 
 - Add more material for testing
 - Add missing docstring
 - Try to improve compression ratio
