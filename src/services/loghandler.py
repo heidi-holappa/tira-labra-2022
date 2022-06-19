@@ -1,6 +1,10 @@
 from datetime import datetime
 import os
 from config import DEFAULT_TEST_DATA_PATH
+from config import HTML_LOG
+from config import CSV_LOG
+from config import ARCHIVE_LOG
+from config import TKINTER_LOG
 from services.graphmanagement import default_graph_manager
 
 
@@ -12,26 +16,14 @@ class LogHandler:
         """Constructor for the class. Uses the default data path defined
         in the .env file.
         """
-        self.filename = os.path.join(DEFAULT_TEST_DATA_PATH, "compression.log")
+        self.filename = os.path.join(DEFAULT_TEST_DATA_PATH, TKINTER_LOG)
         self.html_filename = os.path.join(
-            DEFAULT_TEST_DATA_PATH, "compression-log.html")
+            DEFAULT_TEST_DATA_PATH, HTML_LOG)
         self.archive_filename = os.path.join(
-            DEFAULT_TEST_DATA_PATH, "compression_archive.log")
+            DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
         self.data_csv = os.path.join(
-            DEFAULT_TEST_DATA_PATH, "uncompress-log.csv")
+            DEFAULT_TEST_DATA_PATH, CSV_LOG)
         self.graph_management = default_graph_manager
-        self.logdata = {
-            "original_filename": "",
-            "compressed_filename": "",
-            "uncompressed_filename": "",
-            "compression_method": "",
-            "uncompressed_size": 0,
-            "compressed_size": 0,
-            "compression_time": "",
-            "uncompression_time": "",
-            "data_fetch_and_process_time": "",
-            "data_write_and_process_time": "",
-        }
         self.init_log_file()
 
     def init_log_file(self):
