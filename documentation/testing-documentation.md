@@ -45,9 +45,9 @@ Before running the tests user is asked to specify minimum and maximum character 
 User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and four graphs to make reviewing the test analysis easier and more enjoyable. 
 
 ## Coverage Report for Unittests
-The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. Currently the branch coverage is 86 percent. Especially the service package classes need more extensive tests at this point.  
+The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. Currently the branch coverage is 89 percent. Especially the service package classes need more extensive tests at this point.  
 
-![Coverage report - week 4](images/coverage-report-week-5.png)
+![Coverage report - week 4](images/coverage-report-week-6.png)
 
 ## Input Used for Testing
 At the moment the testing material for user operated extensive tests includes:
