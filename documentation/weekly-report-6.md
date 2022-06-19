@@ -57,7 +57,9 @@ I have a few questions for this week as well:
 
 
 ## Pylint and Pytest - status update
-This week I have written a lot of new functionalities in the service classes and these are still missing tests. Because of this, the branch coverage has now decreased to 61 percent. There are more open Pylint-issues this week than last, but the score is fairly high, 9.87/10. 
+This week I have written a lot of new functionalities in the service classes and these are still missing tests. Because of this, the branch coverage has now decreased to 61 percent. **UPDATE 19.6.2022:** As the issue with testing methods including file manipulation was resolved more extensive tests were added. Branch coverage is now 89%.
+
+There are more open Pylint-issues this week than last, but the score is fairly high, 9.87/10. 
 
 ![Coverage-report](images/coverage-report-week-6.png)
 
