@@ -2,6 +2,7 @@ import unittest
 import os
 import string
 from config import DEFAULT_TEST_DATA_PATH
+from config import HTML_LOG, CSV_LOG, ARCHIVE_LOG, TKINTER_LOG
 from services.compressionmanagement import default_compression_management
 from services.extensivetesthandler import default_test_handler
 
@@ -11,6 +12,9 @@ class TestExtensiveTesting(unittest.TestCase):
     def setUp(self):
         self.compression_management = default_compression_management
         self.extensive_test_handler = default_test_handler
+
+    def tearDown(self):
+        self.destroy_test_files()
 
     def supported_characters(self):
         characters = string.printable.split()[0]
@@ -78,3 +82,25 @@ class TestExtensiveTesting(unittest.TestCase):
         is_valid = self.extensive_test_handler.validate_content_matches(
             content_one, content_two)
         self.assertEqual(False, is_valid)
+
+    def test_activated_extensive_tests_create_an_html_log(self):
+        self.extensive_test_handler.activate_extensive_tests(1, 10000)
+        filepath = os.path.join(DEFAULT_TEST_DATA_PATH, HTML_LOG)
+        result = os.path.exists(filepath)
+        self.assertEqual(result, True)
+
+
+    def destroy_test_files(self):
+        html_path = os.path.join(DEFAULT_TEST_DATA_PATH, HTML_LOG)
+        csv_path = os.path.join(DEFAULT_TEST_DATA_PATH, CSV_LOG)
+        archive_path = os.path.join(DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
+        tkinter_log_path = os.path.join(DEFAULT_TEST_DATA_PATH, TKINTER_LOG)
+        if os.path.exists(html_path):
+            os.remove(html_path)
+        if os.path.exists(archive_path):
+            os.remove(archive_path)
+        if os.path.exists(csv_path):
+            os.remove(csv_path)
+        if os.path.exists(tkinter_log_path):
+            os.remove(tkinter_log_path)
+
