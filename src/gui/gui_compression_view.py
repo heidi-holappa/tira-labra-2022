@@ -252,6 +252,7 @@ class CompressionView:
         if not self.compression_management.validate_file_extension(self.file_to_compress[-3:], "txt"):
             self._file_error("Can only compress txt-files currently")
             return
+        self.init_log_files()
         compression_method = self._compression_var.get()
         if compression_method == 1:
             self.compression_management.initial_huffman_compression(
@@ -291,6 +292,7 @@ class CompressionView:
         if not (self.file_to_uncompress[-3:] == "huf" or self.file_to_uncompress[-2:] == "lz"):
             self._file_error("Can only uncompress .huf and .lz - files.")
             return
+        self.init_log_files()
         if self.file_to_uncompress[-3:] == "huf":
             self.compression_management.initial_huffman_uncompression(
                 self.file_to_uncompress)
@@ -301,6 +303,10 @@ class CompressionView:
         self._update_log()
         self._compression_status_notification(
             "File uncompressed successfully!")
+
+    def init_log_files(self):
+        self.compression_management.loghandler.init_csv_file()
+        self.compression_management.loghandler.init_tkinter_log_file()
 
     def _handle_get_file_to_compress(self):
         """A method to handle filedialog opening.
