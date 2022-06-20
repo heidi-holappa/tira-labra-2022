@@ -297,12 +297,15 @@ class HuffmanCoding:
 
     def log_add_frequencies(self):
         freqs = []
-        for freq in self.frequencies.values():
-            freqs.append(freq / len(self.content) * 100)
+        for freq in self.huffman_coded_values.values():
+            freqs.append(len(freq))
         self.logentry.logdata["huffman_max_frequency"] = str(max(freqs))
         self.logentry.logdata["huffman_min_frequency"] = str(min(freqs))
         self.logentry.logdata["huffman_freq_variance"] = f"{(variance(freqs)):.2f}"
 
+    def log_add_character_count(self):
+        self.logentry.logdata["huffman-character-count"] = str(len(self.frequencies))
+    
     def analyze_compression(self):
         """Creates analysis data on Huffman compression.
         """
@@ -314,6 +317,7 @@ class HuffmanCoding:
         self.logentry.logdata["compression_method"] = "Huffman coding"
         self.logentry.logdata["action"] = "0"
         self.log_add_frequencies()
+        self.log_add_character_count()
 
     def analyze_uncompression(self):
         """A method for creating analysis data on Huffman uncompression.
