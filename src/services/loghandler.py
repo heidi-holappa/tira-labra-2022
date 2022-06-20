@@ -16,7 +16,7 @@ class LogHandler:
         """Constructor for the class. Uses the default data path defined
         in the .env file.
         """
-        self.filename = os.path.join(DEFAULT_TEST_DATA_PATH, TKINTER_LOG)
+        self.tkinter_log = os.path.join(DEFAULT_TEST_DATA_PATH, TKINTER_LOG)
         self.html_filename = os.path.join(
             DEFAULT_TEST_DATA_PATH, HTML_LOG)
         self.archive_filename = os.path.join(
@@ -24,13 +24,12 @@ class LogHandler:
         self.data_csv = os.path.join(
             DEFAULT_TEST_DATA_PATH, CSV_LOG)
         self.graph_management = default_graph_manager
-        self.init_log_file()
+        self.init_tkinter_log_file()
 
-    def init_log_file(self):
-
-        if os.path.exists(self.filename):
-            os.remove(self.filename)
-        with open(self.filename, "a", encoding="utf-8") as file:
+    def init_tkinter_log_file(self):
+        if os.path.exists(self.tkinter_log):
+            os.remove(self.tkinter_log)
+        with open(self.tkinter_log, "a", encoding="utf-8") as file:
             file.close()
 
     def init_html_file(self):
@@ -38,13 +37,15 @@ class LogHandler:
             os.remove(self.html_filename)
         with open(self.html_filename, "a", encoding="utf-8") as file:
             file.close()
+
+    def init_csv_file(self):
         if os.path.exists(self.data_csv):
-            self.archive_log_content(self.data_csv)
+            self.archive_csv_content(self.data_csv)
             os.remove(self.data_csv)
         with open(self.data_csv, "a", encoding="utf-8") as file:
             file.close()
 
-    def archive_log_content(self, filename):
+    def archive_csv_content(self, filename):
         content = ""
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
@@ -66,14 +67,14 @@ class LogHandler:
             Defaults to "".
         """
 
-        if not os.path.exists(self.filename):
-            with open(self.filename, "a", encoding="utf-8") as file:
+        if not os.path.exists(self.tkinter_log):
+            with open(self.tkinter_log, "a", encoding="utf-8") as file:
                 file.close()
 
         compression_ratio = int(logdata['compressed_size']) / \
             int(logdata['uncompressed_size']) * 100
 
-        with open(self.filename, "a", encoding="utf-8") as file:
+        with open(self.tkinter_log, "a", encoding="utf-8") as file:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
             content = f"""------ NEW ENTRY: COMPRESSING DATA ------\n\
@@ -107,7 +108,7 @@ uncompression of test files. You can also find graphs that measure perfomance \
 of compression algorithms based on selected measurers. Note that running the \
 extended tests overwrites the report.</p><br>\n\n"
             file.write(forewords)
-            analysis = f"""-<H2>EXTENSIVE TEST SUMMARY</H2><br>\n\
+            analysis = f"""<H2>EXTENSIVE TEST SUMMARY</H2><br>\n\
 <b>Total runtime:</b> {total_time} seconds<br>\n\
 <b>Successful tests:</b> {success}<br>\n\
 <b>Failed tests:</b> {fail}<br>\n\n\
@@ -124,16 +125,24 @@ number of the file in question. Filenames can be found with the number from the 
 above.</p>\n")
             bar_chart_filename = self.create_compression_ratio_bar_chart()
             file.write(f"<img src='{bar_chart_filename}' alt='Compression ratio comparison'>\
-Bar chart with compression ratios</img><br>\n")
+</img><br>\n")
+            file.write(self.graph_management.graph_explanations["compression-ratio"])
             huffman_frequency_bar_chart = self.create_huffman_frequency_bar_chart()
             file.write(f"<img src='{huffman_frequency_bar_chart}' \
 alt='Huffman frequency variances'></img><br>\n")
+            file.write(self.graph_management.graph_explanations["huffman-frequency-variance"])
+            huffman_character_count_graph = self.create_huffman_character_count_chart()
+            file.write(f"<img src='{huffman_character_count_graph}' \
+alt='Huffman character count'></img><br>\n")
+            file.write(self.graph_management.graph_explanations["huffman-character-count"])
             lempel_ziv_avg_match = self.create_lempel_ziv_bar_chart()
             file.write(f"<img src='{lempel_ziv_avg_match}' alt='Lempel-Ziv average match length'>\
 </img><br>\n")
+            file.write(self.graph_management.graph_explanations["lempel-ziv-mean-length"])
             lempel_ziv_avg_offset = self.create_lempel_ziv_offset_bar_chart()
             file.write(f"<img src='{lempel_ziv_avg_offset}' alt='Lempel-Ziv average offset length'>\
 </img><br>\n")
+            file.write(self.graph_management.graph_explanations["lempel-ziv-mean-offset"])
 
     def create_compression_ratio_bar_chart(self):
         with open(self.data_csv, "r", encoding="utf-8") as file:
@@ -169,6 +178,20 @@ alt='Huffman frequency variances'></img><br>\n")
                     huffman_frequency_variance.append(float(data[13]))
         filename = self.graph_management.construct_huffman_frequency_variance_bar_chart(
             huffman_frequency_variance)
+        return filename
+
+    def create_huffman_character_count_chart(self):
+        with open(self.data_csv, "r", encoding="utf-8") as file:
+            content = file.read()
+            data_as_rows = content.split("\n")[:-1]
+        huffman_character_count = []
+        for row in data_as_rows:
+            data = row.split(";")
+            if data[16] == "0":
+                if data[0][0] == "H":
+                    huffman_character_count.append(float(data[17]))
+        filename = self.graph_management.construct_huffman_character_count_bar_chart(
+            huffman_character_count)
         return filename
 
     def create_lempel_ziv_bar_chart(self):
@@ -292,11 +315,11 @@ alt='Huffman frequency variances'></img><br>\n")
             additional_content (str, optional): Optional additional information. Defaults to "".
         """
 
-        if not os.path.exists(self.filename):
-            with open(self.filename, "a", encoding="utf-8") as file:
+        if not os.path.exists(self.tkinter_log):
+            with open(self.tkinter_log, "a", encoding="utf-8") as file:
                 file.close()
 
-        with open(self.filename, "a", encoding="utf-8") as file:
+        with open(self.tkinter_log, "a", encoding="utf-8") as file:
             log_time = datetime.now()
             log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
             content = f"""------ NEW ENTRY: UNCOMPRESSING DATA ------\n\
@@ -316,6 +339,13 @@ Time used for writing and processing data: \
 {logdata['data_write_and_process_time']} seconds\n"""
             file.write(content)
             file.write("------ END OF ENTRY ------\n\n")
+
+
+    def single_tkinter_compression_log_entry(self, logdata: dict):
+        self.create_compression_entry(logdata)
+    
+    def single_tkinter_uncompression_log_entry(self, logdata: dict):
+        self.create_uncompression_entry(logdata)
 
 
 default_loghandler = LogHandler()

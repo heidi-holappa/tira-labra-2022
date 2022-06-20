@@ -101,10 +101,9 @@ class ExtensiveTestHandler:
         """
 
         self.loghandler.init_html_file()
+        self.loghandler.init_csv_file()
         self.validate_test_files()
         extensive_test_starttime = time.time()
-        if os.path.exists(self.log_file):
-            self.archive_log_content()
         success = 0
         fail = 0
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
@@ -298,19 +297,8 @@ Failed tests: {fail}\n\n\
             success (int): number of successful tests
             fail (int): number of failed tests
         """
-        # with open(self.log_file, 'r', encoding='utf-8') as file:
-        #     content = file.read()
-        #     content_as_list = content.split("\n")
-        # with open(self.html_log_file, 'w', encoding="utf-8") as file:
-        #     log_time = datetime.now()
-        #     log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
         self.loghandler.create_html_file(total_time, success, fail)
 
-        # file.write(analysis)
-        # bar_huffman = content_as_list[0].split(";")
-        # bar_lempelziv = content_as_list[1].split(";")
-        # for row in content_as_list[2:]:
-        #     file.write(row + "<br>\n")
 
     def archive_log_content(self):
         """Archives log content of previous test run.

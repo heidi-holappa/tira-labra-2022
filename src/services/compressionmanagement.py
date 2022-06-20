@@ -33,7 +33,7 @@ class CompressionManagement:
             filename, compressed_filename, logentry)
         default_loghandler.write_csv_entry_to_file(
             logentry.get_logdata_as_csv_row())
-        self.loghandler.create_compression_entry(logentry.logdata)
+        self.create_compression_logentry(logentry)
 
     def initial_huffman_uncompression(self, filename: str):
         """An initial method for testing Huffman decoding.
@@ -55,7 +55,7 @@ class CompressionManagement:
             uncompressed_filename, filename, logentry)
         default_loghandler.write_csv_entry_to_file(
             logentry.get_logdata_as_csv_row())
-        self.loghandler.create_uncompression_entry(logentry.logdata)
+        self.create_uncompression_logentry(logentry)
 
     def lempel_ziv_compress(self, filename: str):
         """A method for testing Lempel-Ziv 77 compression.
@@ -76,7 +76,7 @@ class CompressionManagement:
             filename, compressed_filename, logentry)
         default_loghandler.write_csv_entry_to_file(
             logentry.get_logdata_as_csv_row())
-        self.loghandler.create_compression_entry(logentry.logdata)
+        self.create_compression_logentry(logentry)
 
     def lempel_ziv_uncompress(self, filename: str):
         uncompressed_filename = filename[:-3] + "_uncompressed.txt"
@@ -89,6 +89,12 @@ class CompressionManagement:
             uncompressed_filename, filename, logentry)
         default_loghandler.write_csv_entry_to_file(
             logentry.get_logdata_as_csv_row())
+        self.create_uncompression_logentry(logentry)
+        
+    def create_compression_logentry(self, logentry: LogEntry):
+        self.loghandler.create_compression_entry(logentry.logdata)
+
+    def create_uncompression_logentry(self, logentry: LogEntry):
         self.loghandler.create_uncompression_entry(logentry.logdata)
 
     def validate_file_extension(self, extension: str, accepted_extensions: str) -> bool:
