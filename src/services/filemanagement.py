@@ -1,5 +1,5 @@
 import os
-from config import DEFAULT_DATA_PATH
+from config import DEFAULT_TEST_DATA_PATH
 from config import TKINTER_LOG
 
 class FileManagement:
@@ -57,7 +57,7 @@ class FileManagement:
         with open(filename, "wb") as compressed_file:
             compressed_file.write(content)
 
-    def get_log_content(self, filepath=DEFAULT_DATA_PATH):
+    def get_log_content(self, filepath=DEFAULT_TEST_DATA_PATH):
         """Fetches log content from the given file and path
 
         Args:
