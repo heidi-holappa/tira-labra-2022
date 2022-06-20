@@ -18,7 +18,8 @@ class LogEntry:
             "huffman_freq_variance": "",
             "lz_avg_match_length": "",
             "lz_mean_offset": "",
-            "action": ""
+            "action": "",
+            "huffman-character-count": ""
         }
 
     def get_logdata_as_csv_row(self):
