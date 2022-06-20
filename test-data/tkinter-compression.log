@@ -1,0 +1,376 @@
+------ EXTENSIVE TEST SUMMARY  -------
+------ TIME: 20.06.2022 22:21:20 ------
+Total runtime: 16.21 seconds
+Successful tests: 7
+Failed tests: 0
+
+------ DETAILED SUMMARY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:04
+File accessed: seitseman-veljesta.txt
+File created: seitseman-veljesta.huf
+Compression method: Huffman coding
+Uncompressed_size: 655004 bits
+Compressed size: 346447 bits
+Compression ratio: 52.89
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.15
+Time used for writing and processing data: 0.06 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:05
+"File accessed: seitseman-veljesta.huf
+File created: seitseman-veljesta_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 346447 bits
+Uncompressed_size: 655004 bits
+Compression ratio: 52.89
+Time used for fetching and processing data: 0.08 seconds
+Time used for compression: 0.71 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:07
+File accessed: seitseman-veljesta.txt
+File created: seitseman-veljesta.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 655004 bits
+Compressed size: 339017 bits
+Compression ratio: 51.76
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 1.43
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:07
+"File accessed: seitseman-veljesta.lz
+File created: seitseman-veljesta_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 339017 bits
+Uncompressed_size: 655004 bits
+Compression ratio: 51.76
+Time used for fetching and processing data: 0.09 seconds
+Time used for compression: 0.15 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:07
+File accessed: gutenberg-project-ebook-2.txt
+File created: gutenberg-project-ebook-2.huf
+Compression method: Huffman coding
+Uncompressed_size: 1007060 bits
+Compressed size: 453621 bits
+Compression ratio: 45.04
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.25
+Time used for writing and processing data: 0.07 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:08
+"File accessed: gutenberg-project-ebook-2.huf
+File created: gutenberg-project-ebook-2_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 453621 bits
+Uncompressed_size: 1007060 bits
+Compression ratio: 45.04
+Time used for fetching and processing data: 0.11 seconds
+Time used for compression: 0.97 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:12
+File accessed: gutenberg-project-ebook-2.txt
+File created: gutenberg-project-ebook-2.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 1007060 bits
+Compressed size: 648912 bits
+Compression ratio: 64.44
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 3.18
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:12
+"File accessed: gutenberg-project-ebook-2.lz
+File created: gutenberg-project-ebook-2_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 648912 bits
+Uncompressed_size: 1007060 bits
+Compression ratio: 64.44
+Time used for fetching and processing data: 0.15 seconds
+Time used for compression: 0.27 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:13
+File accessed: random-printable-ascii-100-paragraphs.txt
+File created: random-printable-ascii-100-paragraphs.huf
+Compression method: Huffman coding
+Uncompressed_size: 74714 bits
+Compressed size: 62115 bits
+Compression ratio: 83.14
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.02
+Time used for writing and processing data: 0.01 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:13
+"File accessed: random-printable-ascii-100-paragraphs.huf
+File created: random-printable-ascii-100-paragraphs_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 62115 bits
+Uncompressed_size: 74714 bits
+Compression ratio: 83.14
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.12 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:13
+File accessed: random-printable-ascii-100-paragraphs.txt
+File created: random-printable-ascii-100-paragraphs.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 74714 bits
+Compressed size: 81322 bits
+Compression ratio: 108.84
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.23
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:13
+"File accessed: random-printable-ascii-100-paragraphs.lz
+File created: random-printable-ascii-100-paragraphs_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 81322 bits
+Uncompressed_size: 74714 bits
+Compression ratio: 108.84
+Time used for fetching and processing data: 0.02 seconds
+Time used for compression: 0.04 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:13
+File accessed: gutenberg-project-ebook-1.txt
+File created: gutenberg-project-ebook-1.huf
+Compression method: Huffman coding
+Uncompressed_size: 809246 bits
+Compressed size: 460383 bits
+Compression ratio: 56.89
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.19
+Time used for writing and processing data: 0.07 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:14
+"File accessed: gutenberg-project-ebook-1.huf
+File created: gutenberg-project-ebook-1_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 460383 bits
+Uncompressed_size: 809246 bits
+Compression ratio: 56.89
+Time used for fetching and processing data: 0.11 seconds
+Time used for compression: 0.94 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:16
+File accessed: gutenberg-project-ebook-1.txt
+File created: gutenberg-project-ebook-1.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 809246 bits
+Compressed size: 432296 bits
+Compression ratio: 53.42
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 1.90
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:17
+"File accessed: gutenberg-project-ebook-1.lz
+File created: gutenberg-project-ebook-1_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 432296 bits
+Uncompressed_size: 809246 bits
+Compression ratio: 53.42
+Time used for fetching and processing data: 0.10 seconds
+Time used for compression: 0.19 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:17
+File accessed: natural-language-document-100-paragraphs.txt
+File created: natural-language-document-100-paragraphs.huf
+Compression method: Huffman coding
+Uncompressed_size: 53636 bits
+Compressed size: 30839 bits
+Compression ratio: 57.50
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.01
+Time used for writing and processing data: 0.01 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:17
+"File accessed: natural-language-document-100-paragraphs.huf
+File created: natural-language-document-100-paragraphs_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 30839 bits
+Uncompressed_size: 53636 bits
+Compression ratio: 57.50
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.07 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:17
+File accessed: natural-language-document-100-paragraphs.txt
+File created: natural-language-document-100-paragraphs.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 53636 bits
+Compressed size: 33963 bits
+Compression ratio: 63.32
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.14
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:17
+"File accessed: natural-language-document-100-paragraphs.lz
+File created: natural-language-document-100-paragraphs_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 33963 bits
+Uncompressed_size: 53636 bits
+Compression ratio: 63.32
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.01 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:17
+File accessed: gutenberg-project-ebook-3.txt
+File created: gutenberg-project-ebook-3.huf
+Compression method: Huffman coding
+Uncompressed_size: 480294 bits
+Compressed size: 241501 bits
+Compression ratio: 50.28
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.11
+Time used for writing and processing data: 0.04 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:18
+"File accessed: gutenberg-project-ebook-3.huf
+File created: gutenberg-project-ebook-3_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 241501 bits
+Uncompressed_size: 480294 bits
+Compression ratio: 50.28
+Time used for fetching and processing data: 0.06 seconds
+Time used for compression: 0.50 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:19
+File accessed: gutenberg-project-ebook-3.txt
+File created: gutenberg-project-ebook-3.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 480294 bits
+Compressed size: 302802 bits
+Compression ratio: 63.05
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 1.45
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:20
+"File accessed: gutenberg-project-ebook-3.lz
+File created: gutenberg-project-ebook-3_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 302802 bits
+Uncompressed_size: 480294 bits
+Compression ratio: 63.05
+Time used for fetching and processing data: 0.07 seconds
+Time used for compression: 0.13 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:20
+File accessed: first-100000-decimals-of-pi.txt
+File created: first-100000-decimals-of-pi.huf
+Compression method: Huffman coding
+Uncompressed_size: 100002 bits
+Compressed size: 43726 bits
+Compression ratio: 43.73
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.02
+Time used for writing and processing data: 0.01 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:20
+"File accessed: first-100000-decimals-of-pi.huf
+File created: first-100000-decimals-of-pi_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 43726 bits
+Uncompressed_size: 100002 bits
+Compression ratio: 43.73
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.09 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:20
+File accessed: first-100000-decimals-of-pi.txt
+File created: first-100000-decimals-of-pi.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 100002 bits
+Compressed size: 63696 bits
+Compression ratio: 63.69
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.33
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 20.06.2022 22:21:20
+"File accessed: first-100000-decimals-of-pi.lz
+File created: first-100000-decimals-of-pi_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 63696 bits
+Uncompressed_size: 100002 bits
+Compression ratio: 63.69
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.03 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+
+
+----- EXTENSIVE TEST SUMMARY ENDS ------
+

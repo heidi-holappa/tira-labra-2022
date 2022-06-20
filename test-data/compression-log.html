@@ -1,9 +1,9 @@
 <h1>Extended testing report</h1><br>
-<p>This document includes a report of the extended testing executed on <b>19.06.2022 22:58:37</b>. The tables include information on compression and uncompression of test files. You can also find graphs that measure perfomance of compression algorithms based on selected measurers. Note that running the extended tests overwrites the report.</p><br>
+<p>This document includes a report of the extended testing executed on <b>20.06.2022 22:21:20</b>. The tables include information on compression and uncompression of test files. You can also find graphs that measure perfomance of compression algorithms based on selected measurers. Note that running the extended tests overwrites the report.</p><br>
 
--<H2>EXTENSIVE TEST SUMMARY</H2><br>
-<b>Total runtime:</b> 0.39 seconds<br>
-<b>Successful tests:</b> 8<br>
+<H2>EXTENSIVE TEST SUMMARY</H2><br>
+<b>Total runtime:</b> 16.21 seconds<br>
+<b>Successful tests:</b> 7<br>
 <b>Failed tests:</b> 0<br>
 
 <h2>Detailed summary</h2><br>
@@ -22,177 +22,155 @@
     </tr><br>
     <tr>
         <th>1</th>
-        <td>random-printable-ascii-10-paragraphs.txt</td>
+        <td>seitseman-veljesta.txt</td>
         <td>Huffman coding</td>
-        <td>7220</td>
-        <td>6089</td>
-        <td style='color:red;text-align: center'>0.84</style></td>
+        <td>655004</td>
+        <td>346447</td>
+        <td style='color:green;text-align: center'>0.53</style></td>
+        <td style='text-align: center'>0.15</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.06</td>
     </tr>
     <tr>
         <th>1</th>
-        <td>random-printable-ascii-10-paragraphs.txt</td>
+        <td>seitseman-veljesta.txt</td>
         <td>Lempel-Ziv 77</td>
-        <td>7220</td>
-        <td>7912</td>
-        <td style='color:red;text-align: center'>1.10</style></td>
-        <td style='text-align: center'>0.02</td>
+        <td>655004</td>
+        <td>339017</td>
+        <td style='color:green;text-align: center'>0.52</style></td>
+        <td style='text-align: center'>1.43</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>2</th>
-        <td>random-printable-ascii-25-paragraphs.txt</td>
+        <td>gutenberg-project-ebook-2.txt</td>
         <td>Huffman coding</td>
-        <td>19301</td>
-        <td>16105</td>
+        <td>1007060</td>
+        <td>453621</td>
+        <td style='color:green;text-align: center'>0.45</style></td>
+        <td style='text-align: center'>0.25</td>
+        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.07</td>
+    </tr>
+    <tr>
+        <th>2</th>
+        <td>gutenberg-project-ebook-2.txt</td>
+        <td>Lempel-Ziv 77</td>
+        <td>1007060</td>
+        <td>648912</td>
+        <td style='color:red;text-align: center'>0.64</style></td>
+        <td style='text-align: center'>3.18</td>
+        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.00</td>
+    </tr>
+    <tr>
+        <th>3</th>
+        <td>random-printable-ascii-100-paragraphs.txt</td>
+        <td>Huffman coding</td>
+        <td>74714</td>
+        <td>62115</td>
         <td style='color:red;text-align: center'>0.83</style></td>
+        <td style='text-align: center'>0.02</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.01</td>
     </tr>
     <tr>
-        <th>2</th>
-        <td>random-printable-ascii-25-paragraphs.txt</td>
+        <th>3</th>
+        <td>random-printable-ascii-100-paragraphs.txt</td>
         <td>Lempel-Ziv 77</td>
-        <td>19301</td>
-        <td>21064</td>
+        <td>74714</td>
+        <td>81322</td>
         <td style='color:red;text-align: center'>1.09</style></td>
-        <td style='text-align: center'>0.05</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>3</th>
-        <td>test-material1.txt</td>
-        <td>Huffman coding</td>
-        <td>14745</td>
-        <td>8904</td>
-        <td style='color:green;text-align: center'>0.60</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>3</th>
-        <td>test-material1.txt</td>
-        <td>Lempel-Ziv 77</td>
-        <td>14745</td>
-        <td>5387</td>
-        <td style='color:green;text-align: center'>0.37</style></td>
-        <td style='text-align: center'>0.02</td>
+        <td style='text-align: center'>0.23</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>4</th>
-        <td>natural-language-document-10-paragraphs.txt</td>
+        <td>gutenberg-project-ebook-1.txt</td>
         <td>Huffman coding</td>
-        <td>3661</td>
-        <td>2183</td>
-        <td style='color:green;text-align: center'>0.60</style></td>
+        <td>809246</td>
+        <td>460383</td>
+        <td style='color:green;text-align: center'>0.57</style></td>
+        <td style='text-align: center'>0.19</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.07</td>
     </tr>
     <tr>
         <th>4</th>
-        <td>natural-language-document-10-paragraphs.txt</td>
+        <td>gutenberg-project-ebook-1.txt</td>
         <td>Lempel-Ziv 77</td>
-        <td>3661</td>
-        <td>2708</td>
-        <td style='color:red;text-align: center'>0.74</style></td>
-        <td style='text-align: center'>0.01</td>
+        <td>809246</td>
+        <td>432296</td>
+        <td style='color:green;text-align: center'>0.53</style></td>
+        <td style='text-align: center'>1.90</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>5</th>
-        <td>random-printable-ascii-5-paragraphs.txt</td>
+        <td>natural-language-document-100-paragraphs.txt</td>
         <td>Huffman coding</td>
-        <td>3512</td>
-        <td>3018</td>
-        <td style='color:red;text-align: center'>0.86</style></td>
+        <td>53636</td>
+        <td>30839</td>
+        <td style='color:green;text-align: center'>0.57</style></td>
+        <td style='text-align: center'>0.01</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.01</td>
     </tr>
     <tr>
         <th>5</th>
-        <td>random-printable-ascii-5-paragraphs.txt</td>
+        <td>natural-language-document-100-paragraphs.txt</td>
         <td>Lempel-Ziv 77</td>
-        <td>3512</td>
-        <td>3887</td>
-        <td style='color:red;text-align: center'>1.11</style></td>
-        <td style='text-align: center'>0.01</td>
+        <td>53636</td>
+        <td>33963</td>
+        <td style='color:red;text-align: center'>0.63</style></td>
+        <td style='text-align: center'>0.14</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>6</th>
-        <td>natural-language-document-15-paragraphs.txt</td>
+        <td>gutenberg-project-ebook-3.txt</td>
         <td>Huffman coding</td>
-        <td>5742</td>
-        <td>3408</td>
-        <td style='color:green;text-align: center'>0.59</style></td>
+        <td>480294</td>
+        <td>241501</td>
+        <td style='color:green;text-align: center'>0.50</style></td>
+        <td style='text-align: center'>0.11</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.04</td>
     </tr>
     <tr>
         <th>6</th>
-        <td>natural-language-document-15-paragraphs.txt</td>
+        <td>gutenberg-project-ebook-3.txt</td>
         <td>Lempel-Ziv 77</td>
-        <td>5742</td>
-        <td>3952</td>
-        <td style='color:red;text-align: center'>0.69</style></td>
-        <td style='text-align: center'>0.01</td>
+        <td>480294</td>
+        <td>302802</td>
+        <td style='color:red;text-align: center'>0.63</style></td>
+        <td style='text-align: center'>1.45</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>7</th>
-        <td>natural-language-document-5-paragraphs.txt</td>
+        <td>first-100000-decimals-of-pi.txt</td>
         <td>Huffman coding</td>
-        <td>2810</td>
-        <td>1692</td>
-        <td style='color:green;text-align: center'>0.60</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>7</th>
-        <td>natural-language-document-5-paragraphs.txt</td>
-        <td>Lempel-Ziv 77</td>
-        <td>2810</td>
-        <td>2191</td>
-        <td style='color:red;text-align: center'>0.78</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>8</th>
-        <td>natural-language-document-25-paragraphs.txt</td>
-        <td>Huffman coding</td>
-        <td>10885</td>
-        <td>6370</td>
-        <td style='color:green;text-align: center'>0.59</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>8</th>
-        <td>natural-language-document-25-paragraphs.txt</td>
-        <td>Lempel-Ziv 77</td>
-        <td>10885</td>
-        <td>7169</td>
-        <td style='color:red;text-align: center'>0.66</style></td>
+        <td>100002</td>
+        <td>43726</td>
+        <td style='color:green;text-align: center'>0.44</style></td>
         <td style='text-align: center'>0.02</td>
+        <td style='text-align: center'>0.00</td>
+        <td style='text-align: center'>0.01</td>
+    </tr>
+    <tr>
+        <th>7</th>
+        <td>first-100000-decimals-of-pi.txt</td>
+        <td>Lempel-Ziv 77</td>
+        <td>100002</td>
+        <td>63696</td>
+        <td style='color:red;text-align: center'>0.64</style></td>
+        <td style='text-align: center'>0.33</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -212,184 +190,168 @@
     </tr>
     <tr>
         <th>1</th>
-        <td>random-printable-ascii-10-paragraphs.huf</td>
+        <td>seitseman-veljesta.huf</td>
         <td>Huffman coding</td>
-        <td>7220</td>
-        <td>6089</td>
-        <td style='color:red;text-align: center'>0.84</style></td>
-        <td style='text-align: center'>0.01</td>
-        <td style='text-align: center'>0.00</td>
+        <td>655004</td>
+        <td>346447</td>
+        <td style='color:green;text-align: center'>0.53</style></td>
+        <td style='text-align: center'>0.71</td>
+        <td style='text-align: center'>0.08</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>1</th>
-        <td>random-printable-ascii-10-paragraphs.lz</td>
+        <td>seitseman-veljesta.lz</td>
         <td>Lempel-Ziv 77</td>
-        <td>7220</td>
-        <td>7912</td>
-        <td style='color:red;text-align: center'>1.10</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td>655004</td>
+        <td>339017</td>
+        <td style='color:green;text-align: center'>0.52</style></td>
+        <td style='text-align: center'>0.15</td>
+        <td style='text-align: center'>0.09</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>2</th>
-        <td>random-printable-ascii-25-paragraphs.huf</td>
+        <td>gutenberg-project-ebook-2.huf</td>
         <td>Huffman coding</td>
-        <td>19301</td>
-        <td>16105</td>
-        <td style='color:red;text-align: center'>0.83</style></td>
-        <td style='text-align: center'>0.03</td>
-        <td style='text-align: center'>0.00</td>
+        <td>1007060</td>
+        <td>453621</td>
+        <td style='color:green;text-align: center'>0.45</style></td>
+        <td style='text-align: center'>0.97</td>
+        <td style='text-align: center'>0.11</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>2</th>
-        <td>random-printable-ascii-25-paragraphs.lz</td>
+        <td>gutenberg-project-ebook-2.lz</td>
         <td>Lempel-Ziv 77</td>
-        <td>19301</td>
-        <td>21064</td>
-        <td style='color:red;text-align: center'>1.09</style></td>
-        <td style='text-align: center'>0.01</td>
-        <td style='text-align: center'>0.00</td>
+        <td>1007060</td>
+        <td>648912</td>
+        <td style='color:red;text-align: center'>0.64</style></td>
+        <td style='text-align: center'>0.27</td>
+        <td style='text-align: center'>0.15</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>3</th>
-        <td>test-material1.huf</td>
+        <td>random-printable-ascii-100-paragraphs.huf</td>
         <td>Huffman coding</td>
-        <td>14745</td>
-        <td>8904</td>
-        <td style='color:green;text-align: center'>0.60</style></td>
+        <td>74714</td>
+        <td>62115</td>
+        <td style='color:red;text-align: center'>0.83</style></td>
+        <td style='text-align: center'>0.12</td>
+        <td style='text-align: center'>0.01</td>
+        <td style='text-align: center'>0.00</td>
+    </tr>
+    <tr>
+        <th>3</th>
+        <td>random-printable-ascii-100-paragraphs.lz</td>
+        <td>Lempel-Ziv 77</td>
+        <td>74714</td>
+        <td>81322</td>
+        <td style='color:red;text-align: center'>1.09</style></td>
+        <td style='text-align: center'>0.04</td>
         <td style='text-align: center'>0.02</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
-        <th>3</th>
-        <td>test-material1.lz</td>
-        <td>Lempel-Ziv 77</td>
-        <td>14745</td>
-        <td>5387</td>
-        <td style='color:green;text-align: center'>0.37</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <th>4</th>
+        <td>gutenberg-project-ebook-1.huf</td>
+        <td>Huffman coding</td>
+        <td>809246</td>
+        <td>460383</td>
+        <td style='color:green;text-align: center'>0.57</style></td>
+        <td style='text-align: center'>0.94</td>
+        <td style='text-align: center'>0.11</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>4</th>
-        <td>natural-language-document-10-paragraphs.huf</td>
-        <td>Huffman coding</td>
-        <td>3661</td>
-        <td>2183</td>
-        <td style='color:green;text-align: center'>0.60</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>4</th>
-        <td>natural-language-document-10-paragraphs.lz</td>
+        <td>gutenberg-project-ebook-1.lz</td>
         <td>Lempel-Ziv 77</td>
-        <td>3661</td>
-        <td>2708</td>
-        <td style='color:red;text-align: center'>0.74</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td>809246</td>
+        <td>432296</td>
+        <td style='color:green;text-align: center'>0.53</style></td>
+        <td style='text-align: center'>0.19</td>
+        <td style='text-align: center'>0.10</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>5</th>
-        <td>random-printable-ascii-5-paragraphs.huf</td>
+        <td>natural-language-document-100-paragraphs.huf</td>
         <td>Huffman coding</td>
-        <td>3512</td>
-        <td>3018</td>
-        <td style='color:red;text-align: center'>0.86</style></td>
+        <td>53636</td>
+        <td>30839</td>
+        <td style='color:green;text-align: center'>0.57</style></td>
+        <td style='text-align: center'>0.07</td>
         <td style='text-align: center'>0.01</td>
-        <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>5</th>
-        <td>random-printable-ascii-5-paragraphs.lz</td>
+        <td>natural-language-document-100-paragraphs.lz</td>
         <td>Lempel-Ziv 77</td>
-        <td>3512</td>
-        <td>3887</td>
-        <td style='color:red;text-align: center'>1.11</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td>53636</td>
+        <td>33963</td>
+        <td style='color:red;text-align: center'>0.63</style></td>
+        <td style='text-align: center'>0.01</td>
+        <td style='text-align: center'>0.01</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>6</th>
-        <td>natural-language-document-15-paragraphs.huf</td>
+        <td>gutenberg-project-ebook-3.huf</td>
         <td>Huffman coding</td>
-        <td>5742</td>
-        <td>3408</td>
-        <td style='color:green;text-align: center'>0.59</style></td>
-        <td style='text-align: center'>0.01</td>
-        <td style='text-align: center'>0.00</td>
+        <td>480294</td>
+        <td>241501</td>
+        <td style='color:green;text-align: center'>0.50</style></td>
+        <td style='text-align: center'>0.50</td>
+        <td style='text-align: center'>0.06</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>6</th>
-        <td>natural-language-document-15-paragraphs.lz</td>
+        <td>gutenberg-project-ebook-3.lz</td>
         <td>Lempel-Ziv 77</td>
-        <td>5742</td>
-        <td>3952</td>
-        <td style='color:red;text-align: center'>0.69</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td>480294</td>
+        <td>302802</td>
+        <td style='color:red;text-align: center'>0.63</style></td>
+        <td style='text-align: center'>0.13</td>
+        <td style='text-align: center'>0.07</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
         <th>7</th>
-        <td>natural-language-document-5-paragraphs.huf</td>
+        <td>first-100000-decimals-of-pi.huf</td>
         <td>Huffman coding</td>
-        <td>2810</td>
-        <td>1692</td>
-        <td style='color:green;text-align: center'>0.60</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>7</th>
-        <td>natural-language-document-5-paragraphs.lz</td>
-        <td>Lempel-Ziv 77</td>
-        <td>2810</td>
-        <td>2191</td>
-        <td style='color:red;text-align: center'>0.78</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
-    </tr>
-    <tr>
-        <th>8</th>
-        <td>natural-language-document-25-paragraphs.huf</td>
-        <td>Huffman coding</td>
-        <td>10885</td>
-        <td>6370</td>
-        <td style='color:green;text-align: center'>0.59</style></td>
+        <td>100002</td>
+        <td>43726</td>
+        <td style='color:green;text-align: center'>0.44</style></td>
+        <td style='text-align: center'>0.09</td>
         <td style='text-align: center'>0.01</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
-        <th>8</th>
-        <td>natural-language-document-25-paragraphs.lz</td>
+        <th>7</th>
+        <td>first-100000-decimals-of-pi.lz</td>
         <td>Lempel-Ziv 77</td>
-        <td>10885</td>
-        <td>7169</td>
-        <td style='color:red;text-align: center'>0.66</style></td>
-        <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.00</td>
+        <td>100002</td>
+        <td>63696</td>
+        <td style='color:red;text-align: center'>0.64</style></td>
+        <td style='text-align: center'>0.03</td>
+        <td style='text-align: center'>0.01</td>
         <td style='text-align: center'>0.00</td>
     </tr>
 </table>
 <h2>Graphs</h2>
 <p>Below you can review visual comparison of test results. The labels indicate the number of the file in question. Filenames can be found with the number from the tables above.</p>
-<img src='images/compression-ratio-comparison.png' alt='Compression ratio comparison'>Bar chart with compression ratios</img><br>
+<img src='images/compression-ratio-comparison.png' alt='Compression ratio comparison'></img><br>
+<p>Compression ratio is the <b>size ratio</b> between the uncompressed and compressed content. For instance a ratio of 0.5 would mean that the compressed file's size is 50 percent of the file size of the uncompressed file. For both Huffman Coding and Lempel-Ziv 77 the compression ratio is worse for files with random content. You can read more about the reasons for this in the 'Execution documentation'. Link can be found in the README.md.</p>
 <img src='images/huffman-frequency-variance.png' alt='Huffman frequency variances'></img><br>
+<p>The graph above describes the variance in the Huffman frequencies. As can be seen with the test content, the compression ratio is generally better with content that has a higher variance in the frequencies, but there are exceptions. You can read more about the reasons for this in the 'Execution documentation'. Link can be found in the README.md.</p>
+<img src='images/huffman-character-count.png' alt='Huffman character count'></img><br>
+<p>With a high character count the role of higher frequency is more visible. With a small character count (for instance files with just few different characters) a very high compression ratio can be achieved, even with low frequency.</p>
 <img src='images/lempel-ziv-avg-match.png' alt='Lempel-Ziv average match length'></img><br>
+<p>The average lenght describes the length of the match found in the sliding window. When the average length is higher, the compression ratio is generally better.</p>
 <img src='images/lempel-ziv-avg-offset.png' alt='Lempel-Ziv average offset length'></img><br>
+The offset is the difference in indexes between the matches. For the included test material the offset is generally around 1100-1300 characters. Currently 12 bits (0-4096) are reserved for storing the offset, but perhaps two bits less would suffice in most cases? This could possibly improve the compression ratio.</p>
