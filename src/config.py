@@ -25,3 +25,4 @@ IMG_COMPRESS_RATIO = os.getenv("IMG_COMPRESSION_RATIO") or "test-compression-rat
 IMG_HUFFMAN_FREQ = os.getenv("IMG_HUFFMAN_FREQUENCY") or "test-huffman-frequency.variance.png"
 IMG_LZ_MEAN_MATCH = os.getenv("IMG_LEMPEL_ZIV_MEAN_MATCH") or "test-lempel-ziv-avg-match.png"
 IMG_LZ_MEAN_OFFSET = os.getenv("IMG_LEMPEL_ZIV_MEAN_OFFSET") or "test-lempel-ziv-avg-offset.png"
+IMG_HUFFMAN_CHAR_COUNT = os.getenv("IMG_HUFFMAN_CHARACTER_COUNT") or "huffman-character-count.png"
