@@ -8,6 +8,7 @@ from essential_generators import DocumentGenerator
 from services.filemanagement import default_file_manager
 from services.compressionmanagement import default_compression_management
 from services.loghandler import default_loghandler
+from entities.supportedcharacters import default_supported_characters
 from config import DEFAULT_TEST_DATA_PATH
 from config import CSV_LOG, HTML_LOG, TKINTER_LOG, ARCHIVE_LOG
 
@@ -37,21 +38,23 @@ class ExtensiveTestHandler:
             DEFAULT_TEST_DATA_PATH, HTML_LOG)
         self.log_archive = os.path.join(
             DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
+        self.supported_characters = default_supported_characters.supported_characters_as_list
 
-    def create_printable_characters(self):
-        characters = string.printable.split()[0]
-        ascii_order_set = set()
-        for char in characters:
-            ascii_order_set.add(ord(char))
-        ascii_order_set.add(32)
-        ascii_order_set.add(10)
-        ascii_order_set.add(228)  # ä
-        ascii_order_set.add(196)  # Ä
-        ascii_order_set.add(197)  # Å
-        ascii_order_set.add(229)  # å
-        ascii_order_set.add(246)  # ö
-        ascii_order_set.add(214)  # Ö
-        return ascii_order_set
+    # TODO: Remove, when sure not needed. 
+    # def create_printable_characters(self):
+    #     characters = string.printable.split()[0]
+    #     ascii_order_set = set()
+    #     for char in characters:
+    #         ascii_order_set.add(ord(char))
+    #     ascii_order_set.add(32)
+    #     ascii_order_set.add(10)
+    #     ascii_order_set.add(228)  # ä
+    #     ascii_order_set.add(196)  # Ä
+    #     ascii_order_set.add(197)  # Å
+    #     ascii_order_set.add(229)  # å
+    #     ascii_order_set.add(246)  # ö
+    #     ascii_order_set.add(214)  # Ö
+    #     return ascii_order_set
 
     def create_document_with_natural_language(self, n_of_paragraphs: int = 100):
         """Uses the libary Essential Generators to create random
@@ -65,7 +68,7 @@ class ExtensiveTestHandler:
         for _ in range(n_of_paragraphs):
             created_content += self.document_generator.paragraph() + "\n\n"
         document_content = ""
-        ascii_order_set = self.create_printable_characters()
+        ascii_order_set = self.supported_characters
         for char in created_content:
             if ord(char) in ascii_order_set:
                 document_content += char
@@ -122,20 +125,25 @@ class ExtensiveTestHandler:
         self.html_log_end(success, fail, total)
 
     def validate_test_files(self):
-        ascii_order_set = self.create_printable_characters()
+        """Validates that the content only includes supported characters.
+
+        Raises:
+            InvalidCharactersError: If given content contains unsupported characters, and error is raised.
+        """
+        ascii_order_set = self.supported_characters
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
             with open(filename, 'r', encoding="utf-8") as file:
                 content = file.read()
                 for char in content:
                     if ord(char) not in ascii_order_set:
                         file_split = filename.split("/")
-                        print(
-                            f"Error! {file_split[-1]} includes non-supported characters")
                         raise InvalidCharactersError(
                             f"Error! {file_split[-1]} includes non-supported characters. \
 Non-supported character: {char}")
 
     def remove_extensive_test_files(self):
+        """Removes the files created during a extensive testing.
+        """
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*_uncompressed.txt')):
             os.remove(filename)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.huf')):
@@ -162,7 +170,19 @@ Non-supported character: {char}")
         tests_succeeded = self.test_lempelziv_compression(filename, content)
         return tests_succeeded
 
-    def test_lempelziv_compression(self, filename: str, content: str):
+    def test_lempelziv_compression(self, filename: str, content: str) -> bool:
+        """Handles compressing an uncompressing the given content
+        with LZ77. Validates that original content and the uncompressed
+        content match. 
+
+        Args:
+            filename (str): path of the file to be compressed
+            content (str): content of the original file. Used for validating
+            that the contents match. 
+
+        Returns:
+            bool: boolean value for whether or not tests and validation succeeded.
+        """
         tests_succeeded = True
 
         try:
@@ -186,12 +206,24 @@ Non-supported character: {char}")
         return tests_succeeded
 
     # TODO: Refactor error handling to log files
-    def test_huffman_compression(self, filename: str, content: str):
+    def test_huffman_compression(self, filename: str, content: str) -> bool:
+        """Handles compressing an uncompressing the given content
+        with Huffman coding. Validates that original content and the uncompressed
+        content match. 
+
+        Args:
+            filename (str): path of the file to be compressed
+            content (str): content of the original file. Used for validating
+            that the contents match. 
+
+        Returns:
+            bool: boolean value for whether or not tests and validation succeeded.
+        """
         tests_succeeded = True
         try:
-            self.compression_management.initial_huffman_compression(
+            self.compression_management.activate_huffman_compression(
                 filename)
-            self.compression_management.initial_huffman_uncompression(
+            self.compression_management.activate_huffman_uncompression(
                 filename[:-3] + "huf")
             with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
                 huffman_uncompressed_content = file.read()
