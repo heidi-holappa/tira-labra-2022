@@ -1,3 +1,4 @@
+import pytest
 import unittest
 import os
 import string
@@ -17,7 +18,7 @@ class TestExtensiveTesting(unittest.TestCase):
     def tearDown(self):
         self.destroy_test_files()
 
-    def supported_characters(self):
+    def supported_ascii_characters(self):
         characters = string.printable.split()[0]
         ascii_order_set = set()
         for char in characters:
@@ -33,8 +34,8 @@ class TestExtensiveTesting(unittest.TestCase):
         return ascii_order_set
 
     def test_printable_characters_include_all_supported_characters(self):
-        ascii_order_set = self.supported_characters()
-        fetched_characters = self.extensive_test_handler.create_printable_characters()
+        ascii_order_set = self.supported_ascii_characters()
+        fetched_characters = self.extensive_test_handler.supported_characters
         all_accounted_for = True
         for char in ascii_order_set:
             if char not in fetched_characters:
@@ -42,7 +43,7 @@ class TestExtensiveTesting(unittest.TestCase):
         self.assertTrue(True, all_accounted_for)
 
     def test_random_natural_language_content_only_has_supported_characters(self):
-        ascii_order_set = self.supported_characters()
+        ascii_order_set = self.extensive_test_handler.supported_characters
         self.extensive_test_handler.create_document_with_natural_language(101)
         filename = "natural-language-document-101-paragraphs.txt"
         path_and_filename = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
@@ -56,7 +57,7 @@ class TestExtensiveTesting(unittest.TestCase):
         self.assertTrue(True, all_characters_supported)
 
     def test_random_printable_ascii_content_only_has_supported_characters(self):
-        ascii_order_set = self.supported_characters()
+        ascii_order_set = self.extensive_test_handler.supported_characters
         self.extensive_test_handler.create_document_with_random_printable_ascii(
             101)
         filename = "random-printable-ascii-101-paragraphs.txt"
@@ -84,6 +85,7 @@ class TestExtensiveTesting(unittest.TestCase):
             content_one, content_two)
         self.assertEqual(False, is_valid)
 
+    @pytest.mark.extendedtest
     def test_activated_extensive_tests_create_an_csv_and_html_log(self):
         self.extensive_test_handler.activate_extensive_tests(1, 10000)
         result = True
@@ -94,6 +96,7 @@ class TestExtensiveTesting(unittest.TestCase):
                 break
         self.assertEqual(result, True)
     
+    @pytest.mark.extendedtest
     def test_old_compression_log_is_archived_when_new_log_is_created(self):
         self.extensive_test_handler.activate_extensive_tests(1,10000)
         self.extensive_test_handler.activate_extensive_tests(1,10000)
@@ -102,6 +105,7 @@ class TestExtensiveTesting(unittest.TestCase):
         self.assertEqual(result, True)
 
     
+    @pytest.mark.extendedtest
     def test_graphs__defined_in_configuration_file_are_created(self):
         self.extensive_test_handler.activate_extensive_tests(1, 10000)
         result = True
@@ -111,7 +115,6 @@ class TestExtensiveTesting(unittest.TestCase):
             if not result:
                 break
         self.assertEqual(result, True)
-
 
 
     def destroy_test_files(self):

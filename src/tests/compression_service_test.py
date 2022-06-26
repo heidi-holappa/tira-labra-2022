@@ -13,7 +13,7 @@ class TestCompressionManagement(unittest.TestCase):
         compressed_filename = filename[:-3] + "huf"
         with open(filename, "w") as file:
             file.write("This is test content")
-        self.compression_management.initial_huffman_compression(filename)
+        self.compression_management.activate_huffman_compression(filename)
         compressed_file_created = bool(os.path.exists(compressed_filename))
         os.remove(filename)
         os.remove(compressed_filename)
