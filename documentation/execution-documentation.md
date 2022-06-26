@@ -2,7 +2,7 @@
 
 ## General Structure
 
-- The general structure of the application architecture and application logic can be reviewed in the [architecture documentation](architecture.md)
+- The general structure of the application architecture and application logic, including sequence diagrams, can be reviewed in the [architecture documentation](architecture.md)
 - The general structure of the application GUI can be overviewed in the [how-to-guide](how-to-guide.md).
 
 ## Algorithms introduced
