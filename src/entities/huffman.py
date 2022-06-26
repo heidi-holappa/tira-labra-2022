@@ -7,7 +7,10 @@ from services.filemanagement import default_file_manager
 
 class HuffmanCoding:
 
-    """Constructor for the class
+    """Constructor for the class. The constructor contains more
+    than Pylint's recommended amount of instance-attributes.
+    With the permission of the course assistant this pylint
+    notification (R0902) has been disabled.
     """
 
     def __init__(self,
@@ -38,7 +41,7 @@ class HuffmanCoding:
         in the given content.
 
         Note that the keys for the dictionary are ord-forms of characters, meaning
-        their representation as is their order in ascii 256 code.
+        their representation as is their order in ASCII 256 code.
         """
         for i in enumerate(self.content):
             current = ord(self.content[i[0]])
@@ -48,10 +51,21 @@ class HuffmanCoding:
 
     def build_huffman_tree(self):
         """A method for building the Huffman tree.
-        First another method is called that creates the nodes
-        for the tree. The method return a list of nodes.
 
-        Then the tree is created following the Huffman method.
+        First another method is called that creates the nodes for the tree
+        and returns a minimum heap of tuples (a heapifyed list). Each tuple
+        contains a frequency value and a node. The frequency value is used
+        to order the nodes into ascending order.
+
+        After this a new node is created that has the two nodes with the smallest
+        frequencies as child nodes. The popped node with a lower frequency is
+        placed as the left child and the one with higher frequency as the right
+        child. The frequency of the created parent node is the sum of the
+        frequencies of the child nodes. After these steps the new parent node
+        is pushed into the heap.
+
+        Once the tree is created another method is called to collect the Huffman
+        coded values for each character.
         """
         nodes = self.create_huffman_nodes()
 
@@ -176,10 +190,7 @@ class HuffmanCoding:
         left (if 0) or right (if 1) until a leaf node is found. Then
         the character from that node is added to the uncompressed string.
         """
-        self.uncompressed = ""
-        uncompressed_as_list = []
-        node = self.root_node
-        i = 0
+        uncompressed_as_list, node, i = self._init_huffman_decode()
 
         while i < len(self.compressed):
             bit = self.compressed[i]
@@ -198,6 +209,13 @@ class HuffmanCoding:
                 node = self.root_node
         self.uncompressed = "".join(uncompressed_as_list)
         self.content = uncompressed_as_list
+
+    def _init_huffman_decode(self) -> tuple:
+        self.uncompressed = ""
+        initialized_list = []
+        node = self.root_node
+        i = 0
+        return initialized_list, node, i
 
     def write_compressed_file(self, filename, content):
         """Converts content into a bytearray and calls an instance
@@ -305,7 +323,7 @@ class HuffmanCoding:
 
     def log_add_character_count(self):
         self.logentry.logdata["huffman-character-count"] = str(len(self.frequencies))
-    
+
     def analyze_compression(self):
         """Creates analysis data on Huffman compression.
         """

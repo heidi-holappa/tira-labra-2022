@@ -1,20 +1,28 @@
 class SupportedCharacters:
     """As the number of supported characters is less than 128, characters can be stored in 7 bits.
-    The translation between characters and a seven bit value is done by a dictionary provided by this
-    method. The 'characters_as_string' is hard coded to make sure that the order of the characters
-    does not change. 
+    The translation between characters and a seven bit value is done by a dictionary provided by
+    this method. The 'characters_as_string' is hard coded to make sure that the order of the
+    characters does not change.
     """
 
     def __init__(self):
-        """Constructor for the class. 
+        """Constructor for the class.
         """
         self.supported_characters_as_list, \
         self.char_to_index_dict, \
         self.index_to_char_dict = self.init_data_structures()
 
-    
-    def init_data_structures(self):
-        characters_as_string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+
+    def init_data_structures(self) -> tuple:
+        """Initializes the data structures of supported characters to be provided
+        to other layers of application logic.
+
+        Returns:
+            tuple: list and two dictionaries for character-to-index-to-character translations.
+        """
+        characters_as_string = \
+            '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\
+                !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
         character_list = []
         character_list.append(0)
         for char in characters_as_string:
@@ -29,18 +37,10 @@ class SupportedCharacters:
         character_list.append(214)  # Ö
         character_to_index_dict = {}
         index_to_character_dict = {}
-        for i in range(len(character_list)):
-            character_to_index_dict[character_list[i]] = i
-            index_to_character_dict[i] = character_list[i]
+        for i, value in enumerate(character_list):
+            character_to_index_dict[value] = i
+            index_to_character_dict[i] = value
         return character_list, character_to_index_dict, index_to_character_dict
-
-if __name__ == "__main__":
-    s = SupportedCharacters()
-    d = s.char_to_index_dict
-    for key, item in d.items():
-        print(key, item)
-    l = s.supported_characters_as_list
-    print(l)
 
 
 default_supported_characters = SupportedCharacters()

@@ -25,6 +25,11 @@ class LempelZiv77:
                  logentry: LogEntry = LogEntry()):
         """Construction for the class
 
+        The constructor contains more
+        than Pylint's recommended amount of instance-attributes.
+        With the permission of the course assistant this pylint
+        notification (R0902) has been disabled.
+
         Args:
             uncompressed_filename (str): name and location of the file with
             uncompressed data
