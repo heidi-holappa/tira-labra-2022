@@ -255,7 +255,7 @@ class CompressionView:
         self.init_log_files()
         compression_method = self._compression_var.get()
         if compression_method == 1:
-            self.compression_management.initial_huffman_compression(
+            self.compression_management.activate_huffman_compression(
                 self.file_to_compress)
         if compression_method == 2:
             self.compression_management.lempel_ziv_compress(
@@ -294,7 +294,7 @@ class CompressionView:
             return
         self.init_log_files()
         if self.file_to_uncompress[-3:] == "huf":
-            self.compression_management.initial_huffman_uncompression(
+            self.compression_management.activate_huffman_uncompression(
                 self.file_to_uncompress)
         if self.file_to_uncompress[-2:] == "lz":
             self.compression_management.lempel_ziv_uncompress(

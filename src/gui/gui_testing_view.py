@@ -79,11 +79,6 @@ class TestingView:
         )
 
     def construct_analysis_frame(self):
-        analysis_header = ttk.Label(
-            master=self._analysis_frame,
-            text="Extensive test log",
-            style="Header1.TLabel"
-        )
 
         textfield = Text(
             master=self._analysis_frame,
@@ -198,6 +193,7 @@ class TestingView:
                 min_characters, max_characters)
         except InvalidCharactersError as charerror:
             self._show_error(charerror.args[0])
+            return
         self._update_log()
         self._show_success_message()
 
