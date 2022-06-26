@@ -9,8 +9,12 @@ from config import IMG_LZ_MEAN_MATCH
 from config import IMG_LZ_MEAN_OFFSET
 
 class GraphManagement:
+    """A class that handles constructing graphs for the HTML-log.
+    """
 
     def __init__(self):
+        """Constructor for the class.
+        """
         self.graph_folder = DEFAULT_TEST_GRAPH_FOLDER
         img_folder_split = DEFAULT_TEST_GRAPH_FOLDER.split("/")
         self.img_folder = img_folder_split[-1] + "/"
@@ -36,7 +40,15 @@ For the included test material the offset is generally around 1100-1300 characte
 This could possibly improve the compression ratio.</p>\n"
         }
 
-    def construct_huffman_frequency_variance_bar_chart(self, x_values):
+    def construct_huffman_frequency_variance_bar_chart(self, x_values: list) -> str:
+        """Constructs a frequency variance bar chart for Huffman coding
+
+        Args:
+            x_values (list): a list of float values
+
+        Returns:
+            str: relative path of the created file
+        """
         pyplt.figure(1)
         freq_index = np.arange(len(x_values))
         numbered_labels = list(np.arange(1, len(x_values) + 1))
@@ -57,7 +69,15 @@ This could possibly improve the compression ratio.</p>\n"
         html_path = self.img_folder + IMG_HUFFMAN_FREQ
         return html_path
 
-    def construct_huffman_character_count_bar_chart(self, x_values):
+    def construct_huffman_character_count_bar_chart(self, x_values: list) -> str:
+        """Constructs a character count bar chart for Huffman coding.
+
+        Args:
+            x_values (list): a list of int values.
+
+        Returns:
+            str: relative path of the created file
+        """
         pyplt.figure(5)
         freq_index = np.arange(len(x_values))
         numbered_labels = list(np.arange(1, len(x_values) + 1))
@@ -78,7 +98,15 @@ This could possibly improve the compression ratio.</p>\n"
         html_path = self.img_folder + IMG_HUFFMAN_CHAR_COUNT
         return html_path
 
-    def construct_lempel_ziv_average_length_bar_chart(self, x_values):
+    def construct_lempel_ziv_average_length_bar_chart(self, x_values: list) -> str:
+        """Constructs a bar chart of LZ77  mean length data
+
+        Args:
+            x_values (list): a list of float values
+
+        Returns:
+            str: relative path for the file
+        """
         pyplt.figure(3)
         freq_index = np.arange(len(x_values))
         numbered_labels = list(np.arange(1, len(x_values) + 1))
@@ -98,7 +126,15 @@ This could possibly improve the compression ratio.</p>\n"
         html_path = self.img_folder + IMG_LZ_MEAN_MATCH
         return html_path
 
-    def construct_lempel_ziv_average_offset_bar_chart(self, x_values):
+    def construct_lempel_ziv_average_offset_bar_chart(self, x_values: list) -> str:
+        """Constructs a bar chart of LZ77 mean offsets
+
+        Args:
+            x_values (list): list of float values
+
+        Returns:
+            str: relative path for the graph created
+        """
         pyplt.figure(4)
         freq_index = np.arange(len(x_values))
         numbered_labels = list(np.arange(1, len(x_values) + 1))
@@ -118,7 +154,23 @@ This could possibly improve the compression ratio.</p>\n"
         html_path = self.img_folder + IMG_LZ_MEAN_OFFSET
         return html_path
 
-    def construct_compression_ratio_bar_chart(self, x_values, y_values, labels):
+    def construct_compression_ratio_bar_chart(
+            self,
+            x_values: list,
+            y_values: list,
+            labels: list
+        ) -> str:
+        """Constructs a bar char of compression ratio comparison
+        between Huffman coding and LZ77. 
+
+        Args:
+            x_values (list): list of float values containing Huffman ratios
+            y_values (list): list of float values containing LZ77 ratios
+            labels (list): list of string values for file numbers
+
+        Returns:
+            str: relative path to graph created
+        """
         pyplt.figure(2)
         x_index = np.arange(len(labels))
         numbered_labels = list(np.arange(1, len(labels) + 1))
