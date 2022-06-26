@@ -9,13 +9,13 @@ from config import DEFAULT_DATA_PATH
 class CompressionManagement:
 
     def __init__(self):
+        """Constructor for the class.
+        """
         self.last_analysis = {}
         self.loghandler = default_loghandler
 
-    def initial_huffman_compression(self, filename: str):
-        """A method for testing Huffman coding.
-
-        Gets a filename as a string to compresses.
+    def activate_huffman_compression(self, filename: str):
+        """Handles the procedure for Huffman coding compression and logging.
 
         Args:
             filename (str): filename to be read
@@ -35,10 +35,8 @@ class CompressionManagement:
             logentry.get_logdata_as_csv_row())
         self.create_compression_logentry(logentry)
 
-    def initial_huffman_uncompression(self, filename: str):
-        """An initial method for testing Huffman decoding.
-
-        Gets a filename as a string from where to fetch content to uncompress.
+    def activate_huffman_uncompression(self, filename: str):
+        """Handles the steps of uncompression and logging for Huffman uncompression.
 
         Args:
             filename (str): file which content is to be uncompressed.
@@ -58,12 +56,10 @@ class CompressionManagement:
         self.create_uncompression_logentry(logentry)
 
     def lempel_ziv_compress(self, filename: str):
-        """A method for testing Lempel-Ziv 77 compression.
-
-        Gets a string of content and compresses it.
+        """Handles LZ77 compression and logging.
 
         Args:
-            content (str): content to be compressed
+            filename (str): file to be compressed
         """
 
         compressed_filename = filename[:-3] + "lz"
@@ -79,6 +75,11 @@ class CompressionManagement:
         self.create_compression_logentry(logentry)
 
     def lempel_ziv_uncompress(self, filename: str):
+        """A method that handles the LZ77 uncompression procedure.
+
+        Args:
+            filename (str): name of the compressed file.
+        """
         uncompressed_filename = filename[:-3] + "_uncompressed.txt"
         logentry = LogEntry()
         lempel_ziv_uncompressor = LempelZiv77(
@@ -110,25 +111,36 @@ class CompressionManagement:
         accepted = accepted_extensions.split(";")
         return bool(extension in accepted)
 
-    def compress_all_txt_files_in_directory(self):
-        for file in os.listdir(DEFAULT_DATA_PATH):
-            if file.endswith(".txt"):
-                self.lempel_ziv_compress(os.path.join(DEFAULT_DATA_PATH, file))
-                self.initial_huffman_compression(
-                    os.path.join(DEFAULT_DATA_PATH, file))
-        print("DONE!")
+    # TODO: REMOVE?
+    # def compress_all_txt_files_in_directory(self):
+    #     """Compresses all files with the extension txt. 
+    #     """
+    #     for file in os.listdir(DEFAULT_DATA_PATH):
+    #         if file.endswith(".txt"):
+    #             self.lempel_ziv_compress(os.path.join(DEFAULT_DATA_PATH, file))
+    #             self.activate_huffman_compression(
+    #                 os.path.join(DEFAULT_DATA_PATH, file))
 
     def add_size_and_compression_ratio_to_logentry(self,
                             uncompressed_filename,
                             compressed_filename,
                             logentry):
-        file_stat = os.stat(uncompressed_filename)
-        filesize = file_stat.st_size
+        """Updates the logentry object to include the file sizes and
+        the compression ratio. The os.stat.st_size return the file
+        size in bytes.
+
+        Args:
+            uncompressed_filename (str): filename for the uncompressed file
+            compressed_filename (str): filename for the compressed file
+            logentry (LogEntry): the LogEntry object that is being updated
+        """
+        uncompressed_file_stat = os.stat(uncompressed_filename)
+        uncompressed_filesize = uncompressed_file_stat.st_size
         compressed_file_stat = os.stat(compressed_filename)
         compressed_filesize = compressed_file_stat.st_size
-        logentry.logdata["uncompressed_size"] = str(filesize)
+        logentry.logdata["uncompressed_size"] = str(uncompressed_filesize)
         logentry.logdata["compressed_size"] = str(compressed_filesize)
-        logentry.logdata["compression_ratio"] = f"{compressed_filesize / filesize:.2f}"
+        logentry.logdata["compression_ratio"] = f"{compressed_filesize / uncompressed_filesize:.2f}"
 
 
 default_compression_management = CompressionManagement()
