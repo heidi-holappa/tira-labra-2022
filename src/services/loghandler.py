@@ -27,25 +27,36 @@ class LogHandler:
         self.init_tkinter_log_file()
 
     def init_tkinter_log_file(self):
+        """Initializes the log-file displayed in the TKinter
+        Text-widgets.
+        """
         if os.path.exists(self.tkinter_log):
             os.remove(self.tkinter_log)
         with open(self.tkinter_log, "a", encoding="utf-8") as file:
             file.close()
 
     def init_html_file(self):
+        """Initializes the HTML-log file for reconstruction."""
         if os.path.exists(self.html_filename):
             os.remove(self.html_filename)
         with open(self.html_filename, "a", encoding="utf-8") as file:
             file.close()
 
     def init_csv_file(self):
+        """Initializes the csv-log-file for new use.
+        """
         if os.path.exists(self.data_csv):
             self.archive_csv_content(self.data_csv)
             os.remove(self.data_csv)
         with open(self.data_csv, "a", encoding="utf-8") as file:
             file.close()
 
-    def archive_csv_content(self, filename):
+    def archive_csv_content(self, filename: str):
+        """Archives the content in the csv-file before overwriting the file.
+
+        Args:
+            filename (str): filename of the csv-log -file.
+        """
         content = ""
         with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
@@ -82,8 +93,8 @@ Log entry created: {log_time_strf}\n\
 File accessed: {logdata['original_filename']}\n\
 File created: {logdata['compressed_filename']}\n\
 Compression method: {logdata['compression_method']}\n\
-Uncompressed_size: {logdata['uncompressed_size']} bits\n\
-Compressed size: {logdata['compressed_size']} bits\n"""
+Uncompressed_size: {logdata['uncompressed_size']} bytes\n\
+Compressed size: {logdata['compressed_size']} bytes\n"""
             content += f"Compression ratio: {compression_ratio:.2f}\n"
             content += f"""Time used for fetching and processing data: \
 {logdata['data_fetch_and_process_time']} seconds\n\
@@ -97,54 +108,111 @@ Time used for writing and processing data: \
                          total_time,
                          success,
                          fail):
+        """A method that handles calling the method that create the HTML-log file.
+
+        Args:
+            total_time (str): Total time used for running tests.
+            success (str): The number of tests that were successful
+            fail (str): The number of failed tests
+        """
+
+        with open(self.html_filename, "a", encoding="utf_8") as file:
+            
+            file.write(
+                self.create_forewords_for_html_log()
+                )
+            file.write(
+                self.create_overview_data_for_html_log(total_time, success, fail)
+            )
+            file.write(
+                self.create_tables_for_html_log()
+            )
+            file.write(
+                self.create_graphs_for_html_log()
+            )
+
+    def create_forewords_for_html_log(self) -> str:
+        """Creates the forewords for the HTML-log file.
+
+        Returns:
+            str: created content as a string
+        """
         log_time = datetime.now()
         log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
-        with open(self.html_filename, "a", encoding="utf_8") as file:
-            forewords = f"\
+        forewords = f"\
 <h1>Extended testing report</h1><br>\n\
 <p>This document includes a report of the extended testing executed on \
 <b>{log_time_strf}</b>. The tables include information on compression and \
 uncompression of test files. You can also find graphs that measure perfomance \
 of compression algorithms based on selected measurers. Note that running the \
 extended tests overwrites the report.</p><br>\n\n"
-            file.write(forewords)
-            analysis = f"""<H2>EXTENSIVE TEST SUMMARY</H2><br>\n\
+        return forewords
+
+    def create_overview_data_for_html_log(self, total_time, success, fail) -> str:
+        """Creates the HTML-content with the overview analysis of tests run.
+        
+        Returns:
+            str: created content as a string
+        """
+        analysis = f"""<H2>EXTENSIVE TEST SUMMARY</H2><br>\n\
 <b>Total runtime:</b> {total_time} seconds<br>\n\
 <b>Successful tests:</b> {success}<br>\n\
 <b>Failed tests:</b> {fail}<br>\n\n\
 <h2>Detailed summary</h2><br>\n\n"""
-            file.write(analysis)
-            compression_table = self.create_html_compression_table()
-            uncompression_table = self.create_html_uncompression_table()
-            file.write(compression_table)
-            file.write("<br>\n")
-            file.write(uncompression_table)
-            file.write("<h2>Graphs</h2>\n\
+        return analysis
+    
+    def create_tables_for_html_log(self) -> str:
+        """Creates the HTML-content related to the tables
+
+        Returns:
+            str: content as a string
+        """
+        tables = "<h2>Compression analysis</h2><br>"
+        tables += self.create_html_compression_table()
+        tables += "<h2>Uncompression analysis</h2><br>"
+        tables += self.create_html_uncompression_table()
+        tables += "<br>\n"
+        return tables
+
+    def create_graphs_for_html_log(self) -> str:
+        """Constructs the HTML-content related to the graphs.
+
+        Returns:
+            str: created content as a string
+        """
+        graphs = "<h2>Graphs</h2>\n\
 <p>Below you can review visual comparison of test results. The labels indicate the \
 number of the file in question. Filenames can be found with the number from the tables \
-above.</p>\n")
-            bar_chart_filename = self.create_compression_ratio_bar_chart()
-            file.write(f"<img src='{bar_chart_filename}' alt='Compression ratio comparison'>\
-</img><br>\n")
-            file.write(self.graph_management.graph_explanations["compression-ratio"])
-            huffman_frequency_bar_chart = self.create_huffman_frequency_bar_chart()
-            file.write(f"<img src='{huffman_frequency_bar_chart}' \
-alt='Huffman frequency variances'></img><br>\n")
-            file.write(self.graph_management.graph_explanations["huffman-frequency-variance"])
-            huffman_character_count_graph = self.create_huffman_character_count_chart()
-            file.write(f"<img src='{huffman_character_count_graph}' \
-alt='Huffman character count'></img><br>\n")
-            file.write(self.graph_management.graph_explanations["huffman-character-count"])
-            lempel_ziv_avg_match = self.create_lempel_ziv_bar_chart()
-            file.write(f"<img src='{lempel_ziv_avg_match}' alt='Lempel-Ziv average match length'>\
-</img><br>\n")
-            file.write(self.graph_management.graph_explanations["lempel-ziv-mean-length"])
-            lempel_ziv_avg_offset = self.create_lempel_ziv_offset_bar_chart()
-            file.write(f"<img src='{lempel_ziv_avg_offset}' alt='Lempel-Ziv average offset length'>\
-</img><br>\n")
-            file.write(self.graph_management.graph_explanations["lempel-ziv-mean-offset"])
+above.</p>\n"
+        bar_chart_filename = self.create_compression_ratio_bar_chart()
+        graphs += f"<img src='{bar_chart_filename}' alt='Compression ratio comparison'>\
+</img><br>\n"
+        graphs += self.graph_management.graph_explanations["compression-ratio"]
+        huffman_frequency_bar_chart = self.create_huffman_frequency_bar_chart()
+        graphs += f"<img src='{huffman_frequency_bar_chart}' \
+alt='Huffman frequency variances'></img><br>\n"
+        graphs += self.graph_management.graph_explanations["huffman-frequency-variance"]
+        huffman_character_count_graph = self.create_huffman_character_count_chart()
+        graphs += f"<img src='{huffman_character_count_graph}' \
+alt='Huffman character count'></img><br>\n"
+        graphs += self.graph_management.graph_explanations["huffman-character-count"]
+        lempel_ziv_avg_match = self.create_lempel_ziv_bar_chart()
+        graphs += f"<img src='{lempel_ziv_avg_match}' alt='Lempel-Ziv average match length'>\
+</img><br>\n"
+        graphs += self.graph_management.graph_explanations["lempel-ziv-mean-length"]
+        lempel_ziv_avg_offset = self.create_lempel_ziv_offset_bar_chart()
+        graphs += f"<img src='{lempel_ziv_avg_offset}' alt='Lempel-Ziv average offset length'>\
+</img><br>\n"
+        graphs += self.graph_management.graph_explanations["lempel-ziv-mean-offset"]
+        return graphs
 
-    def create_compression_ratio_bar_chart(self):
+    def create_compression_ratio_bar_chart(self) -> str:
+        """Creates a bar chart detailing the compression ratio comparison
+        between Huffman coding and LZ77.
+
+        Returns:
+            str: path for the graph created. 
+        """
         with open(self.data_csv, "r", encoding="utf-8") as file:
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
@@ -166,7 +234,13 @@ alt='Huffman character count'></img><br>\n")
             labels)
         return filename
 
-    def create_huffman_frequency_bar_chart(self):
+    def create_huffman_frequency_bar_chart(self) -> str:
+        """Handles calling fo the constructin of a bar chart detailing
+        the frequencies for the Huffman compression
+        
+        Returns:
+            str: path to the graph created.
+        """
         with open(self.data_csv, "r", encoding="utf-8") as file:
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
@@ -180,7 +254,13 @@ alt='Huffman character count'></img><br>\n")
             huffman_frequency_variance)
         return filename
 
-    def create_huffman_character_count_chart(self):
+    def create_huffman_character_count_chart(self) -> str:
+        """Handles calling for the constructin of a bar chart detailing
+        the character counts for the Huffman compression. 
+
+        Returns:
+            str: path to the graph created.
+        """
         with open(self.data_csv, "r", encoding="utf-8") as file:
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
@@ -194,7 +274,13 @@ alt='Huffman character count'></img><br>\n")
             huffman_character_count)
         return filename
 
-    def create_lempel_ziv_bar_chart(self):
+    def create_lempel_ziv_bar_chart(self) -> str:
+        """Handles calling for the construction of bar chart detailing
+        the mean lengths for LZ77 compression.
+
+        Returns:
+            str: returns path to the graph as a string
+        """
         with open(self.data_csv, "r", encoding="utf-8") as file:
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
@@ -208,7 +294,12 @@ alt='Huffman character count'></img><br>\n")
             lempel_ziv_avg_match)
         return filename
 
-    def create_lempel_ziv_offset_bar_chart(self):
+    def create_lempel_ziv_offset_bar_chart(self) -> str:
+        """Handles calling for construction of a bar chart.
+
+        Returns:
+            str: filename to the graph created
+        """
         with open(self.data_csv, "r", encoding="utf-8") as file:
             content = file.read()
             data_as_rows = content.split("\n")[:-1]
@@ -222,7 +313,12 @@ alt='Huffman character count'></img><br>\n")
             lempel_ziv_avg_offset)
         return filename
 
-    def create_html_compression_table(self):
+    def create_html_compression_table(self) -> str:
+        """Creates an HTML table of the compression analysis data.
+
+        Returns:
+            str: HTML-table as a string
+        """
         compression_log = "\
 <table border='1'>\n\
     <tr>\n\
@@ -264,7 +360,8 @@ alt='Huffman character count'></img><br>\n")
         compression_log += "</table>\n"
         return compression_log
 
-    def create_html_uncompression_table(self):
+    def create_html_uncompression_table(self) -> str:
+        """Creates a table of the uncompression results."""
         uncompression_log = "\
 <table border='1'>\n\
     <tr cellspacing='3'>\n\
@@ -327,8 +424,8 @@ Log entry created: {log_time_strf}\n"\
 File accessed: {logdata['compressed_filename']}\n\
 File created: {logdata['uncompressed_filename']}\n\
 Compression method: {logdata['compression_method']}\n\
-Compressed size: {logdata['compressed_size']} bits\n\
-Uncompressed_size: {logdata['uncompressed_size']} bits\n"""
+Compressed size: {logdata['compressed_size']} bytes\n\
+Uncompressed_size: {logdata['uncompressed_size']} bytes\n"""
             compression_ratio = int(logdata['compressed_size']) / \
                 int(logdata['uncompressed_size']) * 100
             content += f"""Compression ratio: {compression_ratio:.2f}\n\
@@ -342,9 +439,23 @@ Time used for writing and processing data: \
 
 
     def single_tkinter_compression_log_entry(self, logdata: dict):
+        """Creates a single log entry. This method is called when using
+        the compression view to just create a log entry for the Tkinter
+        Text widget.
+
+        Args:
+            logdata (dict): data from which the entry is created
+        """
         self.create_compression_entry(logdata)
     
     def single_tkinter_uncompression_log_entry(self, logdata: dict):
+        """Creates a single log entry. This method is called when using
+        the compression view to just create a log entry for the Tkinter
+        Text widget.
+
+        Args:
+            logdata (dict): data from which the entry is created
+        """
         self.create_uncompression_entry(logdata)
 
 
