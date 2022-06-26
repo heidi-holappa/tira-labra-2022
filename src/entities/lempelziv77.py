@@ -1,6 +1,7 @@
 from statistics import mean
 import time
 from entities.logentry import LogEntry
+from entities.supportedcharacters import default_supported_characters
 from services.filemanagement import default_file_manager
 
 class NoCompressedContentError(Exception):
@@ -41,6 +42,7 @@ class LempelZiv77:
         self._bytearray_list = []
         self.bytearray_data = None
         self.logentry = logentry
+        self.supported_characters = default_supported_characters
 
     def fetch_uncompressed_content(self):
         """Calls FileManagement from service package to fetch uncompressed content
@@ -88,7 +90,9 @@ class LempelZiv77:
         self.file_manager.create_binary_file(filename, content_to_write)
 
     def lempel_ziv_activate_compression(self):
-        """A method to activate and manage different steps of compression
+        """A method to activate and manage different steps of compression.
+
+        Method also includes run-time logging on different phases.
         """
         fetch_starttime = time.time()
         self.fetch_uncompressed_content()
@@ -110,7 +114,9 @@ class LempelZiv77:
         self.logentry.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
     def lempel_ziv_activate_uncompression(self):
-        """A method to activate and manage different steps of uncopmpression
+        """A method to activate and manage different steps of uncopmpression.
+
+        Method also includes run-time logging.
         """
         fetch_starttime = time.time()
         self.fetch_compressed_content()
@@ -180,14 +186,16 @@ class LempelZiv77:
             offset = member[0]
             match_length = member[1]
             next_character = member[2]
+            next_char_index = self.supported_characters.char_to_index_dict[next_character]
             if offset == 0:
                 content_as_bits.append("0")
-                content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
+                # content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
+                content_as_bits.append(str(bin(next_char_index)[2:].zfill(7)))
             else:
                 content_as_bits.append("1")
                 content_as_bits.append(str(bin(offset)[2:].zfill(12)))
                 content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
-        content_as_bits.append("00000000")
+        content_as_bits.append("0000000")
         remaining_bits = str((8 - len(content_as_bits) % 8) * "0")
         content_as_bits.append(remaining_bits)
         self.compressed_content = "".join(content_as_bits)
@@ -234,7 +242,7 @@ class LempelZiv77:
             tuple: offset, match length and character, if no match is found.
         """
         longest = (0, 0, 0)
-        for i in range(buffer_start_index+2, buffer_end_index):
+        for i in range(buffer_start_index+3, buffer_end_index):
             found_index = self.content[window_start_index:buffer_start_index].rfind(
                 self.content[buffer_start_index:i])
             if found_index != -1:
@@ -247,38 +255,27 @@ class LempelZiv77:
             longest = (0, 1, ord(self.content[buffer_start_index]))
         return longest
 
-    # TODO: Remove after demo-session if new version if favorable
-    def transform_fetched_content_to_tuples(self):
-        """A method that transforms the fetched data into tuples.
-        """
-
-        self.compressed_content_as_list = []
-        i = 0
-        while i < len(self.compressed_content):
-            offset = int(self.compressed_content[i:i+12], 2)
-            length = int(self.compressed_content[i+12:i+16], 2)
-            if offset == 0:
-                character = chr(int(self.compressed_content[i+16:i+24], 2))
-                i += 24
-            else:
-                character = ""
-                i += 16
-            self.compressed_content_as_list.append((offset, length, character))
 
     def construct_tuples_from_fetched_content(self):
         """A method that transforms the fetched data into tuples.
+
+        The first bit indicates whether a match exists. If bit value is 0,
+        not match exists and the next 7 bits include the index of the next character.
+        If a match exists, the next 12 bits include the offset and the following 4 bits
+        the match length.
         """
 
         self.compressed_content_as_list = []
         i = 0
         while i < len(self.compressed_content):
             if self.compressed_content[i] == "0":
-                if self.compressed_content[i+1:i+9] == "00000000":
+                if self.compressed_content[i+1:i+8] == "0000000":
                     break
                 offset = 0
                 length = 1
-                character = chr(int(self.compressed_content[i+1:i+9], 2))
-                i += 9
+                character_index = int(self.compressed_content[i+1:i+8], 2)
+                character = chr(self.supported_characters.index_to_char_dict[character_index])
+                i += 8
             else:
                 offset = int(self.compressed_content[i+1:i+13], 2)
                 length = int(self.compressed_content[i+13:i+17], 2)
@@ -308,11 +305,15 @@ class LempelZiv77:
         self.content = uncompressed_string
 
     def calculate_mean_length_and_mean_offset_for_log(self):
+        """Handles calculating the mean length and mean offset of
+        the matching content in the events when a match is found
+        """
         lengths = []
         offsets = []
         for entry in self.compressed_content_as_list:
-            offsets.append(entry[0])
-            lengths.append(entry[1])
+            if entry[0] > 0:
+                offsets.append(entry[0])
+                lengths.append(entry[1])
         self.logentry.logdata["lz_avg_match_length"] = str(mean(lengths))
         self.logentry.logdata["lz_mean_offset"] = str(mean(offsets))
 
