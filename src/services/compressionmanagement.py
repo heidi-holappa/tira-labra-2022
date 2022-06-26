@@ -3,8 +3,6 @@ from services.loghandler import default_loghandler
 from entities.huffman import HuffmanCoding
 from entities.lempelziv77 import LempelZiv77
 from entities.logentry import LogEntry
-from config import DEFAULT_DATA_PATH
-
 
 class CompressionManagement:
 
@@ -91,7 +89,7 @@ class CompressionManagement:
         default_loghandler.write_csv_entry_to_file(
             logentry.get_logdata_as_csv_row())
         self.create_uncompression_logentry(logentry)
-        
+
     def create_compression_logentry(self, logentry: LogEntry):
         self.loghandler.create_compression_entry(logentry.logdata)
 
@@ -113,7 +111,7 @@ class CompressionManagement:
 
     # TODO: REMOVE?
     # def compress_all_txt_files_in_directory(self):
-    #     """Compresses all files with the extension txt. 
+    #     """Compresses all files with the extension txt.
     #     """
     #     for file in os.listdir(DEFAULT_DATA_PATH):
     #         if file.endswith(".txt"):
