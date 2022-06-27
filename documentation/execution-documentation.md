@@ -220,6 +220,22 @@ For the test material in this project the average offset length was between 1100
 ### Lempel-Ziv 77 character storing should be investigated
 Currently all characters take one byte of space. The range of characters is however limited and perhaps less space would suffice. The number of characters is less than 128, so 7 bits could be enough for uniquelly identifying each character. This way for each character stored (= when no match is found) a byte of space would be required. This way the compression ratio would be 1.0. 
 
+### Application logic  
+The application logic would benefit from following updates:
+- Introducing error handling to compression / uncompression
+- Improved error handling on extensive tests
+- Refactoring of application logic
+  - validating content could be moved to Entities package class SupportedCharacters
+
+
+## Pylint / Pytest  
+The following Pylint -notificatoins were ignored in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues remain):
+- R0902: too-many-instance-attributes
+  - HuffmanCoding
+  - LempelZiv
+- W0703: broad-except
+  - ExtensiveTestHandler
+
 # Sources
 
 **Huffman coding:**  

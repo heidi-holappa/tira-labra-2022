@@ -1,29 +1,4 @@
-# Weekly Report - Final Phase
-
-## Quick recap on progress
-
-
-## What have I done this week?
-
-
-## How has the application progressed?
-
-## What did I learn during this week / today?
-
-
-## What remained unclear or caused difficulties? 
-
-
-## Pylint and Pytest - status update
-
-## Study hours for final phase #7
-
-| Date (dd/mm/yyyy) |Task | Hours |
-| ---- | ---- | ---- |
-| 19.6.2022 | Add log-content to environmental variables | 1 |
-| 19.6.2022 | Write new tests | 1 |
-| **total**| ---- | **2** |
-
+# Total study hours
 
 ## Work hours for the course
 
@@ -37,3 +12,18 @@
 | 6 | 19 |
 | 7 |  |
 | **Total** | **100.25** |
+
+
+## Study hours for final phase #7
+
+| Date (dd/mm/yyyy) |Task | Hours |
+| ---- | ---- | ---- |
+| 19.6.2022 | Add log-content to environmental variables | 1 |
+| 19.6.2022 | Write new tests | 1 |
+| 20.6.2022 | Improve visual graphs | 2 |
+| 20.6.2022 | Improve logging | 1 |
+| 21.6.2022 | Demo-session | 2 |
+| 24.6.2022 | Refactor code | 2 |
+| 25.6.2022 | Fix Pylint-issues, write documentation | 3 |
+| 26.6.2022 | Fix Pylint-issues, write documentation, refactor code | 6 |
+| **total**| ---- | **18** |

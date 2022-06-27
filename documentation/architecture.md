@@ -67,6 +67,10 @@ CompressionManagement ->> HuffmanCoding: analyze_compression()
 CompressionManagement ->> LogHandler: write_csv_entry_to_file(logentry.get_data_as_csv_row)
 CompressionManagement ->> CompressionManagement: create_compression_logentry(logentry)
 CompressionManagement ->> LogHandler: create_compression_entry(logentry.logdata)
+GUI ->> GUI: _update_log()
+GUI ->> GUI: clear_frame()
+GUI ->> GUI: _construct_log_frame()
+GUI ->> user: _compression_status_notification()
 ```
 
 ### Running extensive tests
