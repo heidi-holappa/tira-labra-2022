@@ -13,6 +13,7 @@ class HuffmanCoding:
     notification (R0902) has been disabled.
     """
 
+    # pylint: disable=too-many-instance-attributes
     def __init__(self,
                  uncompressed_filename,
                  compressed_filename,
@@ -337,6 +338,7 @@ class HuffmanCoding:
         self.log_add_frequencies()
         self.log_add_character_count()
 
+    # pylint: disable=duplicate-code
     def analyze_uncompression(self):
         """A method for creating analysis data on Huffman uncompression.
         Note that compressed content length is included in the data in the method
