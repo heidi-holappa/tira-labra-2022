@@ -201,7 +201,6 @@ class LempelZiv77:
         window_start_index = max(0, current_index - self.window_size)
         buffer_end_index = min(
             current_index + self.buffer_size, len(self.content))
-        print(window_start_index, current_index, buffer_end_index)
         result = self.find_matches_in_sliding_window(
             window_start_index,
             current_index,
