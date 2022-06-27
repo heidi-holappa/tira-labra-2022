@@ -78,7 +78,7 @@ class MainView:
 
         button_testing_view = ttk.Button(
             master=self._frame,
-            text="Run extensive tests",
+            text="Run analysis-tests",
             command=self._testing_view,
             style="Custom.TButton"
 

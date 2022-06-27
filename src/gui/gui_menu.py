@@ -30,7 +30,9 @@ class GuiMenu:
 
         helpmenu = Menu(menubar, tearoff=0)
         helpmenu.add_command(
-            label="Documenation (opens browser)", command=self._open_help)
+            label="How-to-use (opens browser)", command=self._open_help)
+        helpmenu.add_command(
+            label="Analysis-tests documentation (opens browser)", command=self._open_analysis_documentation)
         helpmenu.add_command(label="About", command=self._show_about)
         menubar.add_cascade(label="Help", menu=helpmenu)
         return menubar
@@ -45,6 +47,12 @@ class GuiMenu:
         """
         webbrowser.open_new(
             "https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/how-to-guide.md")
+
+    def _open_analysis_documentation(self):
+        """Opens the testing documentation in Github in the default browser window.
+        """
+        webbrowser.open_new(
+            "https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#extensive-analysis-tests-view-in-gui")
 
     def _show_about(self):
         """A method that prompts a messabox with project information.

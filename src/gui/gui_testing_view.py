@@ -68,7 +68,11 @@ class TestingView:
     def construct_instruction_frame(self):
         label_instruction = ttk.Label(
             master=self._label_and_instruction_frame,
-            text="In this view you can generate extensive test data and run selected tests. Please note that running extensive tests can take a long time, especially with large content.",
+            text="In this view user can generate random test data or run selected analysis-tests. \
+Sample test material with character-count from 3,000 to almost 8,000,000 is included.\
+Please note that running analysis-tests can take a long time, especially with large content.\
+The largest as-default available test file has almost 7,800,000 characters and is app. \
+15 MB in size.",
             style="Centered.TLabel"
         )
         label_instruction.grid(
@@ -113,7 +117,7 @@ class TestingView:
 
         button_run_extensive_tests = ttk.Button(
             master=self._buttons_frame,
-            text="Run extensive tests",
+            text="Run analysis-tests",
             command=self._run_extensive_tests,
             style="Custom.TButton"
         )
