@@ -144,7 +144,7 @@ class TestHuffmanCompression(unittest.TestCase):
         self.assertEqual(True, content_matches)
 
     @pytest.mark.extendedtest 
-    def test_compressed_data_matches_with_a_very_long_existing_file(self): # pragma: no cover
+    def test_compressed_data_matches_with_a_very_long_existing_file(self):
         filename = os.path.join(DEFAULT_TEST_DATA_PATH,
                                 "gutenberg-top-10.txt")
         with open(filename, "r", encoding="utf-8") as file: 
@@ -152,8 +152,8 @@ class TestHuffmanCompression(unittest.TestCase):
         self.create_test_file(content)
         self.huffman_coder.execute_compression()
         content = self.huffman_coder.content
-        uncompressed_filename = self.filename[:-4] + "_uncompressed.txt"
-        self.huffman_coder.uncompressed_filename = uncompressed_filename
+        self.uncompressed_filename = filename[:-4] + "_uncompressed.txt"
+        self.huffman_coder.uncompressed_filename = self.uncompressed_filename
         self.huffman_coder.execute_uncompression()
         decoded_content = self.huffman_coder.uncompressed
         content_matches = True

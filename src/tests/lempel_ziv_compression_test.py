@@ -143,9 +143,10 @@ class TestLempelZivCompression(unittest.TestCase):
         self.assertEqual(True, content_matches)
 
     @pytest.mark.extendedtest 
-    def test_compressed_data_matches_with_a_very_long_existing_file(self): # pragma: no cover
+    def test_compressed_data_matches_with_a_very_long_existing_file(self): 
         filename = os.path.join(DEFAULT_TEST_DATA_PATH,
                                 "gutenberg-top-10.txt")
+        self.uncompressed_filename = filename[:-4] + "_uncompressed.txt"
         with open(filename, "r", encoding="utf-8") as file: 
             content = file.read()
         self.create_test_file(content)
