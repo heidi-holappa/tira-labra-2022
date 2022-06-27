@@ -45,7 +45,7 @@ In the GUI's analysis-tests view user can create new randomly created test mater
 
 When the analysis-tests are run, all files in the configured directory (default: test-data) that match the size user defined are included. Included files are compressed and uncompressed. All content is validated before compression and after uncompression original and uncompressed content of each file is verified to match. 
 
-User can also add data to the folder for testing purposes. The data is validated before analysis-tests begin to ensure that only supported characters are used in uploaded test-files. If there are un-supported characters in a test-file, user is shown the following notification:
+User can also add data to the folder for testing purposes. The data is validated before analysis-tests begin to ensure that only supported characters are used in uploaded test-files. If there are un-supported characters in a test-file, user is shown the following notification and test-run is terminated:
 
 ![Error: non-supported characters](images/error-non-supported-characters.png)
 
@@ -57,15 +57,18 @@ A sample of an HTML-log generated with the mentioned character limits (min: 100,
 
 ### Input Used for Testing
 The testing material for user operated extensive analysis-tests includes:
-- Files with semirandomly generated ASCII -content ([example](../test-data/random-printable-ascii-100-paragraphs.txt)). 
-- Files with semirandomly generated natural language content ([example](../test-data/natural-language-document-100-paragraphs.txt)). 
+- Files with semirandomly generated ASCII -content ([example](../test-data/random-printable-ascii-100-paragraphs.txt)). (7,000 to 70,000 characters)
+- Files with semirandomly generated natural language content ([example](../test-data/natural-language-document-100-paragraphs.txt)). (3,000 to 53,000 characters)
 - Public Domain content from Project Gutenberg:
-  - [The Standard Operaglass, by Charles Annesley](../test-data/gutenberg-project-ebook-1.txt)
-  - [The value of Zeta(3) to 1,000,000](../test-data/gutenberg-project-ebook-2.txt)
-  - [Miscellaneous Mathematical Constants, by Various](../test-data/gutenberg-project-ebook-3.txt)
-  - [Top 10 books from Project Gutenberg in one file](../test-data/gutenberg-top-10.txt)
-- Finnish classic [Seitsemän Veljestä](../test-data/seitseman-veljesta.txt)
-- [First 100,000 decimals of pi](../test-data/first-100000-decimals-of-pi.txt)
+  - [The Standard Operaglass, by Charles Annesley](../test-data/gutenberg-project-standar-operaglass.txt) (809,246 characters)
+  - [The value of Zeta(3) to 1,000,000](../test-data/gutenberg-project-the-value-of-zeta-3.txt) (1,007,060 characters)
+  - [Miscellaneous Mathematical Constants, by Various](../test-data/gutenberg-project-misc-math-constants.txt) (480,294 characters)
+  - [The Martian Shore, by Charles L. Fontenay](../test-data/gutenberg-project-martian-shore.txt) (51,543 characters)
+  - [Argonaut stories, by Jerome Hart](../test-data/gutenberg-project-argonaut-stories.txt) (283,094 characters)
+  - [The wonder woman, by Mae Van Norman](../test-data/gutenberg-project-the-wonder-woman.txt) (254,827 characters)
+  - [Top 10 books from Project Gutenberg in one file](../test-data/gutenberg-top-10.txt) (7,650,153 characters)
+- Finnish classic [Seitsemän Veljestä](../test-data/seitseman-veljesta.txt) (624,402 characters)
+- [First 100,000 decimals of pi](../test-data/first-100000-decimals-of-pi.txt) (100,003 characters)
 
 For the automated tests mostly predefined inputs are used, but few tests use randomly created material. 
 
