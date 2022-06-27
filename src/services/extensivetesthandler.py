@@ -10,7 +10,7 @@ from services.compressionmanagement import default_compression_management
 from services.loghandler import default_loghandler
 from entities.supportedcharacters import default_supported_characters
 from config import DEFAULT_TEST_DATA_PATH
-from config import CSV_LOG, HTML_LOG, TKINTER_LOG, ARCHIVE_LOG
+from config import HTML_LOG, TKINTER_LOG
 
 
 class InvalidCharactersError(Exception):
@@ -36,11 +36,9 @@ class ExtensiveTestHandler:
         self.log_file = os.path.join(DEFAULT_TEST_DATA_PATH, TKINTER_LOG)
         self.html_log_file = os.path.join(
             DEFAULT_TEST_DATA_PATH, HTML_LOG)
-        self.log_archive = os.path.join(
-            DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
         self.supported_characters = default_supported_characters.supported_characters_as_list
 
-    # TODO: Remove, when sure not needed. 
+    # TODO: Remove, when sure not needed.
     # def create_printable_characters(self):
     #     characters = string.printable.split()[0]
     #     ascii_order_set = set()
@@ -128,7 +126,8 @@ class ExtensiveTestHandler:
         """Validates that the content only includes supported characters.
 
         Raises:
-            InvalidCharactersError: If given content contains unsupported characters, and error is raised.
+            InvalidCharactersError: If given content contains unsupported characters,
+            and error is raised.
         """
         ascii_order_set = self.supported_characters
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
@@ -170,15 +169,16 @@ Non-supported character: {char}")
         tests_succeeded = self.test_lempelziv_compression(filename, content)
         return tests_succeeded
 
+    # pylint: disable=broad-except
     def test_lempelziv_compression(self, filename: str, content: str) -> bool:
         """Handles compressing an uncompressing the given content
         with LZ77. Validates that original content and the uncompressed
-        content match. 
+        content match.
 
         Args:
             filename (str): path of the file to be compressed
             content (str): content of the original file. Used for validating
-            that the contents match. 
+            that the contents match.
 
         Returns:
             bool: boolean value for whether or not tests and validation succeeded.
@@ -206,15 +206,16 @@ Non-supported character: {char}")
         return tests_succeeded
 
     # TODO: Refactor error handling to log files
+    # pylint: disable=broad-except
     def test_huffman_compression(self, filename: str, content: str) -> bool:
         """Handles compressing an uncompressing the given content
         with Huffman coding. Validates that original content and the uncompressed
-        content match. 
+        content match.
 
         Args:
             filename (str): path of the file to be compressed
             content (str): content of the original file. Used for validating
-            that the contents match. 
+            that the contents match.
 
         Returns:
             bool: boolean value for whether or not tests and validation succeeded.
@@ -330,19 +331,6 @@ Failed tests: {fail}\n\n\
             fail (int): number of failed tests
         """
         self.loghandler.create_html_file(total_time, success, fail)
-
-
-    def archive_log_content(self):
-        """Archives log content of previous test run.
-        """
-        content = ""
-        with open(self.log_file, "r", encoding="utf-8") as file:
-            content = file.read()
-        with open(self.log_archive, "a", encoding="utf-8") as file:
-            file.write(content)
-        os.remove(self.log_file)
-        with open(self.log_file, "a", encoding="utf-8") as file:
-            file.close()
 
 
 default_test_handler = ExtensiveTestHandler()
