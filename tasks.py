@@ -11,7 +11,7 @@ def test(ctx):
 
 @task
 def extended_test(ctx):
-    ctx.run("pytest src -m 'extendedtest'", pty=True)
+    ctx.run("pytest src -m 'extendedtest or not extendedtest'", pty=True)
 
 @task
 def coverage(ctx):
