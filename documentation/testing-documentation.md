@@ -55,8 +55,8 @@ User can view the test result of the extensive tests in the desktop application,
 
 A sample of an HTML-log generated with the mentioned character limits (min: 100,000; max: 2,500,000) can be reviewed [here](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html). Please note that the htmlpreview web-application does not load images with relative paths. To view the HTML-report with images, download a copy of this project and view the content locally on your preferred browser, or review the images in the [Github -folder](https://github.com/heidi-holappa/tira-labra-2022/tree/master/test-data/images).
 
-### Input Used for Testing
-The testing material for user operated extensive analysis-tests includes:
+### Input Used for Analysis-tests
+The sample material for user operated extensive analysis-tests includes:
 - Files with semirandomly generated ASCII -content ([example](../test-data/random-printable-ascii-100-paragraphs.txt)). (7,000 to 70,000 characters)
 - Files with semirandomly generated natural language content ([example](../test-data/natural-language-document-100-paragraphs.txt)). (3,000 to 53,000 characters)
 - Public Domain content from Project Gutenberg:
@@ -69,9 +69,6 @@ The testing material for user operated extensive analysis-tests includes:
   - [Top 10 books from Project Gutenberg in one file](../test-data/gutenberg-top-10.txt) (7,650,153 characters)
 - Finnish classic [Seitsemän Veljestä](../test-data/seitseman-veljesta.txt) (624,402 characters)
 - [First 100,000 decimals of pi](../test-data/first-100000-decimals-of-pi.txt) (100,003 characters)
-
-For the automated tests mostly predefined inputs are used, but few tests use randomly created material. 
-
 
 ## Coverage Report for Unittests
 The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. The branch coverage of the final release is 99 percent.
