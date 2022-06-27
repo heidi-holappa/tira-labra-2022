@@ -66,10 +66,48 @@ The sample material for user operated extensive analysis-tests includes:
 - Finnish classic [Seitsemän Veljestä](../test-data/seitseman-veljesta.txt) (624,402 characters)
 - [First 100,000 decimals of pi](../test-data/first-100000-decimals-of-pi.txt) (100,003 characters)
 
-### Adding new test-data
+### Adding new data for analysis-tests
 User can also add data to the folder for testing purposes. The data is validated before analysis-tests begin to ensure that only supported characters are used in uploaded test-files. If there are un-supported characters in a test-file, user is shown the following notification and test-run is terminated:
 
 ![Error: non-supported characters](images/error-non-supported-characters.png)
+
+The following simple code can be used to create a copy of a file with un-supported characters stripped for testing purposes:
+
+```python
+import string
+
+class RemoveUnsupportedCharacters:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+    def create_supported_copy(self):
+        with open(self.filename, "r", encoding="utf-8") as file:
+            content = file.read()
+        document_content = ""
+        characters = string.printable.split()[0]
+        ascii_order_set = set()
+        for char in characters:
+            ascii_order_set.add(ord(char))
+        ascii_order_set.add(32)
+        ascii_order_set.add(10)
+        ascii_order_set.add(228) # ä
+        ascii_order_set.add(196) # Ä
+        ascii_order_set.add(197) # Å
+        ascii_order_set.add(229) # å
+        ascii_order_set.add(246) # ö
+        ascii_order_set.add(214) # Ö
+
+        for char in content:
+            if ord(char) in ascii_order_set:
+                document_content += char
+        with open("path of the new file to be created", "a", encoding="utf-8") as file:
+            file.write(document_content)
+
+if __name__ == "__main__":
+    translator = RemoveUnsupportedCharacters("path of the original file")
+    translator.create_supported_copy()
+```
 
 ## Coverage Report for Unittests
 The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. The branch coverage of the final release is 99 percent.
