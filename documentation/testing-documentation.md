@@ -1,8 +1,8 @@
 # Testing documentation
-The application has automated unittests and a functionalities that allow user to create test material and run an extended test-set on selected materials. 
+The application has automated unittests and a functionalities that allow user to create test and analysis material and run an extended test/analysis-set on selected materials. 
 
 ## Automated tests
-The automated tests are also divided into two categories. Lighter tests are ran every time the application is launched. These test that the basic functionalities of the application run correctly. If any of the tests fail, the application won't start. These tests include (but are not limited to):
+The automated tests are divided into two categories. Lighter tests are run every time the application is launched. These tests ensure that the basic functionalities of the application run correctly. If any of the tests fail, the application won't start. These tests include (but are not limited to):
 
 | Package | Class | Test | Notes |
 | -------- | -------- | -------- | -------- |
@@ -14,6 +14,7 @@ The automated tests are also divided into two categories. Lighter tests are ran 
 | Services | ExtensiveTestHandler | Randomly created content only includes supported charcters | |
 | Services | ExtensiveTestHandler | Content validation works as intended | Multiple tests |
 | Services | ExtensiveTestHandler | HTML-report and graphs are created | |
+| Services | ExtensiveTestHandler | Test that compression/uncompressoin of larger, 1-15 MB (sic), files succeeds  | Part of extended tests |
 | Entities | HuffmanCoding | frequencies are calculated correctly | |
 | Entities | HuffmanCoding | Huffman tree is built correctly | |
 | Entities | HuffmanCoding | uncompressed file content matches the original file content with different types of content. ||
@@ -22,16 +23,13 @@ The automated tests are also divided into two categories. Lighter tests are ran 
 | Entities | HuffmanNode | node comparison works. | class HuffmanNode is in the file huffman.py |
 | Entities | Lempel-Ziv 77 | Uncompressed content matches original content | |
 | Entities | Lempel-Ziv 77 | Various content-types are compressed and uncompressed correctly | |
-| Entities | Lempel-Ziv 77 | Offsets, lengths and characters are correctly formed for "AABCABCDABCDABCD"  | |
+| Entities | Lempel-Ziv 77 | Offsets, lengths and characters are correctly formed for pre-determined test content  | |
 
- User can additionally manually launch more extensive tests from the terminal. The more extensive automated tests include testing algorithms on larger files and can take multiple minutes to run through. Tests include validation and user is notified if validations fail. Currently validation includes:
+ User can additionally manually launch more extensive tests from the terminal. The more extensive automated tests include testing algorithms on larger files and can take multiple minutes to run through. 
 
- - Test files have content
- - Original and uncompressed contents match
+### Running automated tests in terminal
 
-## Running tests in terminal
-
-A lighter test-set is run every time the application start. To run this lighter test-set in the terminal, use the command
+A lighter test-set is run every time the application start. To run this lighter test-set in the terminal without starting the application, use the command
 ```
 poetry run invoke test
 ```
@@ -42,12 +40,29 @@ User can also activate a test set containing more extensive tests. Please note, 
 poetry run invoke extended-test
 ```
 
-## Extensive tests view in GUI
-In the extensive tests -view user can create new test material or run tests on files of selected size. When the tests are run, all files in the configured directory (default = test-data) that match the size user defined are included and tested. The directory can be configured in the .env -file. User can also add data to the folder for testing purposes.  
+## Extensive analysis-tests view in GUI
+In the extensive tests -view user can create new randomly created material or run analysis-tests on files of selected size. When the analysis-tests are run, all files in the configured directory (default = test-data) that match the size user defined are included and tested. The directory can be configured in the .env -file. Please note that the configuration for automated tests is in the file .env.test.  
+
+User can also add data to the folder for testing purposes. The data is validated before analysis-tests begin to ensure that only supported characters are used in uploaded test-files. 
 
 Before running the tests user is asked to specify minimum and maximum character count for files to be included. If user for instance sets the values to `100000` and `2500000` files with a character count from 100,000 to 2,500,000 will be included in the tests.  
 
-User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and four graphs to make reviewing the test analysis easier and more enjoyable. 
+User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and five graphs to make reviewing the test analysis easier and more enjoyable. 
+
+### Input Used for Testing
+The testing material for user operated extensive analysis-tests includes:
+- Files with semirandomly generated ASCII -content ([example](../test-data/random-printable-ascii-100-paragraphs.txt)). 
+- Files with semirandomly generated natural language content ([example](../test-data/natural-language-document-100-paragraphs.txt)). 
+- Public Domain content from Project Gutenberg:
+  - [The Standard Operaglass, by Charles Annesley](../test-data/gutenberg-project-ebook-1.txt)
+  - [The value of Zeta(3) to 1,000,000](../test-data/gutenberg-project-ebook-2.txt)
+  - [Miscellaneous Mathematical Constants, by Various](../test-data/gutenberg-project-ebook-3.txt)
+  - [Top 10 books from Project Gutenberg in one file](../test-data/gutenberg-top-10.txt)
+- Finnish classic [Seitsemän Veljestä](../test-data/seitseman-veljesta.txt)
+- [First 100,000 decimals of pi](../test-data/first-100000-decimals-of-pi.txt)
+
+For the automated tests mostly predefined inputs are used, but few tests use randomly created material. 
+
 
 ## Coverage Report for Unittests
 The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. The branch coverage of the final release is 99 percent.
@@ -58,26 +73,3 @@ The following directories and files have been omitted from the branch coverage r
 - GUI -package
 - test -package
 - launch.py
-
-## Input Used for Testing
-At the moment the testing material for user operated extensive tests includes:
-- Files with Python-random ASCII - content. 
-- Files with randomly generated natural language content. 
-- Public Domain content from Project Gutenberg and the Finnish classic 'Seitsemän Veljestä'
-- First 100,000 decimals of pi
-
-For the automated tests mostly predefined inputs are used, but few tests use randomly created material. 
-
-
-## Redoing Tests
-A user can run the automated tests by typing `poetry run invoke test` in the terminal. To create a coverage report user can use the command `poetry run invoke coverage-report`
-
-## Visual Presentation of coverage branch test Results
-See coverage report above. 
-
-
-## Tests to be added (to-do-list):
-* Expand tests on service classes
-* Research if there are ways to test space efficiency
-* Consider testing service packages FileManagement, LogManagement, GraphManagement
-* Lempel-Ziv 77 has a lighter selection of tests than Huffman Coding. Is this alright as is? 
