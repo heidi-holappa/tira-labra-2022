@@ -44,4 +44,3 @@ class LogEntry:
             logdata_as_list.append(value)
         csv_data = ";".join(logdata_as_list)
         return csv_data
-

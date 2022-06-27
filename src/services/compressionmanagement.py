@@ -109,16 +109,6 @@ class CompressionManagement:
         accepted = accepted_extensions.split(";")
         return bool(extension in accepted)
 
-    # TODO: REMOVE?
-    # def compress_all_txt_files_in_directory(self):
-    #     """Compresses all files with the extension txt.
-    #     """
-    #     for file in os.listdir(DEFAULT_DATA_PATH):
-    #         if file.endswith(".txt"):
-    #             self.lempel_ziv_compress(os.path.join(DEFAULT_DATA_PATH, file))
-    #             self.activate_huffman_compression(
-    #                 os.path.join(DEFAULT_DATA_PATH, file))
-
     def add_size_and_compression_ratio_to_logentry(self,
                             uncompressed_filename,
                             compressed_filename,

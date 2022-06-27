@@ -275,13 +275,17 @@ class HuffmanCoding:
         self.root_node = node
         self.decompress_huffman_tree(self.root_node, tree, characters)
 
-    # TODO: At the moment a copy of a string object is created with each recursive step.
     def decompress_huffman_tree(self, node, tree: str, characters: str):
         """A recursive method that handles the decompression of the Huffman tree. Logic
         is as follows:
         1) If the next character is '0', insert child nodes and traverse left and right
         2) If the next character is '1', the current node is a leaf node. Insert a character
         and return indexes of next node/vertice and next character.
+
+        Note: in this recursive method copies of string-objects are created. As the tree
+        is of restricted size, the operation is not resource heavy. If supported characters
+        expand, consider refactoring this method to use pointers instead of copies of
+        string objects.
 
         Args:
             node (HuffmanNode): Node currently under inspection
@@ -309,10 +313,12 @@ class HuffmanCoding:
                 tree[1:],
                 characters)
             return tree, characters
-        if len(characters):
-            node.character = int(characters[:8], 2)
-            return tree, characters[8:]
-        return None
+        # if len(characters):
+        #     node.character = int(characters[:8], 2)
+        #     return tree, characters[8:]
+        # return "", ""
+        node.character = int(characters[:8], 2)
+        return tree, characters[8:]
 
     def log_add_frequencies(self):
         freqs = []
@@ -480,16 +486,3 @@ class HuffmanNode:
             boolean: Is the frequency of this instance less than
         """
         return (self.frequency, other_node.frequency)
-
-    def __str__(self):
-        """__str__ is a special method for return a string representation of
-        the instance of the object.
-
-        Returns:
-            str: returns a pre-defined string form.
-        """
-        return "Character: " + str(self.character) + ", frequency: " + str(self.frequency)
-
-
-if __name__ == "__main__":
-    pass

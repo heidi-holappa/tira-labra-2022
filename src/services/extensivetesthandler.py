@@ -38,22 +38,6 @@ class ExtensiveTestHandler:
             DEFAULT_TEST_DATA_PATH, HTML_LOG)
         self.supported_characters = default_supported_characters.supported_characters_as_list
 
-    # TODO: Remove, when sure not needed.
-    # def create_printable_characters(self):
-    #     characters = string.printable.split()[0]
-    #     ascii_order_set = set()
-    #     for char in characters:
-    #         ascii_order_set.add(ord(char))
-    #     ascii_order_set.add(32)
-    #     ascii_order_set.add(10)
-    #     ascii_order_set.add(228)  # ä
-    #     ascii_order_set.add(196)  # Ä
-    #     ascii_order_set.add(197)  # Å
-    #     ascii_order_set.add(229)  # å
-    #     ascii_order_set.add(246)  # ö
-    #     ascii_order_set.add(214)  # Ö
-    #     return ascii_order_set
-
     def create_document_with_natural_language(self, n_of_paragraphs: int = 100):
         """Uses the libary Essential Generators to create random
         natural content. The created data has to be manipulated as
