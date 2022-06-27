@@ -8,3 +8,5 @@ data/*
 documentation/project-notes.md
 test-data/compression.log
 test-data/compression_archive.log
+test-data
+test.data.zip
