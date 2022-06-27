@@ -201,6 +201,7 @@ class LempelZiv77:
         window_start_index = max(0, current_index - self.window_size)
         buffer_end_index = min(
             current_index + self.buffer_size, len(self.content))
+        print(window_start_index, current_index, buffer_end_index)
         result = self.find_matches_in_sliding_window(
             window_start_index,
             current_index,
@@ -227,7 +228,7 @@ class LempelZiv77:
             tuple: offset, match length and character, if no match is found.
         """
         longest = (0, 0, 0)
-        for i in range(buffer_start_index+3, buffer_end_index):
+        for i in range(buffer_start_index+3, buffer_end_index + 1):
             found_index = self.content[window_start_index:buffer_start_index].rfind(
                 self.content[buffer_start_index:i])
             if found_index != -1:
