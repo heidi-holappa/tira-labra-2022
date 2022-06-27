@@ -52,7 +52,7 @@ class GuiMenu:
         """Opens the testing documentation in Github in the default browser window.
         """
         webbrowser.open_new(
-            "https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#extensive-analysis-tests-view-in-gui")
+            "https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#analysis-tests-view")
 
     def _show_about(self):
         """A method that prompts a messabox with project information.
