@@ -19,6 +19,7 @@ class LempelZiv77:
     compression algorithm.
     """
 
+    # pylint: disable=too-many-instance-attributes
     def __init__(self,
                  uncompressed_filename: str,
                  compressed_filename: str,
@@ -161,25 +162,25 @@ class LempelZiv77:
         self.construct_binary_version_of_content()
 
     # TODO: Remove after demo-session if new version is favorable
-    def create_binary_version_of_content(self):
-        """A method to create binary type content of the data. The logic is the following:
-        Offset: 12 bits
-        Length of match: 4 bits
-        Next character: a byte"""
-        content_as_bits = []
-        for member in self.compressed_content_as_list:
-            offset = member[0]
-            match_length = member[1]
-            next_character = member[2]
-            content_as_bits.append(str(bin(offset)[2:].zfill(12)))
-            content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
-            if offset == 0:
-                content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
-        self.compressed_content = "".join(content_as_bits)
-        for i in range(0, len(self.compressed_content), 8):
-            value = ord(chr(int(self.compressed_content[i:i+8], 2)))
-            self._bytearray_list.append(value)
-        self.bytearray_data = bytearray(self._bytearray_list)
+    # def create_binary_version_of_content(self):
+    #     """A method to create binary type content of the data. The logic is the following:
+    #     Offset: 12 bits
+    #     Length of match: 4 bits
+    #     Next character: a byte"""
+    #     content_as_bits = []
+    #     for member in self.compressed_content_as_list:
+    #         offset = member[0]
+    #         match_length = member[1]
+    #         next_character = member[2]
+    #         content_as_bits.append(str(bin(offset)[2:].zfill(12)))
+    #         content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
+    #         if offset == 0:
+    #             content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
+    #     self.compressed_content = "".join(content_as_bits)
+    #     for i in range(0, len(self.compressed_content), 8):
+    #         value = ord(chr(int(self.compressed_content[i:i+8], 2)))
+    #         self._bytearray_list.append(value)
+    #     self.bytearray_data = bytearray(self._bytearray_list)
 
     def construct_binary_version_of_content(self):
         """A method to create binary type content of the data. The logic is the following:
@@ -319,9 +320,14 @@ class LempelZiv77:
             if entry[0] > 0:
                 offsets.append(entry[0])
                 lengths.append(entry[1])
-        self.logentry.logdata["lz_avg_match_length"] = str(mean(lengths))
-        self.logentry.logdata["lz_mean_offset"] = str(mean(offsets))
+        self.logentry.logdata["lz_avg_match_length"] = "0"
+        self.logentry.logdata["lz_mean_offset"] = "0"
+        if len(lengths):
+            self.logentry.logdata["lz_avg_match_length"] = str(mean(lengths))
+        if len(offsets):
+            self.logentry.logdata["lz_mean_offset"] = str(mean(offsets))
 
+    # pylint: disable=duplicate-code
     def analyze_compression(self):
         """An initial method for creating analysis data on compression.
         """
@@ -334,6 +340,7 @@ class LempelZiv77:
         self.logentry.logdata["action"] = "0"
         self.calculate_mean_length_and_mean_offset_for_log()
 
+    # pylint: disable=duplicate-code
     def analyze_uncompression(self):
         """An initial method for creating analysis data on compression.
         """
