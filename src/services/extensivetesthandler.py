@@ -22,7 +22,7 @@ class InvalidCharactersError(Exception):
 
 
 class ExtensiveTestHandler:
-    """A class that handles the manually operated tests and creation of
+    """A class that handles the manually operated analysis-tests and creation of
     random test material.
     """
 
@@ -153,7 +153,6 @@ Non-supported character: {char}")
         tests_succeeded = self.test_lempelziv_compression(filename, content)
         return tests_succeeded
 
-    # pylint: disable=broad-except
     def test_lempelziv_compression(self, filename: str, content: str) -> bool:
         """Handles compressing an uncompressing the given content
         with LZ77. Validates that original content and the uncompressed
@@ -167,30 +166,26 @@ Non-supported character: {char}")
         Returns:
             bool: boolean value for whether or not tests and validation succeeded.
         """
+        
         tests_succeeded = True
-
-        try:
-            self.compression_management.lempel_ziv_compress(filename)
-            self.compression_management.lempel_ziv_uncompress(
-                filename[:-3] + "lz")
-            with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
-                lz77_uncompressed_content = file.read()
-            result = self.validate_content_matches(
-                content, lz77_uncompressed_content)
-            if not result:
-                tests_succeeded = False
-                self.log_entry(filename,
-                               "Failure: Original and uncompressed contents in previous \
-                                test did not match.",
-                               "Lempel-Ziv77 compression or uncompression")
-        except Exception as exption:
+        self.compression_management.lempel_ziv_compress(filename)
+        self.compression_management.lempel_ziv_uncompress(
+            filename[:-3] + "lz")
+        with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
+            lz77_uncompressed_content = file.read()
+        contents_match = self.validate_content_matches(
+            content, lz77_uncompressed_content)
+        if not contents_match:
             tests_succeeded = False
-            self.log_entry(filename, str(
-                exption), "Lempel-Ziv77 compression or uncompression")
-        return tests_succeeded
+            error_as_dict = {
+                "filename": filename,
+                "algorithm": "Lempel-Ziv 77",
+                "status": "content of original and uncompressed files did not match."
 
-    # TODO: Refactor error handling to log files
-    # pylint: disable=broad-except
+            }
+            self.write_error_to_log(error_as_dict)
+        return tests_succeeded
+    
     def test_huffman_compression(self, filename: str, content: str) -> bool:
         """Handles compressing an uncompressing the given content
         with Huffman coding. Validates that original content and the uncompressed
@@ -205,31 +200,24 @@ Non-supported character: {char}")
             bool: boolean value for whether or not tests and validation succeeded.
         """
         tests_succeeded = True
-        try:
-            self.compression_management.activate_huffman_compression(
-                filename)
-            self.compression_management.activate_huffman_uncompression(
-                filename[:-3] + "huf")
-            with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
-                huffman_uncompressed_content = file.read()
-            result = self.validate_content_matches(
-                content, huffman_uncompressed_content)
-            if not result:
-                tests_succeeded = False
-                self.log_entry(filename,
-                               "Failure: Original and uncompressed contents in previous \
-                                test did not match.",
-                               "Huffman compression or uncompression")
-                self.html_log_entry(filename,
-                                    "Failure: Original and uncompressed contents in previous \
-                                test did not match.",
-                                    "Huffman compression or uncompression")
-        except Exception as exption:
-            self.log_entry(filename, str(
-                exption), "Huffman compression or uncompression")
-            self.html_log_entry(filename, str(
-                exption), "Huffman compression or uncompression")
+    
+        self.compression_management.activate_huffman_compression(
+            filename)
+        self.compression_management.activate_huffman_uncompression(
+            filename[:-3] + "huf")
+        with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
+            huffman_uncompressed_content = file.read()
+        result = self.validate_content_matches(
+            content, huffman_uncompressed_content)
+        if not result:
             tests_succeeded = False
+            error_as_dict = {
+                "filename": filename,
+                "algorithm": "Huffman coding",
+                "status": "content of original and uncompressed files did not match."
+
+            }
+            self.write_error_to_log(error_as_dict)
         return tests_succeeded
 
     def validate_content_matches(self, original_content: str, uncompressed_content: str) -> bool:
@@ -274,41 +262,31 @@ Failed tests: {fail}\n\n\
             file.write(content)
             file.write("\n\n----- EXTENSIVE TEST SUMMARY ENDS ------\n\n")
 
-    def log_entry(self, filename: str, error_content: str, phase: str) -> None:
-        """If a test fails a log entry is created.
+    def write_error_to_log(self, error_content: dict):
+        """Writes a description of the error to the log files. At the moment
+        only content matching is validated, but the error writing is done in
+        an abstract way to make expanding this feature easier.
 
         Args:
-            filename (str): File for which the failure happened.
-            error_content (str): Error content.
-            phase (str): Clarification on which algorithm the error occured.
+            error_content (dict): the error content
         """
-        content = "--------- ERROR NOTIFICATION ---------\n"
-        content += f"Filename: {filename}\n"
-        content += f"Failed task: {phase}\n"
-        content += f"Description: {error_content}\n"
-        content += "------ END OF ERROR NOTIFICATION ------\n\n"
-        with open(self.log_file, "a", encoding="utf-8") as file:
-            file.write(content)
-
-    def html_log_entry(self, filename: str, error_content: str, phase: str) -> None:
-        """If a test fails a log entry is created.
-
-        Args:
-            filename (str): File for which the failure happened.
-            error_content (str): Error content.
-            phase (str): Clarification on which algorithm the error occured.
-        """
-        content = "<H2> ERROR NOTIFICATION </H2><br>\n"
-        content += f"<b>Filename:</b> {filename}<br>\n"
-        content += f"<b>Failed task:</b> {phase}<br>\n"
-        content += f"<b>Description:</b> {error_content}<br>\n"
+        html_content = "<H2> ERROR NOTIFICATION </H2><br>\n"
+        html_content += f"<b>Filename:</b> {error_content['filename']}<br>\n"
+        html_content += f"<b>Algorithm:</b> {error_content['algorithm']}<br>\n"
+        html_content += f"<b>Description:</b> {error_content['status']}<br>\n"
         with open(self.html_log_file, "a", encoding="utf-8") as file:
-            file.write(content)
+            file.write(html_content)
 
+        tkinter_content = "--------- ERROR NOTIFICATION ---------\n"
+        tkinter_content += f"Filename: {error_content['filename']}\n"
+        tkinter_content += f"Algorithm: {error_content['algorithm']}\n"
+        tkinter_content += f"Description: {error_content['status']}\n"
+        tkinter_content += "------ END OF ERROR NOTIFICATION ------\n\n"
+        with open(self.log_file, "a", encoding="utf-8") as file:
+            file.write(tkinter_content)
+        
     def html_log_end(self, success, fail, total_time):
         """Once tests are done, a summary of tests is written to the file.
-
-        Uses 'r+' to write to the start of the file.
 
         Args:
             success (int): number of successful tests
