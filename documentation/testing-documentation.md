@@ -40,14 +40,18 @@ User can also activate a test set containing more extensive tests. Please note, 
 poetry run invoke extended-test
 ```
 
-## Extensive analysis-tests view in GUI
-In the extensive tests -view user can create new randomly created material or run analysis-tests on files of selected size. When the analysis-tests are run, all files in the configured directory (default = test-data) that match the size user defined are included and tested. The directory can be configured in the .env -file. Please note that the configuration for automated tests is in the file .env.test.  
+## Analysis-tests view
+In the GUI's analysis-tests view user can create new randomly created test material or run analysis-tests on the files located in the configured test-folder that are of selected size.  
 
-User can also add data to the folder for testing purposes. The data is validated before analysis-tests begin to ensure that only supported characters are used in uploaded test-files. 
+When the analysis-tests are run, all files in the configured directory (default: test-data) that match the size user defined are included. Included files are compressed and uncompressed. All content is validated before compression and after uncompression original and uncompressed content of each file is verified to match. 
 
-Before running the tests user is asked to specify minimum and maximum character count for files to be included. If user for instance sets the values to `100000` and `2500000` files with a character count from 100,000 to 2,500,000 will be included in the tests.  
+User can also add data to the folder for testing purposes. The data is validated before analysis-tests begin to ensure that only supported characters are used in uploaded test-files. If there are un-supported characters in a test-file, user is shown the following notification:
 
-User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and five graphs to make reviewing the test analysis easier and more enjoyable. 
+![Error: non-supported characters](images/error-non-supported-characters.png)
+
+Before running the tests user is asked to specify minimum and maximum character count for files to be included. If user for instance sets the values to `100000` and `2500000` files with a character count from 100,000 to 2,500,000 will be included in the tests. 
+
+User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and five graphs to make reviewing the test analysis easier and more enjoyable. A sample of an HTML-log generated with the mentioned character limits (min: 100,000; max: 2,500,000) can be reviewed [here](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html). Please note that the htmlpreview web-application does not load images with relative paths. To view the HTML-report with images, download a copy of this project and view the content locally on your preferred browser, or review the images in the [Github -folder](https://github.com/heidi-holappa/tira-labra-2022/tree/master/test-data/images).
 
 ### Input Used for Testing
 The testing material for user operated extensive analysis-tests includes:
@@ -73,3 +77,9 @@ The following directories and files have been omitted from the branch coverage r
 - GUI -package
 - test -package
 - launch.py
+
+## Configuration
+The ideal goal in this project was to avoid hard-coding paths and filenames into the code. The application uses dotenv to provide configurability. User has the opportunity to re-configure: 
+- certain paths (default compression/uncompression path, analysis-test -path)
+- filenames of different log-related files
+- filenames of the visualizations created for the HTML-log.
