@@ -2,15 +2,18 @@
 The application has automated unittests and a functionalities that allow user to create test material and run an extended test-set on selected materials. 
 
 ## Automated tests
-The automated tests are also divided into two categories. Lighter tests are ran every time the application is launched. These test that the basic functionalities of the application run correctly. If any of the tests fail, the application won't start. These tests include:
+The automated tests are also divided into two categories. Lighter tests are ran every time the application is launched. These test that the basic functionalities of the application run correctly. If any of the tests fail, the application won't start. These tests include (but are not limited to):
 
 | Package | Class | Test | Notes |
 | -------- | -------- | -------- | -------- |
 | Services | FileManagement | File creation works | |
 | Services | FileManagement | Only valid files are compressed / uncompressed | |
+| Services | FileManagement | If no log file is found a default message is returned. | |
+| Services | CompressionManagement | Test file extension validation works | |
 | Services | ExtensiveTestHandler | All supported characters are included | |
 | Services | ExtensiveTestHandler | Randomly created content only includes supported charcters | |
-| Services | ExtensiveTestHandler | Content validation works as intended | |
+| Services | ExtensiveTestHandler | Content validation works as intended | Multiple tests |
+| Services | ExtensiveTestHandler | HTML-report and graphs are created | |
 | Entities | HuffmanCoding | frequencies are calculated correctly | |
 | Entities | HuffmanCoding | Huffman tree is built correctly | |
 | Entities | HuffmanCoding | uncompressed file content matches the original file content with different types of content. ||
@@ -19,6 +22,7 @@ The automated tests are also divided into two categories. Lighter tests are ran 
 | Entities | HuffmanNode | node comparison works. | class HuffmanNode is in the file huffman.py |
 | Entities | Lempel-Ziv 77 | Uncompressed content matches original content | |
 | Entities | Lempel-Ziv 77 | Various content-types are compressed and uncompressed correctly | |
+| Entities | Lempel-Ziv 77 | Offsets, lengths and characters are correctly formed for "AABCABCDABCDABCD"  | |
 
  User can additionally manually launch more extensive tests from the terminal. The more extensive automated tests include testing algorithms on larger files and can take multiple minutes to run through. Tests include validation and user is notified if validations fail. Currently validation includes:
 
@@ -27,12 +31,13 @@ The automated tests are also divided into two categories. Lighter tests are ran 
 
 ## Running tests in terminal
 
-To run lighter test-set in the terminal, use the command
+A lighter test-set is run every time the application start. To run this lighter test-set in the terminal, use the command
 ```
 poetry run invoke test
 ```
 
-To run the tests created for larger files use the command
+User can also activate a test set containing more extensive tests. Please note, that running these tests can take some time. With the University provided Fuxi-laptop the tests take approximately 90 seconds. 
+
 ```
 poetry run invoke extended-test
 ```
@@ -45,9 +50,14 @@ Before running the tests user is asked to specify minimum and maximum character 
 User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and four graphs to make reviewing the test analysis easier and more enjoyable. 
 
 ## Coverage Report for Unittests
-The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. Currently the branch coverage is 89 percent. Especially the service package classes need more extensive tests at this point.  
+The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. The branch coverage of the final release is 99 percent.
 
-![Coverage report - week 4](images/coverage-report-week-6.png)
+![Coverage report - final release](images/coverage-report-final-release.png)
+
+The following directories and files have been omitted from the branch coverage report:
+- GUI -package
+- test -package
+- launch.py
 
 ## Input Used for Testing
 At the moment the testing material for user operated extensive tests includes:
@@ -56,7 +66,7 @@ At the moment the testing material for user operated extensive tests includes:
 - Public Domain content from Project Gutenberg and the Finnish classic 'Seitsemän Veljestä'
 - First 100,000 decimals of pi
 
-For the automated tests at the moment both predefined inputs and randomized input are used. Based on research it seems that tests with randomized input are not recommended. In the future focus will shift more to predefined inputs so that failed tests can be more easily replicated. 
+For the automated tests mostly predefined inputs are used, but few tests use randomly created material. 
 
 
 ## Redoing Tests
