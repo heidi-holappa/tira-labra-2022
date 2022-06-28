@@ -40,37 +40,58 @@ Start by selecting either an uncompressed txt-file or compressed huf- or lz-file
 
 ![File explorer](images/how-to-guide-compression-view-explorer.png)
 
-Once compression / uncompression is done, analysis of results will be showcased. 
+Once compression / uncompression is done, short analysis of results will be showcased. 
 
 ![Analysis](images/how-to-guide-compression-view-action-taken.png)
 
 A compressed file is created into the same directory. Data is stored as bytes.  
 
-A log-file containing the showcased analysis on the compression is created. The most recent log-entry is by default in the file compression.log. The older entries are in file compression_archive.log.  
+## Analysis-tests view
+In the GUI's 'analysis-tests' view user can create new randomly created test material or run analysis-tests on the files located in the configured test-folder.  
 
+When the analysis-tests are run, all files in the configured directory (default: test-data) that match the minimum and maximum size defined by user are included. Included files are then compressed and uncompressed. All content is validated before compression and after uncompression original and uncompressed content of each file is verified to match. Analysis data is gathered from different steps of the process.
 
-![Log-archive](images/how-to-guide-log-file.png)
+Before running the tests user is asked to specify minimum and maximum character count for files to be included. If user for instance sets the values to `50000` and `2500000` files with a character count from 50,000 to 2,500,000 will be included in the tests. 
 
-## Extensive testing view
-An initial version of manually operatable tests are available. Currently user can create random data either in natural English lanaguage or as random printable ASCII-characters. User can then run extensive tests that go through all the files in the default test directory defined in the .env file. When launching the tests user is asked to define what is the maximum character length for the files to be included in testing. For instance, if user inputs 50000 (fifty thousand), files with 50,000 or less characters will be included in the tests.  
+User can view the results of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and five graphs to make reviewing the test analysis easier and more enjoyable.  
 
-![Extensive test view week 4](images/extensive-test-view-week-4.png)
+A sample of an HTML-log generated with the mentioned character limits (min: 50,000; max: 2,500,000) can be reviewed [here](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html). Please note that the htmlpreview web-application does not load images with relative paths. To view the HTML-report with images, download a copy of this project and view the content locally on your preferred browser, or review the images in the [Github -folder](https://github.com/heidi-holappa/tira-labra-2022/tree/master/test-data/images).
 
-Analysis data shows a summary of the test results. It also sums the number of successful and failed tests.  
-
-![Extensive test summary](images/how-to-guide-extensive-test-summary.png)
+![Extensive test view week 4](images/analysis-tests-view.png)
 
 ## Configuration
-The application uses dotenv for configuration. User can change the default folder used in File Explorer. 
+The application uses dotenv for configuration. User can reconfigure: 
+- certain paths (default compression/uncompression path, analysis-test -path)
+- filenames of different log-related files
+- filenames of the visualizations created for the HTML-log.
 
 
 # How To Run Tests
-To run the tests use the command `poetry run invoke test` in the root folder of the project. To generate a coverage report use the command `poetry run invoke coverage-report`.
+To run the limited but quicker test-set use the command `poetry run invoke test` in the root folder of the project. To run all available tests use the command `poetry run invoke extended-test`.  
 
+To generate a coverage report use the command `poetry run invoke coverage-report`.
+
+Please see [testing documentation](testing-documentation.md) for more information on tests.
+
+# Supported characters
+The application supports compressing txt-files with content consisting of the following characters: 
+
+```
+'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+```
+In addition following characters are supported:
+- (32) # whitespace
+- (10) # line-break
+- (228) # ä
+- (196) # Ä
+- (197) # Å
+- (229) # å
+- (246) # ö
+- (214) # Ö
+
+The compression creates byte-files with extensions .huf (Huffman coding) and .lz (Lempel-Ziv 77). An uncompressed version can then be created from these files.
 
 # For creator 
-Below are the course guidelines on what how-to-guide should include. These are here for easier access. Will be deleted once the project is finished:
-
 * Miten ohjelma suoritetaan, miten eri toiminnallisuuksia käytetään
 * Minkä muotoisia syötteitä ohjelma hyväksyy
 * Missä hakemistossa on jar ja ajamiseen tarvittavat testitiedostot.
