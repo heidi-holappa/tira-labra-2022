@@ -156,7 +156,7 @@ For the selected sample-data the Huffman coding fares better with files containi
 
 ### Performance comparison
 
-The Lempel-Ziv 77 required considerably more time resources for compression than Huffman coding due to iteratively searching for string matches. In compressin phase Huffman coding calculates the Huffman coded values based on frequencies and then the coded content itself is created in linear time. 
+The Lempel-Ziv 77 required considerably more time resources for compression than Huffman coding due to iteratively searching for string matches. In compression phase Huffman coding calculates the Huffman coded values based on frequencies and then the coded content itself is created in linear time. 
 
 ![Time required for compression-phase](images/compression-comparison.png)
 
@@ -168,7 +168,7 @@ In uncompression phase however Lempel-Ziv 77 fared noticeably better as can be s
 
 ![Time required for uncompression-phase](images/uncompression-comparison.png)
 
-Huffman coding however needs to re-create the Huffman tree and then build the content by traversing the tree n-times, in which n is the length of the content. Interestingly we can observe that for Huffman coding the frequencies of the original content are also significant. By looking at files 4 and 9. They have almost the same uncompression time despite the time difference.  
+Huffman coding however needs to re-create the Huffman tree and then build the content by traversing the tree n-times, in which n is the length of the content. Interestingly we can observe that for Huffman coding the frequencies of the original content are also significant. By looking at files 4 and 9. They have almost the same uncompression time despite the size difference.  
 
 My assessment is that as the content of file 9 was mostly integers (with a short pre-face in natural language), the main content got high frequency values and thus favorable (=short) traversal paths in the Huffman tree.  
 
