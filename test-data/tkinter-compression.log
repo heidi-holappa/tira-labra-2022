@@ -1,13 +1,13 @@
 ------ EXTENSIVE TEST SUMMARY  -------
------- TIME: 27.06.2022 20:16:59 ------
-Total runtime: 18.27 seconds
-Successful tests: 7
+------ TIME: 28.06.2022 14:33:35 ------
+Total runtime: 18.97 seconds
+Successful tests: 10
 Failed tests: 0
 
 ------ DETAILED SUMMARY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:41
+Log entry created: 28.06.2022 14:33:16
 File accessed: gutenberg-project-misc-math-constants.txt
 File created: gutenberg-project-misc-math-constants.huf
 Compression method: Huffman coding
@@ -20,7 +20,7 @@ Time used for writing and processing data: 0.04 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:41
+Log entry created: 28.06.2022 14:33:16
 "File accessed: gutenberg-project-misc-math-constants.huf
 File created: gutenberg-project-misc-math-constants_uncompressed.txt
 Compression method: Huffman coding
@@ -28,12 +28,12 @@ Compressed size: 241501 bytes
 Uncompressed_size: 480294 bytes
 Compression ratio: 50.28
 Time used for fetching and processing data: 0.06 seconds
-Time used for compression: 0.51 seconds
+Time used for compression: 0.49 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:43
+Log entry created: 28.06.2022 14:33:18
 File accessed: gutenberg-project-misc-math-constants.txt
 File created: gutenberg-project-misc-math-constants.lz
 Compression method: Lempel-Ziv 77
@@ -41,12 +41,12 @@ Uncompressed_size: 480294 bytes
 Compressed size: 298059 bytes
 Compression ratio: 62.06
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 1.45
+Time used for compression: 1.41
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:43
+Log entry created: 28.06.2022 14:33:18
 "File accessed: gutenberg-project-misc-math-constants.lz
 File created: gutenberg-project-misc-math-constants_uncompressed.txt
 Compression method: Lempel-Ziv 77
@@ -59,7 +59,7 @@ Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:43
+Log entry created: 28.06.2022 14:33:18
 File accessed: gutenberg-project-the-wonder-woman.txt
 File created: gutenberg-project-the-wonder-woman.huf
 Compression method: Huffman coding
@@ -72,20 +72,20 @@ Time used for writing and processing data: 0.02 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:44
+Log entry created: 28.06.2022 14:33:19
 "File accessed: gutenberg-project-the-wonder-woman.huf
 File created: gutenberg-project-the-wonder-woman_uncompressed.txt
 Compression method: Huffman coding
 Compressed size: 144528 bytes
 Uncompressed_size: 254827 bytes
 Compression ratio: 56.72
-Time used for fetching and processing data: 0.03 seconds
+Time used for fetching and processing data: 0.04 seconds
 Time used for compression: 0.31 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:44
+Log entry created: 28.06.2022 14:33:19
 File accessed: gutenberg-project-the-wonder-woman.txt
 File created: gutenberg-project-the-wonder-woman.lz
 Compression method: Lempel-Ziv 77
@@ -93,12 +93,12 @@ Uncompressed_size: 254827 bytes
 Compressed size: 136444 bytes
 Compression ratio: 53.54
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.61
+Time used for compression: 0.62
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:44
+Log entry created: 28.06.2022 14:33:19
 "File accessed: gutenberg-project-the-wonder-woman.lz
 File created: gutenberg-project-the-wonder-woman_uncompressed.txt
 Compression method: Lempel-Ziv 77
@@ -111,7 +111,7 @@ Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:45
+Log entry created: 28.06.2022 14:33:20
 File accessed: seitseman-veljesta.txt
 File created: seitseman-veljesta.huf
 Compression method: Huffman coding
@@ -119,12 +119,12 @@ Uncompressed_size: 655004 bytes
 Compressed size: 346447 bytes
 Compression ratio: 52.89
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.15
-Time used for writing and processing data: 0.07 seconds
+Time used for compression: 0.17
+Time used for writing and processing data: 0.06 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:45
+Log entry created: 28.06.2022 14:33:20
 "File accessed: seitseman-veljesta.huf
 File created: seitseman-veljesta_uncompressed.txt
 Compression method: Huffman coding
@@ -132,12 +132,12 @@ Compressed size: 346447 bytes
 Uncompressed_size: 655004 bytes
 Compression ratio: 52.89
 Time used for fetching and processing data: 0.09 seconds
-Time used for compression: 0.75 seconds
+Time used for compression: 0.74 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:47
+Log entry created: 28.06.2022 14:33:22
 File accessed: seitseman-veljesta.txt
 File created: seitseman-veljesta.lz
 Compression method: Lempel-Ziv 77
@@ -145,12 +145,12 @@ Uncompressed_size: 655004 bytes
 Compressed size: 324723 bytes
 Compression ratio: 49.58
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 1.47
+Time used for compression: 1.44
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:47
+Log entry created: 28.06.2022 14:33:22
 "File accessed: seitseman-veljesta.lz
 File created: seitseman-veljesta_uncompressed.txt
 Compression method: Lempel-Ziv 77
@@ -158,12 +158,12 @@ Compressed size: 324723 bytes
 Uncompressed_size: 655004 bytes
 Compression ratio: 49.58
 Time used for fetching and processing data: 0.08 seconds
-Time used for compression: 0.17 seconds
+Time used for compression: 0.16 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:48
+Log entry created: 28.06.2022 14:33:23
 File accessed: gutenberg-project-standar-operaglass.txt
 File created: gutenberg-project-standar-operaglass.huf
 Compression method: Huffman coding
@@ -171,25 +171,25 @@ Uncompressed_size: 809246 bytes
 Compressed size: 460383 bytes
 Compression ratio: 56.89
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.21
-Time used for writing and processing data: 0.09 seconds
+Time used for compression: 0.20
+Time used for writing and processing data: 0.08 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:49
+Log entry created: 28.06.2022 14:33:24
 "File accessed: gutenberg-project-standar-operaglass.huf
 File created: gutenberg-project-standar-operaglass_uncompressed.txt
 Compression method: Huffman coding
 Compressed size: 460383 bytes
 Uncompressed_size: 809246 bytes
 Compression ratio: 56.89
-Time used for fetching and processing data: 0.12 seconds
-Time used for compression: 1.02 seconds
+Time used for fetching and processing data: 0.11 seconds
+Time used for compression: 0.96 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:51
+Log entry created: 28.06.2022 14:33:26
 File accessed: gutenberg-project-standar-operaglass.txt
 File created: gutenberg-project-standar-operaglass.lz
 Compression method: Lempel-Ziv 77
@@ -197,12 +197,12 @@ Uncompressed_size: 809246 bytes
 Compressed size: 410111 bytes
 Compression ratio: 50.68
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 1.89
+Time used for compression: 1.90
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:51
+Log entry created: 28.06.2022 14:33:26
 "File accessed: gutenberg-project-standar-operaglass.lz
 File created: gutenberg-project-standar-operaglass_uncompressed.txt
 Compression method: Lempel-Ziv 77
@@ -215,7 +215,163 @@ Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:51
+Log entry created: 28.06.2022 14:33:26
+File accessed: random-printable-ascii-100-paragraphs.txt
+File created: random-printable-ascii-100-paragraphs.huf
+Compression method: Huffman coding
+Uncompressed_size: 74714 bytes
+Compressed size: 62115 bytes
+Compression ratio: 83.14
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.02
+Time used for writing and processing data: 0.01 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:26
+"File accessed: random-printable-ascii-100-paragraphs.huf
+File created: random-printable-ascii-100-paragraphs_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 62115 bytes
+Uncompressed_size: 74714 bytes
+Compression ratio: 83.14
+Time used for fetching and processing data: 0.02 seconds
+Time used for compression: 0.13 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+File accessed: random-printable-ascii-100-paragraphs.txt
+File created: random-printable-ascii-100-paragraphs.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 74714 bytes
+Compressed size: 74410 bytes
+Compression ratio: 99.59
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.24
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+"File accessed: random-printable-ascii-100-paragraphs.lz
+File created: random-printable-ascii-100-paragraphs_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 74410 bytes
+Uncompressed_size: 74714 bytes
+Compression ratio: 99.59
+Time used for fetching and processing data: 0.02 seconds
+Time used for compression: 0.05 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+File accessed: gutenberg-project-martian-shore.txt
+File created: gutenberg-project-martian-shore.huf
+Compression method: Huffman coding
+Uncompressed_size: 51543 bytes
+Compressed size: 29853 bytes
+Compression ratio: 57.92
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.01
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+"File accessed: gutenberg-project-martian-shore.huf
+File created: gutenberg-project-martian-shore_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 29853 bytes
+Uncompressed_size: 51543 bytes
+Compression ratio: 57.92
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.06 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+File accessed: gutenberg-project-martian-shore.txt
+File created: gutenberg-project-martian-shore.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 51543 bytes
+Compressed size: 24129 bytes
+Compression ratio: 46.81
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.12
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+"File accessed: gutenberg-project-martian-shore.lz
+File created: gutenberg-project-martian-shore_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 24129 bytes
+Uncompressed_size: 51543 bytes
+Compression ratio: 46.81
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.01 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+File accessed: natural-language-document-100-paragraphs.txt
+File created: natural-language-document-100-paragraphs.huf
+Compression method: Huffman coding
+Uncompressed_size: 53636 bytes
+Compressed size: 30839 bytes
+Compression ratio: 57.50
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.01
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+"File accessed: natural-language-document-100-paragraphs.huf
+File created: natural-language-document-100-paragraphs_uncompressed.txt
+Compression method: Huffman coding
+Compressed size: 30839 bytes
+Uncompressed_size: 53636 bytes
+Compression ratio: 57.50
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.06 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+File accessed: natural-language-document-100-paragraphs.txt
+File created: natural-language-document-100-paragraphs.lz
+Compression method: Lempel-Ziv 77
+Uncompressed_size: 53636 bytes
+Compressed size: 32049 bytes
+Compression ratio: 59.75
+Time used for fetching and processing data: 0.00 seconds
+Time used for compression: 0.14
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: UNCOMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
+"File accessed: natural-language-document-100-paragraphs.lz
+File created: natural-language-document-100-paragraphs_uncompressed.txt
+Compression method: Lempel-Ziv 77
+Compressed size: 32049 bytes
+Uncompressed_size: 53636 bytes
+Compression ratio: 59.75
+Time used for fetching and processing data: 0.01 seconds
+Time used for compression: 0.02 seconds
+Time used for writing and processing data: 0.00 seconds
+------ END OF ENTRY ------
+
+------ NEW ENTRY: COMPRESSING DATA ------
+Log entry created: 28.06.2022 14:33:27
 File accessed: first-100000-decimals-of-pi.txt
 File created: first-100000-decimals-of-pi.huf
 Compression method: Huffman coding
@@ -223,12 +379,12 @@ Uncompressed_size: 100002 bytes
 Compressed size: 43726 bytes
 Compression ratio: 43.73
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.03
+Time used for compression: 0.02
 Time used for writing and processing data: 0.01 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:51
+Log entry created: 28.06.2022 14:33:27
 "File accessed: first-100000-decimals-of-pi.huf
 File created: first-100000-decimals-of-pi_uncompressed.txt
 Compression method: Huffman coding
@@ -236,12 +392,12 @@ Compressed size: 43726 bytes
 Uncompressed_size: 100002 bytes
 Compression ratio: 43.73
 Time used for fetching and processing data: 0.01 seconds
-Time used for compression: 0.11 seconds
+Time used for compression: 0.10 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:52
+Log entry created: 28.06.2022 14:33:28
 File accessed: first-100000-decimals-of-pi.txt
 File created: first-100000-decimals-of-pi.lz
 Compression method: Lempel-Ziv 77
@@ -249,12 +405,12 @@ Uncompressed_size: 100002 bytes
 Compressed size: 63360 bytes
 Compression ratio: 63.36
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.30
+Time used for compression: 0.31
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:52
+Log entry created: 28.06.2022 14:33:28
 "File accessed: first-100000-decimals-of-pi.lz
 File created: first-100000-decimals-of-pi_uncompressed.txt
 Compression method: Lempel-Ziv 77
@@ -267,7 +423,7 @@ Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:52
+Log entry created: 28.06.2022 14:33:28
 File accessed: gutenberg-project-the-value-of-zeta-3.txt
 File created: gutenberg-project-the-value-of-zeta-3.huf
 Compression method: Huffman coding
@@ -275,12 +431,12 @@ Uncompressed_size: 1007060 bytes
 Compressed size: 453621 bytes
 Compression ratio: 45.04
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.26
+Time used for compression: 0.24
 Time used for writing and processing data: 0.08 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:53
+Log entry created: 28.06.2022 14:33:29
 "File accessed: gutenberg-project-the-value-of-zeta-3.huf
 File created: gutenberg-project-the-value-of-zeta-3_uncompressed.txt
 Compression method: Huffman coding
@@ -288,12 +444,12 @@ Compressed size: 453621 bytes
 Uncompressed_size: 1007060 bytes
 Compression ratio: 45.04
 Time used for fetching and processing data: 0.11 seconds
-Time used for compression: 1.01 seconds
+Time used for compression: 0.97 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:57
+Log entry created: 28.06.2022 14:33:32
 File accessed: gutenberg-project-the-value-of-zeta-3.txt
 File created: gutenberg-project-the-value-of-zeta-3.lz
 Compression method: Lempel-Ziv 77
@@ -301,25 +457,25 @@ Uncompressed_size: 1007060 bytes
 Compressed size: 642218 bytes
 Compression ratio: 63.77
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 3.09
+Time used for compression: 3.07
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:57
+Log entry created: 28.06.2022 14:33:33
 "File accessed: gutenberg-project-the-value-of-zeta-3.lz
 File created: gutenberg-project-the-value-of-zeta-3_uncompressed.txt
 Compression method: Lempel-Ziv 77
 Compressed size: 642218 bytes
 Uncompressed_size: 1007060 bytes
 Compression ratio: 63.77
-Time used for fetching and processing data: 0.18 seconds
-Time used for compression: 0.28 seconds
+Time used for fetching and processing data: 0.15 seconds
+Time used for compression: 0.27 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:57
+Log entry created: 28.06.2022 14:33:33
 File accessed: gutenberg-project-argonaut-stories.txt
 File created: gutenberg-project-argonaut-stories.huf
 Compression method: Huffman coding
@@ -327,12 +483,12 @@ Uncompressed_size: 283095 bytes
 Compressed size: 158239 bytes
 Compression ratio: 55.90
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.07
-Time used for writing and processing data: 0.02 seconds
+Time used for compression: 0.06
+Time used for writing and processing data: 0.03 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:58
+Log entry created: 28.06.2022 14:33:34
 "File accessed: gutenberg-project-argonaut-stories.huf
 File created: gutenberg-project-argonaut-stories_uncompressed.txt
 Compression method: Huffman coding
@@ -340,12 +496,12 @@ Compressed size: 158239 bytes
 Uncompressed_size: 283095 bytes
 Compression ratio: 55.90
 Time used for fetching and processing data: 0.04 seconds
-Time used for compression: 0.38 seconds
+Time used for compression: 0.34 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: COMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:59
+Log entry created: 28.06.2022 14:33:34
 File accessed: gutenberg-project-argonaut-stories.txt
 File created: gutenberg-project-argonaut-stories.lz
 Compression method: Lempel-Ziv 77
@@ -353,12 +509,12 @@ Uncompressed_size: 283095 bytes
 Compressed size: 146516 bytes
 Compression ratio: 51.76
 Time used for fetching and processing data: 0.00 seconds
-Time used for compression: 0.71
+Time used for compression: 0.75
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
 ------ NEW ENTRY: UNCOMPRESSING DATA ------
-Log entry created: 27.06.2022 20:16:59
+Log entry created: 28.06.2022 14:33:35
 "File accessed: gutenberg-project-argonaut-stories.lz
 File created: gutenberg-project-argonaut-stories_uncompressed.txt
 Compression method: Lempel-Ziv 77
@@ -366,7 +522,7 @@ Compressed size: 146516 bytes
 Uncompressed_size: 283095 bytes
 Compression ratio: 51.76
 Time used for fetching and processing data: 0.04 seconds
-Time used for compression: 0.07 seconds
+Time used for compression: 0.08 seconds
 Time used for writing and processing data: 0.00 seconds
 ------ END OF ENTRY ------
 
