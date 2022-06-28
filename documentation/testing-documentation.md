@@ -1,5 +1,5 @@
 # Testing documentation
-The application has automated unittests and a functionalities that allow user to create test and analysis material and run an extended test/analysis-set on selected materials. 
+The application has automated unittests and functionalities for user to create test and analysis material and run an extended analysis-set on selected materials. Sample material is provided.
 
 ## Automated tests
 The automated tests are divided into two categories. Lighter tests are run every time the application is launched. These tests ensure that the basic functionalities of the application run correctly. If any of the tests fail, the application won't start. These tests include (but are not limited to):
@@ -25,8 +25,6 @@ The automated tests are divided into two categories. Lighter tests are run every
 | Entities | Lempel-Ziv 77 | Various content-types are compressed and uncompressed correctly | |
 | Entities | Lempel-Ziv 77 | Offsets, lengths and characters are correctly formed for pre-determined test content  | |
 
- User can additionally manually launch more extensive tests from the terminal. The more extensive automated tests include testing algorithms on larger files and can take multiple minutes to run through. 
-
 ### Running automated tests in terminal
 
 A lighter test-set is run every time the application start. To run this lighter test-set in the terminal without starting the application, use the command
@@ -41,13 +39,13 @@ poetry run invoke extended-test
 ```
 
 ## Analysis-tests view
-In the GUI's analysis-tests view user can create new randomly created test material or run analysis-tests on the files located in the configured test-folder that are of selected size.  
+In the GUI's 'analysis-tests' view user can create new randomly created test material or run analysis-tests on the files located in the configured test-folder.  
 
-When the analysis-tests are run, all files in the configured directory (default: test-data) that match the size user defined are included. Included files are compressed and uncompressed. All content is validated before compression and after uncompression original and uncompressed content of each file is verified to match. 
+When the analysis-tests are run, all files in the configured directory (default: test-data) that match the minimum and maximum size defined by user are included. Included files are then compressed and uncompressed. All content is validated before compression and after uncompression original and uncompressed content of each file is verified to match. Analysis data is gathered from different steps of the process.
 
 Before running the tests user is asked to specify minimum and maximum character count for files to be included. If user for instance sets the values to `50000` and `2500000` files with a character count from 50,000 to 2,500,000 will be included in the tests. 
 
-User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and five graphs to make reviewing the test analysis easier and more enjoyable.  
+User can view the results of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and five graphs to make reviewing the test analysis easier and more enjoyable.  
 
 A sample of an HTML-log generated with the mentioned character limits (min: 50,000; max: 2,500,000) can be reviewed [here](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html). Please note that the htmlpreview web-application does not load images with relative paths. To view the HTML-report with images, download a copy of this project and view the content locally on your preferred browser, or review the images in the [Github -folder](https://github.com/heidi-holappa/tira-labra-2022/tree/master/test-data/images).
 
@@ -138,7 +136,7 @@ The sought compression ratio for this project was between 40-60 percent (meaning
 | 10 | gutenberg-project-argonaut-stories.txt | Lempel-Ziv 77 | 283095 | 146516 | 0.52 | 0.75 | 0.00 | 0.00
 
 ### What compressed well
-Both algorithms reached the desired compression ratio on documents containing sensible natural language. In this case public domain content (novels and short stories) was used as was detailed in section 'input used for analysis-tests.' In the table above files 2,3,4 and 6 fell under this category.  
+Both algorithms reached the desired compression ratio on documents containing sensible natural language. In this case public domain content (novels and short stories) was used as was detailed in section [input used for analysis-tests](https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#input-used-for-analysis-tests). In the table above files 2,3,4 and 6 fell under this category.  
 
 On all these files the Lempel-Ziv 77 algorithm was able to reach more favorable compression ratios as the content provided a good amount of string-matches to enable compression. This is evident since each non-match takes 8 bits of space and matches 16 bits, which means that the compression comes from matches made. 
 
