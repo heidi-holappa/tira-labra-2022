@@ -69,7 +69,7 @@ User can also add data to the folder for testing purposes. The data is validated
 
 ![Error: non-supported characters](images/error-non-supported-characters.png)
 
-The following simple code can be used to create a copy of a file with un-supported characters stripped for testing purposes:
+The following simple code can be used to create stripped a copy of a file with un-supported characters for testing purposes:
 
 ```python
 import string
@@ -146,11 +146,13 @@ As both algorithms (Huffman coding and Lempel-Ziv 77) take advantage of repetiti
 
 In the included analysis-test sample the Lempel-Ziv 77 algorithm fails to meet the optimal compression ratio with files 1,5,8 and 9. Files 1,8 and 9 all contain mathematical constants. As can be seen in the graph visualizing the mean lenghts of the matches, it is apparent that when matching content was found, the matches were shorter on these files, which is in line with the non-optimal compression results. 
 
-The file 5 contain randomly created ASCII-paragraphs. With 102 available characters the chance of finding a matching 3 to 15 character string from the sliding window and lookahead buffer is quite low, which explains the non-optimal compression ratio and low mean length for found matches. 
+The file 5 contains randomly created ASCII-paragraphs. With 102 available characters the chance of finding a matching 3 to 15 character randomly generated string from the sliding window and lookahead buffer is quite low, which explains the non-optimal compression ratio and low mean length for found matches.  
 
 ![Mean length of found matches in Lempel-Ziv 77](../test-data/images/lempel-ziv-avg-match.png)
 
-For the selected sample-data the Huffman coding fares better with files containing mathematical constants (files 1,8 and 9). Even though on these files the variance in Huffman coded values is small, the amount of Huffman coded values is smaller as well, meaning that the most common Huffman coded values (in this case integer values 0-9) have a shorter traversal path, making their size less than the original 8 bits. 
+**Side note:** *(As a curiosity from Lempel-Ziv 77 results on file 5 we can actually deduct that in the whole content there was at most app. 300 matches found, as the minimum length for a match is three characters and only 304 bytes were saved (saving a match takes 2 bytes).)*
+
+For the selected sample-data the Huffman coding fares better with files containing mathematical constants (files 1,8 and 9). Even though on these files the variance in Huffman coded values is small, the amount of Huffman coded values is smaller as well, meaning that the most common Huffman coded values (in this case integer values 0-9) have a shorter traversal path, making their size less than the original 8 bits. You can read more on how the Huffman tree is created from the [Design/execution documentation](execution-documentation.md)
 
 ### Performance comparison
 
