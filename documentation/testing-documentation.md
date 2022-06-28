@@ -45,11 +45,11 @@ In the GUI's analysis-tests view user can create new randomly created test mater
 
 When the analysis-tests are run, all files in the configured directory (default: test-data) that match the size user defined are included. Included files are compressed and uncompressed. All content is validated before compression and after uncompression original and uncompressed content of each file is verified to match. 
 
-Before running the tests user is asked to specify minimum and maximum character count for files to be included. If user for instance sets the values to `100000` and `2500000` files with a character count from 100,000 to 2,500,000 will be included in the tests. 
+Before running the tests user is asked to specify minimum and maximum character count for files to be included. If user for instance sets the values to `50000` and `2500000` files with a character count from 50,000 to 2,500,000 will be included in the tests. 
 
 User can view the test result of the extensive tests in the desktop application, or from a generated HTML-file. The HTML-file includes two tables and five graphs to make reviewing the test analysis easier and more enjoyable.  
 
-A sample of an HTML-log generated with the mentioned character limits (min: 100,000; max: 2,500,000) can be reviewed [here](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html). Please note that the htmlpreview web-application does not load images with relative paths. To view the HTML-report with images, download a copy of this project and view the content locally on your preferred browser, or review the images in the [Github -folder](https://github.com/heidi-holappa/tira-labra-2022/tree/master/test-data/images).
+A sample of an HTML-log generated with the mentioned character limits (min: 50,000; max: 2,500,000) can be reviewed [here](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html). Please note that the htmlpreview web-application does not load images with relative paths. To view the HTML-report with images, download a copy of this project and view the content locally on your preferred browser, or review the images in the [Github -folder](https://github.com/heidi-holappa/tira-labra-2022/tree/master/test-data/images).
 
 ### Input Used for Analysis-tests
 The sample material for user operated extensive analysis-tests includes:
@@ -108,6 +108,73 @@ if __name__ == "__main__":
     translator = RemoveUnsupportedCharacters("path of the original file")
     translator.create_supported_copy()
 ```
+
+## Analysis of test results
+In the included [analysis-test HTML-log](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html) the sample content with character count between 50,000 and 2,500,000 was tested. A table and graphs from that document can be reviewed below for easier reading experience.
+
+The sought compression ratio for this project was between 40-60 percent (meaning that the compressed file size is 40-60 percent of the original size). As can be seen in the table for the compression phase (below), this is achieved for most files. 
+
+| # |	Filename |Algorithm | Original size | Compressed size | Compression ratio | Compression time (s) | Pre-process (s) | Post-process (s)
+| ---- | --- | ---- | --- | ---- | --- | ---- | --- | ---- | 
+| 1 | gutenberg-project-misc-math-constants.txt | Huffman coding | 480294 | 241501 | 0.50 | 0.11 | 0.00 | 0.04
+| 1 | gutenberg-project-misc-math-constants.txt | Lempel-Ziv 77 | 480294 | 298059 | 0.62 | 1.41 | 0.00 | 0.00
+| 2 | gutenberg-project-the-wonder-woman.txt | Huffman coding | 254827 | 144528 | 0.57 | 0.06 | 0.00 | 0.02
+| 2 | gutenberg-project-the-wonder-woman.txt | Lempel-Ziv 77 | 254827 | 136444 | 0.54 | 0.62 | 0.00 | 0.00
+| 3 | seitseman-veljesta.txt | Huffman coding | 655004 | 346447 | 0.53 | 0.17 | 0.00 | 0.06
+| 3 | seitseman-veljesta.txt | Lempel-Ziv 77 | 655004 | 324723 | 0.50 | 1.44 | 0.00 | 0.00
+| 4 | gutenberg-project-standar-operaglass.txt | Huffman coding | 809246 | 460383 | 0.57 | 0.20 | 0.00 | 0.08
+| 4 | gutenberg-project-standar-operaglass.txt | Lempel-Ziv 77 | 809246 | 410111 | 0.51 | 1.90 | 0.00 | 0.00
+| 5 | random-printable-ascii-100-paragraphs.txt | Huffman coding | 74714 | 62115 | 0.83 | 0.02 | 0.00 | 0.01
+| 5 | random-printable-ascii-100-paragraphs.txt | Lempel-Ziv 77 | 74714 | 74410 | 1.00 | 0.24 | 0.00 | 0.00
+| 6 | gutenberg-project-martian-shore.txt | Huffman coding | 51543 | 29853 | 0.58 | 0.01 | 0.00 | 0.00
+| 6 | gutenberg-project-martian-shore.txt | Lempel-Ziv 77 | 51543 | 24129 | 0.47 | 0.12 | 0.00 | 0.00
+| 7 | natural-language-document-100-paragraphs.txt | Huffman coding | 53636 | 30839 | 0.57 | 0.01 | 0.00 | 0.00
+| 7 | natural-language-document-100-paragraphs.txt | Lempel-Ziv 77 | 53636 | 32049 | 0.60 | 0.14 | 0.00 | 0.00
+| 8 | first-100000-decimals-of-pi.txt | Huffman coding | 100002 | 43726 | 0.44 | 0.02 | 0.00 | 0.01
+| 8 | first-100000-decimals-of-pi.txt | Lempel-Ziv 77 | 100002 | 63360 | 0.63 | 0.31 | 0.00 | 0.00
+| 9 | gutenberg-project-the-value-of-zeta-3.txt | Huffman coding | 1007060 | 453621 | 0.45 | 0.24 | 0.00 | 0.08
+| 9 | gutenberg-project-the-value-of-zeta-3.txt | Lempel-Ziv 77 | 1007060 | 642218 | 0.64 | 3.07 | 0.00 | 0.00
+| 10 | gutenberg-project-argonaut-stories.txt | Huffman coding | 283095 | 158239 | 0.56 | 0.06 | 0.00 | 0.03
+| 10 | gutenberg-project-argonaut-stories.txt | Lempel-Ziv 77 | 283095 | 146516 | 0.52 | 0.75 | 0.00 | 0.00
+
+### What compressed well
+Both algorithms reached the desired compression ratio on documents containing sensible natural language. In this case public domain content (novels and short stories) was used as was detailed in section 'input used for analysis-tests.' In the table above files 2,3,4 and 6 fell under this category.  
+
+On all these files the Lempel-Ziv 77 algorithm was able to reach more favorable compression ratios as the content provided a good amount of string-matches to enable compression. This is evident since each non-match takes 8 bits of space and matches 16 bits, which means that the compression comes from matches made. 
+
+
+### Cases in which the optimal compression ratio was not achieved
+As both algorithms (Huffman coding and Lempel-Ziv 77) take advantage of repetition both in their own way, it is unsurprising that the cases in which the compression ratio is not in the optimal range happen with files with less repetition.  
+
+In the included analysis-test sample the Lempel-Ziv 77 algorithm fails to meet the optimal compression ratio with files 1,5,8 and 9. Files 1,8 and 9 all contain mathematical constants. As can be seen in the graph visualizing the mean lenghts of the matches, it is apparent that when matching content was found, the matches were shorter on these files, which is in line with the non-optimal compression results. 
+
+The file 5 contain randomly created ASCII-paragraphs. With 102 available characters the chance of finding a matching 3 to 15 character string from the sliding window and lookahead buffer is quite low, which explains the non-optimal compression ratio and low mean length for found matches. 
+
+![Mean length of found matches in Lempel-Ziv 77](../test-data/images/lempel-ziv-avg-match.png)
+
+For the selected sample-data the Huffman coding fares better with files containing mathematical constants (files 1,8 and 9). Even though on these files the variance in Huffman coded values is small, the amount of Huffman coded values is smaller as well, meaning that the most common Huffman coded values (in this case integer values 0-9) have a shorter traversal path, making their size less than the original 8 bits. 
+
+### Performance comparison
+
+The Lempel-Ziv 77 required considerably more time resources for compression than Huffman coding due to iteratively searching for string matches. In compressin phase Huffman coding calculates the Huffman coded values based on frequencies and then the coded content itself is created in linear time. 
+
+![Time required for compression-phase](images/compression-comparison.png)
+
+On the sample material used the most significant factors for time required seems to be the size of the content compressed and additionally on Lempel-Ziv 77 the times the window search has to be performed. By looking at the files 4 and 9 we can observe that compressing file 9 took proportionally more time as less matches were found and matches were by average shorter in length (indicating that more window searches had to be performed). 
+
+![Original size vs. compression time](images/original-size-compression-time.png)
+
+In uncompression phase however Lempel-Ziv 77 fared noticeably better as can be seen in the referenced HTML-log file. In uncompression phase Lempel-Ziv 77 iteratively goes through the content once to re-create it. The time needed is linear. 
+
+![Time required for uncompression-phase](images/uncompression-comparison.png)
+
+Huffman coding however needs to re-create the Huffman tree and then build the content by traversing the tree n-times, in which n is the length of the content. Interestingly we can observe that for Huffman coding the frequencies of the original content are also significant. By looking at files 4 and 9. They have almost the same uncompression time despite the time difference.  
+
+My assessment is that as the content of file 9 was mostly integers (with a short pre-face in natural language), the main content got high frequency values and thus favorable (=short) traversal paths in the Huffman tree.  
+
+![Uncompressed size vs. uncompression time](images/uncomp-size-time.png)
+
+![Huffman coding different characters](../test-data/images/huffman-character-count.png)
 
 ## Coverage Report for Unittests
 The coverage report can be run by typing the command `poetry run invoke coverage-report` in the terminal. The branch coverage of the final release is 99 percent.
