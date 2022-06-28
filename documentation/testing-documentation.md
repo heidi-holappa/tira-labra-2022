@@ -108,7 +108,7 @@ if __name__ == "__main__":
 ```
 
 ## Analysis of test results
-In the included [analysis-test HTML-log](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html) the sample content with character count between 50,000 and 2,500,000 was tested. A table and graphs from that document can be reviewed below for easier reading experience.
+The included [analysis-test HTML-log](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html) the contains a report on test run on sample content with character count between 50,000 and 2,500,000. We will next look a bit closer to at the results. Some additional graphs drawn from the table results are included.  
 
 The sought compression ratio for this project was between 40-60 percent (meaning that the compressed file size is 40-60 percent of the original size). As can be seen in the table for the compression phase (below), this is achieved for most files. 
 
