@@ -26,4 +26,7 @@
 | 24.6.2022 | Refactor code | 2 |
 | 25.6.2022 | Fix Pylint-issues, write documentation | 3 |
 | 26.6.2022 | Fix Pylint-issues, write documentation, refactor code | 6 |
-| **total**| ---- | **18** |
+| 27.6.2022 | Fix bugs, refactor validation, write more tests | 3 |
+| 27.6.2022 | Write documentation | 2 |
+| 28.6.2022 | Write documentation | 4 |
+| **total**| ---- | **27** |
