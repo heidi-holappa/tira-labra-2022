@@ -254,6 +254,15 @@ To sum it up, the uncompression phase of Huffman coding has the following steps:
 - reconstructing the Huffman tree in linear time `O(m)` in which `m` equals the number of nodes
 - traversing the Huffman tree `k` times to decode the content, which to my best understanding takes the time of `O(k log n)`
 
+### Summary
+The time complexities of Lempel-Ziv 77 and Huffman coding in a table
+
+| Algorithm | Compression | Uncompression | Explanation
+| ---- | ---- | ---- | ---- |
+| Lempel-Ziv 77 | O(k * m * n) | O(k) | k = length of content, m = window size, n = buffer size |
+| Huffman coding | O(k + n log n) | O(k log n) | k = length of content, n = number of unique characters |
+
+
 ## Performance and O-analysis comparison
 A detailed look at the performance is included in the [testing documentation's](https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#performance-comparison) section 'Performance comparison.'
 As written above, this is still under investigation.
