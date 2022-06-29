@@ -212,6 +212,7 @@ To sum up, the Huffman coding consists of different steps that have different ti
 - Calculating frequencies. This is done in an iterative loop with constant time calculations, time complexity being `O(k)`
 - Building of minimum heap. The heap operations take a time of `O(log n)` and both creating and traversing the tree contain `n` steps making the required time `O(n log n)`
 - Creating the Huffman coded content, which takes the linear time of `O(k)`
+- Put together the time complexity is `O(k + n log n)`
 
 As the maximum character count is `102` for this project, it quickly follows as file sizes grow that the time complexity in compression phase is close to the linear time of `O(k),`  
 
