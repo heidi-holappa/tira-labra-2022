@@ -204,7 +204,7 @@ The space complexity is more related to a particular implementation. In this pro
 ### Huffman coding
 Let `k` be the length of the content to be compressed and `n` be the number of unique characters in the material. The Huffman compression begins with iterating through the content `k` once to calculate the frequencies, taking a linear time of `O(k)`.  
 
-After the frequencies are calculated, the Huffman tree is created. [John Morris](https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html) from the University of Auckland presents, that the time complexity of the encoding phase of Huffman coding is `O(n log n)`, in which n is the numbers of characters in the constructed tree. A similar time complexity is presented in Cormen et. al. book 'Introduction to Algorithms.'
+After the frequencies are calculated, the Huffman tree is created. [John Morris](https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html) from the University of Auckland presents, that the time complexity of the encoding phase of Huffman coding is `O(n log n)`, in which n is the numbers of characters in the constructed tree. A similar time complexity is presented in Cormen et. al. book 'Introduction to Algorithms.' In some sources (i.e. [[1]](https://www.cs.umd.edu/class/fall2017/cmsc451-0101/Lects/lect06-greedy-huffman.pdf) [[2]](https://www.codesdope.com/course/algorithms-huffman-codes/)) the implementation used in this project is called a **greedy algorithm** as the algorithm always chooses the best available option when combining frequencies.
 
 After this phase the Huffman coded values are calculated by traversing the tree `n` times, taking the time complexity of `O(n log n)`. Finally the compressed content is created by iteratively going through the content `k` to create a Huffman coded version of the content. This is done in the linear time of `O(k)`.  
 
@@ -262,13 +262,12 @@ Making the average traversal steps taken
 Which is under the balanced tree height of 3.
 ```
 
-As we can see in this edge case the traversal times are balanced out, making the time complexity be in this edge case in the range of `O(k log n)`. One edge case does not offer definitive proof and there is some amount of uncertainty left on this time complexity. It is however my current understanding that the time complexity of the decompression phase falls under `O(k log n)`, because the frequencies balance the steps taken while traversing the tree.
+As we can see in this edge case the traversal times are balanced out, making the time complexity be in this edge case in the range of `O(k log n)`. One edge case does not offer definitive proof and there is some amount of uncertainty left on this time complexity. It is however my current understanding that the time complexity of the decompression phase falls under `O(k log n)`, because the frequencies balance the steps taken while traversing the tree. The online tutorial-site [CodeScope](https://www.codesdope.com/course/algorithms-huffman-codes/) suggests similar time complexity for decoding, but the article has no author, so it is hard to estimate it's credibility. 
 
 To sum it up, the uncompression phase of Huffman coding has the following steps:
 
 - reconstructing the Huffman tree in linear time `O(m)` in which `m` equals the number of nodes
 - traversing the Huffman tree `k` times to decode the content, which to my best understanding takes the time of `O(k log n)`
-
 
 The space complexity is more related to a particular implementation. In this implementation the space requirements are as follows:
 - Compression-phase:
