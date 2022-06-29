@@ -335,12 +335,13 @@ The application logic would benefit from following updates:
   - validating content could be moved to Entities package class SupportedCharacters
 
 ## Pylint / Pytest  
-The following Pylint -notificatoins were ignored in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues remain):
-- R0902: too-many-instance-attributes
+The following Pylint -notifications were ignored in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues were ignored):
+- too-many-instance-attributes
   - HuffmanCoding
   - LempelZiv
-- W0703: broad-except
-  - ExtensiveTestHandler
+- duplicate-code
+  - HuffmanCoding (creating analysis data)
+  - LempelZiv (creating analysis data)
 
 # Sources
 
