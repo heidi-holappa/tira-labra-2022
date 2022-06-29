@@ -262,7 +262,9 @@ Making the average traversal steps taken
 Which is under the balanced tree height of 3.
 ```
 
-As we can see in this edge case the traversal times are balanced out, making the time complexity be in this edge case in the range of `O(k log n)`. One edge case does not offer definitive proof and there is some amount of uncertainty left on this time complexity. It is however my current understanding that the time complexity of the decompression phase falls under `O(k log n)`, because the frequencies balance the steps taken while traversing the tree. The online tutorial-site [CodeScope](https://www.codesdope.com/course/algorithms-huffman-codes/) suggests similar time complexity for decoding, but the article has no author, so it is hard to estimate it's credibility. 
+As we can see in this edge case the traversal times are balanced out, making the time complexity be in this edge case in the range of `O(k log n)`. One edge case does not offer definitive proof and there is some amount of uncertainty left on this time complexity.  
+
+It is my current understanding that the time complexity of the decompression phase falls under `O(k log n)`, because the frequencies balance the steps taken while traversing the tree. The online tutorial-site [CodeScope](https://www.codesdope.com/course/algorithms-huffman-codes/) suggests similar time complexity for decoding, but the article has no author, so it is hard to estimate it's credibility. 
 
 To sum it up, the uncompression phase of Huffman coding has the following steps:
 
@@ -292,7 +294,7 @@ The time complexities of Lempel-Ziv 77 and Huffman coding in a table
 | Lempel-Ziv 77 | O(k * m * n) | O(k) | k = length of content, m = window size, n = buffer size |
 | Huffman coding | O(k + n log n) | O(k log n)* | k = length of content, n = number of unique characters |
 
-_*Please note the uncertainty regarding this time complexity discussed in section [Accomplished time complexities and space requirements]_
+_*) Please note the uncertainty regarding this time complexity discussed in section [Accomplished time complexities and space requirements](https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/execution-documentation.md#accomplished-time-complexities-and-space-requirements)_
 
 ## Performance and O-analysis comparison
 A detailed look at the performance is included in the [testing documentation's](https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#performance-comparison) section 'Performance comparison.'
