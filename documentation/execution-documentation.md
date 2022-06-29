@@ -201,7 +201,7 @@ To sum up, the huffman coding consists of different steps that have different ti
 
 As the maximum character count is `102` for this project, it quickly follows as file sizes grow that the time complexity in compression phase is close to the linear time of `O(k),`  
 
-In the uncompression phase the Huffman tree is first reconstructed taking the time of `O(n log n).` After this the uncompressed content is recreated by traversing the tree `k` times.
+In the uncompression phase the Huffman tree is first reconstructed taking linear time equal to the number of nodes. After this the uncompressed content is recreated by traversing the tree `k` times.
 
 As in this implementation the structure of the tree depends on the frequencies of the compressed content, the structure can vary. Emeritus Professor Salomon and Dr. Motta (source 17 at the end of the document) present that in the worst case the longest path in a similarily as in this project construted tree can be of length `n-1` by giving the following example (in which xa + yb are the frequencies of each node):
 
@@ -222,7 +222,7 @@ graph TB
 ```
 In all the included sources there was no definitive time complexity given for the decompression process using this approach to constructing the Huffman tree. It is my reasoning that as the tree structure is based on the frequencies of the characters, in an edge case as detailed above, the variance in frequencies has to be higher, meaning that in decompression phase the most common characters are found from the shortest paths.  
 
-The frequencies of the leaf nodes (characters) in the binary tree above are `5a +8b, 3a + 5b, 2a + 3b, a + 2b, a + b, a, b`. If the tree was balanced, all the height of the tree would be 3 as there are seven leaf nodes.  The leaf node `2a +3b` is thus on the balanced level.
+The frequencies of the leaf nodes (characters) in the binary tree above are `5a +8b, 3a + 5b, 2a + 3b, a + 2b, a + b, a, b`. If the tree was balanced, all the height of the tree would be 3 as there are seven leaf nodes.  
 
 As we can see, the leaf node `a` has the smallest frequency, meaning that `a < b` and thus we can present that `13a, 8a, 5a, 3a, 2a, a, a < 5a +8b, 3a + 5b, 2a + 3b, a + 2b, a + b, a, b`, meaning that 
 
@@ -249,6 +249,10 @@ Which is under the balanced tree height of 3.
 
 As we can see in this edge case the traversal times are balanced out, making the time complexity be in this edge case in the range of `O(k log n)`. One edge case does not offer definitive proof and there is some amount of uncertainty left on this time complexity. It is however my current understanding that the time complexity of the decompression phase falls under `O(k log n)`, because the frequencies balance the steps taken while traversing the tree.
 
+To sum it up, the uncompression phase of Huffman coding has the following steps:
+
+- reconstructing the Huffman tree in linear time `O(m)` in which `m` equals the number of nodes
+- traversing the Huffman tree `k` times to decode the content, which to my best understanding takes the time of `O(k log n)`
 
 ## Performance and O-analysis comparison
 A detailed look at the performance is included in the [testing documentation's](https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#performance-comparison) section 'Performance comparison.'
@@ -277,13 +281,12 @@ In addition following characters are supported:
 In the future the application could be expanded to handle a wider variety of ASCII-characters. 
 
 ### Canonical Huffman tree could be introduced
-While researching the subject I came across the concept of [canonical Huffman code](https://en.wikipedia.org/wiki/Canonical_Huffman_code). It could perhaps be used to improve the efficiency of the Huffman compression. Due to time constraints I did not have a chance to pursue this, but it could be a worthwile addition in the future. 
+While researching the subject I came across the concept of [canonical Huffman code](https://en.wikipedia.org/wiki/Canonical_Huffman_code). It could perhaps be used to improve the efficiency of the Huffman compression. Due to time constraints I did not have a chance to pursue this, but it could be a worthwile addition in the future.  
+
+One additional benefit to implementing the Canonical Huffman tree would be that for it more definite time complexities are available. 
 
 ### Lempel-Ziv 77 ideal offset should be investigated
 For the test material in this project the average offset length was between 1100-1300 characters. This means that in most occations the optimal match can be found within that distance. Currently the window size is 4096 and storing the offset value takes 12 bits. If the window size was 2048, it would require 11 bits and compression speed would increase. This means that for each match found we would save one bit of space. As the minimum match searched for is now three characters, this would mean that for each found match the compression ratio would be in the worst case 2/3 which is approximately 0.67. 
-
-### Lempel-Ziv 77 character storing should be investigated
-Currently all characters take one byte of space. The range of characters is however limited and perhaps less space would suffice. The number of characters is less than 128, so 7 bits could be enough for uniquelly identifying each character. This way for each character stored (= when no match is found) a byte of space would be required. This way the compression ratio would be 1.0. 
 
 ### Application logic  
 The application logic would benefit from following updates:
@@ -291,7 +294,6 @@ The application logic would benefit from following updates:
 - Improved error handling on extensive tests
 - Refactoring of application logic
   - validating content could be moved to Entities package class SupportedCharacters
-
 
 ## Pylint / Pytest  
 The following Pylint -notificatoins were ignored in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues remain):
