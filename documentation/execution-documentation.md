@@ -237,7 +237,7 @@ graph TB
 ```
 In all the included sources there was no definitive time complexity given for the decompression process using this approach to constructing the Huffman tree. It is my reasoning that as the tree structure is based on the frequencies of the characters, in an edge case as detailed above, the variance in frequencies has to be higher, meaning that in decompression phase the most common characters are found from the shortest paths.  
 
-The frequencies of the leaf nodes (characters) in the binary tree above are `5a +8b, 3a + 5b, 2a + 3b, a + 2b, a + b, a, b`. If the tree was balanced, all the height of the tree would be 3 as there are seven leaf nodes.  
+The frequencies of the leaf nodes (characters) in the binary tree above are `5a +8b, 3a + 5b, 2a + 3b, a + 2b, a + b, a, b`. If the tree was balanced, the height of the tree would be 3 as there are seven leaf nodes.  
 
 As we can see, the leaf node `a` has the smallest frequency, meaning that `a < b` and thus we can present that `13a, 8a, 5a, 3a, 2a, a, a < 5a +8b, 3a + 5b, 2a + 3b, a + 2b, a + b, a, b`, meaning that 
 
