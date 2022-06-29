@@ -173,7 +173,7 @@ The bits stored into the file include:
 It is worth noting that on Lempel-Ziv 77 the list of supported characters is not the standard 7-bit ASCII-characters. Because of this the application has a class in Entities -package to manage transformation of the characters into 7-bit numeric presentations. Due to this each character for which no match was found take up a byte of space (the same amount as before compression) instead of nine bits (a byte for character and 1 bit indicator). This is beneficial in the edge case scenarios in which no compression happens. Without this optimation the compressed size could exceed the original size with Lempel-Ziv 77 implementation.
 
 
-## Accomplished Time and Space Complexities 
+## Accomplished Time Complexities and Space Requirements
 
 ### Lempel-Ziv 77 
 In the compression phase the Lempel Ziv 77 algorithm iterates through the whole content once. At each iterative step a search is executed and an optimal match is search for from the lookahead buffer and the window. Matches are searched for with Python's built-in `str.find()` method. The process is repeated at each iterative step of the content `k` that is being compressed. In the worst case scenario no matches are found and the process needs to be repeated at each index, so the time complexity is `k * search time`. 
@@ -290,8 +290,9 @@ The time complexities of Lempel-Ziv 77 and Huffman coding in a table
 | Algorithm | Compression | Uncompression | Explanation
 | ---- | ---- | ---- | ---- |
 | Lempel-Ziv 77 | O(k * m * n) | O(k) | k = length of content, m = window size, n = buffer size |
-| Huffman coding | O(k + n log n) | O(k log n) | k = length of content, n = number of unique characters |
+| Huffman coding | O(k + n log n) | O(k log n)* | k = length of content, n = number of unique characters |
 
+_*Please note the uncertainty regarding this time complexity discussed in section [Accomplished time complexities and space requirements]_
 
 ## Performance and O-analysis comparison
 A detailed look at the performance is included in the [testing documentation's](https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#performance-comparison) section 'Performance comparison.'
