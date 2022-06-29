@@ -58,7 +58,7 @@ And the order in which the characters were stored would be
 BCDA
 ```
 
-When we uncompress the content, we first re-construct the tree from the stored preorder structure. While constructing the tree we add the stored characters to leaf nodes in order. After the tree is constructed we then traverse it based on the compressed content. Each time we end up in a leaf, we add the character in the said leaf node and start traversing again from the root of the tree. In this example the first bit in the compressed content `111100010011` is 1, so we would traverse right. We then conclude that we are in a leaf node and can traverse no further, so we add the character "A" and start again from the root. 
+When we uncompress the content, we first re-construct the tree from the stored preorder structure. While constructing the tree we add the stored characters to leaf nodes in order. After the tree is constructed we then traverse it based on the compressed content. Each time we end up in a leaf, we add the character in the said leaf node and start traversing again from the root of the tree. In this example the first bit in the compressed content `11110000010011` is 1, so we would traverse right. We then conclude that we are in a leaf node and can traverse no further, so we add the character "A" and start again from the root. 
 
 ### Lempel-Ziv 77
 One central idea in Lempel-Ziv 77 is, that in natural language there is often repetition. Consider for instance the following naive sentence:
@@ -342,6 +342,8 @@ The following Pylint -notifications were ignored in agreement with the course as
 - duplicate-code
   - HuffmanCoding (creating analysis data)
   - LempelZiv (creating analysis data)
+
+For a detailed description on the tests, please see [testing documentation](testing-documentation.md)
 
 # Sources
 
