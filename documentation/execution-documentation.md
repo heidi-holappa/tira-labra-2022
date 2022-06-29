@@ -37,7 +37,8 @@ D = 011
 
 As we can see, we now have to traverse only one edge to reach 'A', which we do most frequently and in rarer occations we traverse a longer path. Using the Huffman coded values the compressed content would now be:
 ```
-111100010011
+AAAA B B  C  D
+11110000010011
 ```
 
 To uncompress the stored content we need to have the tree, the characters and the Huffman coded content (traversal paths). In this application the tree is stored in a [pre-order](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order,_NLR), in which we 
@@ -186,15 +187,28 @@ From this an estimate of the total worst case time complexity can be created. A 
 - m = characters in sliding window
 - n = characters in lookahead buffer
 
+In the uncompression-phase the compressed content is gone through iteratively once, making the time complexity `O(k)`, in which `k` is the length of the uncompressed content.
+
+The space complexity is more related to a particular implementation. In this project the space requirements are as follows
+- Compression phase
+  - A string of uncompressed content (k characters)
+  - List of tuples (offset, length, ord(character)) (max. k tuples)
+  - List of bit tranformations in string form, then joined into one string
+  - Bytearray formed from the string in previous step
+- Uncompression phase
+  - Bytes read from file transformed into a string
+  - List of tuples formed from the string
+  - list of characters of uncompressed content, then joined to a string
+
 
 ### Huffman coding
 Let `k` be the length of the content to be compressed and `n` be the number of unique characters in the material. The Huffman compression begins with iterating through the content `k` once to calculate the frequencies, taking a linear time of `O(k)`.  
 
 After the frequencies are calculated, the Huffman tree is created. [John Morris](https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html) from the University of Auckland presents, that the time complexity of the encoding phase of Huffman coding is `O(n log n)`, in which n is the numbers of characters in the constructed tree. A similar time complexity is presented in Cormen et. al. book 'Introduction to Algorithms.'
 
-After this phase the Huffman coded values are calculated by traversing the tree `n` times, taking the time complexity of `O(n log n)`. Finally the compressed content is created by iteratively going through the kontent `k` to create a Huffman coded version of the content. This is done in the linear time of `O(k)`.  
+After this phase the Huffman coded values are calculated by traversing the tree `n` times, taking the time complexity of `O(n log n)`. Finally the compressed content is created by iteratively going through the content `k` to create a Huffman coded version of the content. This is done in the linear time of `O(k)`.  
 
-To sum up, the huffman coding consists of different steps that have different time complexities. 
+To sum up, the Huffman coding consists of different steps that have different time complexities. 
 - Calculating frequencies. This is done in an iterative loop with constant time calculations, time complexity being `O(k)`
 - Building of minimum heap. The heap operations take a time of `O(log n)` and both creating and traversing the tree contain `n` steps making the required time `O(n log n)`
 - Creating the Huffman coded content, which takes the linear time of `O(k)`
@@ -253,6 +267,22 @@ To sum it up, the uncompression phase of Huffman coding has the following steps:
 
 - reconstructing the Huffman tree in linear time `O(m)` in which `m` equals the number of nodes
 - traversing the Huffman tree `k` times to decode the content, which to my best understanding takes the time of `O(k log n)`
+
+
+The space complexity is more related to a particular implementation. In this implementation the space requirements are as follows:
+- Compression-phase:
+  - string of uncompressed content
+  - Dictionary of Huffman frequencies (max. 102 key-value pairs)
+  - Creation of Huffman tree (node-objects, max of c*n nodes in which c is a constant and n is the number of unique characters)
+  - Creating a dictionary of Huffman coded values (max. 102 key-value pairs)
+  - Creating a huffman coded list from content
+  - joining tree, Huffman codes for characters and Huffman coded content as a string
+  - creating a list of bytes from content and then joining a string object of byte content
+- Uncompression-phase
+  - creating a string of byte content, transforming it to a list of bytes
+  - creating a list of string content from the bytes, joining it to strings (tree, characters, coded content)
+  - creating the Huffman tree
+  - creating a list of uncompressed content, joining a string-object from the list.
 
 ### Summary
 The time complexities of Lempel-Ziv 77 and Huffman coding in a table
