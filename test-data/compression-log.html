@@ -1,14 +1,22 @@
-<h1>Extended testing report</h1><br>
-<p>This document includes a report of the extended testing executed on <b>28.06.2022 14:33:35</b>. The tables include information on compression and uncompression of test files. You can also find graphs that measure perfomance of compression algorithms based on selected measurers. Note that running the extended tests overwrites the report.</p><br>
+<h1>ANALYSIS REPORT</h1>
+<p>This document contains a report for the analysis testing executed on <b>30.06.2022 12:58:11</b>. The included tables contain information on compression and uncompression phases. Graphs visualize perfomance of compression algorithms based on selected measurers. Note that running the analysis tests overwrites the report.</p>
 
-<H2>EXTENSIVE TEST SUMMARY</H2><br>
-<b>Total runtime:</b> 18.97 seconds<br>
-<b>Successful tests:</b> 10<br>
-<b>Failed tests:</b> 0<br>
+<h2>OVERVIEW</h2>
 
-<h2>Detailed summary</h2><br>
+<b>Total runtime:</b> 18.88 seconds<br>
+<b>Tests run:</b> 10<br>
+<ul>
+    <li><b>Successful tests:</b> 10<br></li>
+    <li><b>Failed tests:</b> 0<br></li>
+</ul>
 
-<h2>Compression analysis</h2><br><table border='1'>
+<h2>DETAILED SUMMARY</h2>
+
+<h3>Tables</h3>
+<p>The tables contain detailed information on compression and uncompression phases. The sought after compression ratio for this project was 0.4-0.6. The files on which this compression ratio was less than or equal to 0.6 are colored green and other are colored red.</p>
+
+<h4>Compression analysis</h4>
+<table border='1'>
     <tr>
         <th>#</th>
         <th>Filename</th>
@@ -36,7 +44,7 @@
         <td>gutenberg-project-misc-math-constants.txt</td>
         <td>Lempel-Ziv 77</td>
         <td>480294</td>
-        <td>298059</td>
+        <td>298058</td>
         <td style='color:red;text-align: center'>0.62</style></td>
         <td style='text-align: center'>1.41</td>
         <td style='text-align: center'>0.00</td>
@@ -58,9 +66,9 @@
         <td>gutenberg-project-the-wonder-woman.txt</td>
         <td>Lempel-Ziv 77</td>
         <td>254827</td>
-        <td>136444</td>
+        <td>136443</td>
         <td style='color:green;text-align: center'>0.54</style></td>
-        <td style='text-align: center'>0.62</td>
+        <td style='text-align: center'>0.60</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -71,9 +79,9 @@
         <td>655004</td>
         <td>346447</td>
         <td style='color:green;text-align: center'>0.53</style></td>
-        <td style='text-align: center'>0.17</td>
+        <td style='text-align: center'>0.14</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.06</td>
+        <td style='text-align: center'>0.05</td>
     </tr>
     <tr>
         <th>3</th>
@@ -82,7 +90,7 @@
         <td>655004</td>
         <td>324723</td>
         <td style='color:green;text-align: center'>0.50</style></td>
-        <td style='text-align: center'>1.44</td>
+        <td style='text-align: center'>1.43</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -104,7 +112,7 @@
         <td>809246</td>
         <td>410111</td>
         <td style='color:green;text-align: center'>0.51</style></td>
-        <td style='text-align: center'>1.90</td>
+        <td style='text-align: center'>1.91</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -146,9 +154,9 @@
         <td>gutenberg-project-martian-shore.txt</td>
         <td>Lempel-Ziv 77</td>
         <td>51543</td>
-        <td>24129</td>
+        <td>24128</td>
         <td style='color:green;text-align: center'>0.47</style></td>
-        <td style='text-align: center'>0.12</td>
+        <td style='text-align: center'>0.11</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -181,7 +189,7 @@
         <td>100002</td>
         <td>43726</td>
         <td style='color:green;text-align: center'>0.44</style></td>
-        <td style='text-align: center'>0.02</td>
+        <td style='text-align: center'>0.03</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.01</td>
     </tr>
@@ -203,7 +211,7 @@
         <td>1007060</td>
         <td>453621</td>
         <td style='color:green;text-align: center'>0.45</style></td>
-        <td style='text-align: center'>0.24</td>
+        <td style='text-align: center'>0.23</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.08</td>
     </tr>
@@ -212,7 +220,7 @@
         <td>gutenberg-project-the-value-of-zeta-3.txt</td>
         <td>Lempel-Ziv 77</td>
         <td>1007060</td>
-        <td>642218</td>
+        <td>642217</td>
         <td style='color:red;text-align: center'>0.64</style></td>
         <td style='text-align: center'>3.07</td>
         <td style='text-align: center'>0.00</td>
@@ -227,7 +235,7 @@
         <td style='color:green;text-align: center'>0.56</style></td>
         <td style='text-align: center'>0.06</td>
         <td style='text-align: center'>0.00</td>
-        <td style='text-align: center'>0.03</td>
+        <td style='text-align: center'>0.02</td>
     </tr>
     <tr>
         <th>10</th>
@@ -236,12 +244,14 @@
         <td>283095</td>
         <td>146516</td>
         <td style='color:green;text-align: center'>0.52</style></td>
-        <td style='text-align: center'>0.75</td>
+        <td style='text-align: center'>0.72</td>
         <td style='text-align: center'>0.00</td>
         <td style='text-align: center'>0.00</td>
     </tr>
 </table>
-<h2>Uncompression analysis</h2><br><table border='1'>
+<h4>Uncompression analysis</h4>
+
+<table border='1'>
     <tr cellspacing='3'>
         <th>#</th>
         <th>Filename</th>
@@ -260,8 +270,8 @@
         <td>480294</td>
         <td>241501</td>
         <td style='color:green;text-align: center'>0.50</style></td>
-        <td style='text-align: center'>0.49</td>
-        <td style='text-align: center'>0.06</td>
+        <td style='text-align: center'>0.52</td>
+        <td style='text-align: center'>0.05</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
@@ -269,9 +279,9 @@
         <td>gutenberg-project-misc-math-constants.lz</td>
         <td>Lempel-Ziv 77</td>
         <td>480294</td>
-        <td>298059</td>
+        <td>298058</td>
         <td style='color:red;text-align: center'>0.62</style></td>
-        <td style='text-align: center'>0.13</td>
+        <td style='text-align: center'>0.14</td>
         <td style='text-align: center'>0.07</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -282,8 +292,8 @@
         <td>254827</td>
         <td>144528</td>
         <td style='color:green;text-align: center'>0.57</style></td>
-        <td style='text-align: center'>0.31</td>
-        <td style='text-align: center'>0.04</td>
+        <td style='text-align: center'>0.30</td>
+        <td style='text-align: center'>0.03</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
@@ -291,9 +301,9 @@
         <td>gutenberg-project-the-wonder-woman.lz</td>
         <td>Lempel-Ziv 77</td>
         <td>254827</td>
-        <td>136444</td>
+        <td>136443</td>
         <td style='color:green;text-align: center'>0.54</style></td>
-        <td style='text-align: center'>0.07</td>
+        <td style='text-align: center'>0.06</td>
         <td style='text-align: center'>0.03</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -304,8 +314,8 @@
         <td>655004</td>
         <td>346447</td>
         <td style='color:green;text-align: center'>0.53</style></td>
-        <td style='text-align: center'>0.74</td>
-        <td style='text-align: center'>0.09</td>
+        <td style='text-align: center'>0.73</td>
+        <td style='text-align: center'>0.08</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
@@ -326,7 +336,7 @@
         <td>809246</td>
         <td>460383</td>
         <td style='color:green;text-align: center'>0.57</style></td>
-        <td style='text-align: center'>0.96</td>
+        <td style='text-align: center'>0.97</td>
         <td style='text-align: center'>0.11</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -338,7 +348,7 @@
         <td>410111</td>
         <td style='color:green;text-align: center'>0.51</style></td>
         <td style='text-align: center'>0.20</td>
-        <td style='text-align: center'>0.10</td>
+        <td style='text-align: center'>0.09</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
@@ -359,7 +369,7 @@
         <td>74714</td>
         <td>74410</td>
         <td style='color:red;text-align: center'>1.00</style></td>
-        <td style='text-align: center'>0.05</td>
+        <td style='text-align: center'>0.04</td>
         <td style='text-align: center'>0.02</td>
         <td style='text-align: center'>0.00</td>
     </tr>
@@ -379,7 +389,7 @@
         <td>gutenberg-project-martian-shore.lz</td>
         <td>Lempel-Ziv 77</td>
         <td>51543</td>
-        <td>24129</td>
+        <td>24128</td>
         <td style='color:green;text-align: center'>0.47</style></td>
         <td style='text-align: center'>0.01</td>
         <td style='text-align: center'>0.01</td>
@@ -436,8 +446,8 @@
         <td>1007060</td>
         <td>453621</td>
         <td style='color:green;text-align: center'>0.45</style></td>
-        <td style='text-align: center'>0.97</td>
-        <td style='text-align: center'>0.11</td>
+        <td style='text-align: center'>1.00</td>
+        <td style='text-align: center'>0.10</td>
         <td style='text-align: center'>0.00</td>
     </tr>
     <tr>
@@ -445,7 +455,7 @@
         <td>gutenberg-project-the-value-of-zeta-3.lz</td>
         <td>Lempel-Ziv 77</td>
         <td>1007060</td>
-        <td>642218</td>
+        <td>642217</td>
         <td style='color:red;text-align: center'>0.64</style></td>
         <td style='text-align: center'>0.27</td>
         <td style='text-align: center'>0.15</td>
@@ -469,21 +479,21 @@
         <td>283095</td>
         <td>146516</td>
         <td style='color:green;text-align: center'>0.52</style></td>
-        <td style='text-align: center'>0.08</td>
-        <td style='text-align: center'>0.04</td>
+        <td style='text-align: center'>0.07</td>
+        <td style='text-align: center'>0.03</td>
         <td style='text-align: center'>0.00</td>
     </tr>
 </table>
 <br>
-<h2>Graphs</h2>
+<h3>Graphs</h3>
 <p>Below you can review visual comparison of test results. The labels indicate the number of the file in question. Filenames can be found with the number from the tables above.</p>
 <img src='images/compression-ratio-comparison.png' alt='Compression ratio comparison'></img><br>
-<p>Compression ratio is the <b>size ratio</b> between the uncompressed and compressed content. For instance a ratio of 0.5 would mean that the compressed file's size is 50 percent of the file size of the uncompressed file. For both Huffman Coding and Lempel-Ziv 77 the compression ratio is worse for files with random content. You can read more about the reasons for this in the 'Execution documentation'. Link can be found in the README.md.</p>
+<p>Compression ratio is the <b>size ratio</b> between the uncompressed and compressed content. For instance a ratio of 0.5 would mean that the compressed file's size is 50 percent of the file size of the uncompressed file. For both Huffman Coding and Lempel-Ziv 77 the compression ratio is worse for files with random content. You can read more about the reasons for this in the 'Implementation documentation'. Link can be found in the README.md.</p>
 <img src='images/huffman-frequency-variance.png' alt='Huffman frequency variances'></img><br>
-<p>The graph above describes the variance in the Huffman frequencies. As can be seen with the test content, the compression ratio is generally better with content that has a higher variance in the frequencies, but there are exceptions. You can read more about the reasons for this in the 'Execution documentation'. Link can be found in the README.md.</p>
+<p>The graph above describes the variance in the Huffman frequencies. As can be seen with the test content, the compression ratio is generally better with content that has a higher variance in the frequencies, but there are exceptions. You can read more about the reasons for this in the 'Implementation documentation'. Link can be found in the README.md.</p>
 <img src='images/huffman-character-count.png' alt='Huffman character count'></img><br>
-<p>With a high character count the role of higher frequency is more visible. With a small character count (for instance files with just few different characters) a very high compression ratio can be achieved, even with low frequency.</p>
+<p>With a high character count the role of higher frequency variance is more visible. With a small character count (for instance files with just few different characters) a very high compression ratio can be achieved, even with low frequency variance.</p>
 <img src='images/lempel-ziv-avg-match.png' alt='Lempel-Ziv average match length'></img><br>
-<p>The average lenght describes the length of the match found in the sliding window. When the average length is higher, the compression ratio is generally better.</p>
+<p>The average length describes the length of the match found in the sliding window. When the average length is higher, the compression ratio is generally better. Note that the mean value is only calculated for found matches. Indexes for which no match was found are not included in the mean value. </p>
 <img src='images/lempel-ziv-avg-offset.png' alt='Lempel-Ziv average offset length'></img><br>
 The offset is the difference in indexes between the matches. For the included test material the offset is generally around 1200-1400 characters. Currently 12 bits (0-4096) are reserved for storing the offset, but perhaps two bits less would suffice in most cases? This could possibly improve the compression ratio.</p>
