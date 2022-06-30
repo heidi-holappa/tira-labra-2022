@@ -166,6 +166,7 @@ The largest as-default available test file has almost 7,800,000 characters and i
             return
         self.testhandler.create_document_with_random_printable_ascii(
             paragraphs)
+        self._show_content_created("random ASCII", paragraphs)
 
     def _generate_paragraphs_of_english(self):
         """Handles calling the instance of ExtensiveTestHandler to create
@@ -177,6 +178,7 @@ The largest as-default available test file has almost 7,800,000 characters and i
             self._show_error("Please select a value between 0 and 10,000")
             return
         self.testhandler.create_document_with_natural_language(paragraphs)
+        self._show_content_created("natural language", paragraphs)
 
     def _run_extensive_tests(self):
         """Handles calling the instance of ExtensiveTestHangler to initiate
@@ -210,6 +212,16 @@ The largest as-default available test file has almost 7,800,000 characters and i
             message=content,
             icon=messagebox.ERROR)
 
+    def _show_content_created(self, type, paragraphs):
+        """A message box verifying that content was created suffessfully.
+        """
+        content = f"Created {paragraphs} paragraph(s) of {type} content."
+        messagebox.showinfo(
+            title="Content created successfully",
+            message=content,
+            icon=messagebox.INFO)
+
+    
     def _show_success_message(self):
         """Constructs a messagebox confirming that tests have been successfully ran.
         User can open HTML-log-file if they so choose from the message box.
