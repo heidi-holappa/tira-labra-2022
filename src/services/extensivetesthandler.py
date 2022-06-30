@@ -58,7 +58,6 @@ class ExtensiveTestHandler:
         document_content = "".join(stripped_content_as_list)
         file = f"natural-language-document-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)
-        print("creating file ", filename)
         self.file_manager.create_txt_file(filename, document_content)
 
     def create_document_with_random_printable_ascii(self, n_of_paragraphs: int = 100):
@@ -82,7 +81,6 @@ class ExtensiveTestHandler:
         document_content = "".join(document_content_as_list)
         file = f"random-printable-ascii-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)
-        print("creating file ", filename)
         self.file_manager.create_txt_file(filename, document_content)
 
     def activate_extensive_tests(self, min_characters: int = 0, max_characters: int = 100000):
