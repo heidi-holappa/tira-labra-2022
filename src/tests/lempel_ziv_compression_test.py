@@ -27,7 +27,7 @@ class TestLempelZivCompression(unittest.TestCase):
         byte_array = bytearray(values)
         str_value = str(bin(values[0])[2:].zfill(8))
         self.lz77_coder.compressed_content = ""
-        self.lz77_coder.tranform_bytes_into_string(byte_array)
+        self.lz77_coder._transform_bytes_into_string(byte_array)
         result = self.lz77_coder.compressed_content
         self.assertEqual(result, str_value)
 
@@ -105,7 +105,7 @@ class TestLempelZivCompression(unittest.TestCase):
             (4,4,0),
         ]
         self.lz77_coder.content = test_content
-        self.lz77_coder.compress_content()
+        self.lz77_coder._lempel_ziv_compress_content()
         created_list = self.lz77_coder.compressed_content_as_list
         print(list_of_tuples_should_be, created_list)
         self.assertEqual(list_of_tuples_should_be, created_list)
@@ -133,7 +133,7 @@ class TestLempelZivCompression(unittest.TestCase):
             (15,15,0),
         ]
         self.lz77_coder.content = test_content
-        self.lz77_coder.compress_content()
+        self.lz77_coder._lempel_ziv_compress_content()
         created_list = self.lz77_coder.compressed_content_as_list
         print(list_of_tuples_should_be, created_list)
         self.assertEqual(list_of_tuples_should_be, created_list)

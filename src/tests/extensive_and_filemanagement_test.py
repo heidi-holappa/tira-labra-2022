@@ -138,18 +138,6 @@ class TestExtensiveTesting(unittest.TestCase):
             os.remove(filename)
 
     @pytest.mark.extendedtest
-    def test_huffman_coding_raises_exception_and_returns_false_if_file_not_found(self):
-        content = str("ABCEFGHIJK")
-        filename = "test_unsupported_characters.txt"
-        file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
-        with open(file_and_path, "a", encoding="utf-8") as file:
-            file.write(content)
-        result = self.extensive_test_handler.test_huffman_compression(filename, content)
-        for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_unsupported_characters*.*")):
-            os.remove(filename)
-        self.assertEqual(False, result)
-
-    @pytest.mark.extendedtest
     def test_huffman_coding_returns_false_with_non_matching_content(self):
         content = str("ABCDEFGHIJKLMN")
         filename = "test_unsupported_characters.txt"
@@ -161,19 +149,6 @@ class TestExtensiveTesting(unittest.TestCase):
             os.remove(filename)
         self.assertEqual(False, result)
     
-    @pytest.mark.extendedtest
-    def test_lempelziv_raises_exception_and_returns_false_with_unsupported_ascii_characters(self):
-        content = str(chr(29) + chr(31) + chr(32) + "ABC")
-        filename = "test_unsupported_characters.txt"
-        file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
-        with open(file_and_path, "a", encoding="utf-8") as file:
-            file.write(content)
-        result = self.extensive_test_handler.test_lempelziv_compression(file_and_path, content)
-        for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_unsupported_characters*.*")):
-            os.remove(filename)
-        self.assertEqual(False, result)
-
-
     @pytest.mark.extendedtest
     def test_lempelziv_returns_false_with_non_matching_content(self):
         content = str("ABCDEFGHIJKLMN")

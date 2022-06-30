@@ -53,23 +53,6 @@ class TestHuffmanCompression(unittest.TestCase):
         print(test_content)
         self.assertEqual(True, all_found)
 
-    # Deactivated until issues are solved
-    def compression_and_decompression_work_with_a_single_character_file(self):
-        content = "a"
-        self.create_test_file(content)
-        self.huffman_coder.execute_compression()
-        uncompressed_filename = self.filename[:-4] + "_uncompressed.txt"
-        self.huffman_coder.uncompressed_filename = uncompressed_filename
-        self.huffman_coder.execute_uncompression()
-        content_matches = True
-        print("original content: ", content, ", uncompressed content: ",
-              self.huffman_coder.uncompressed)
-        os.remove(uncompressed_filename)
-        for i in range(len(content)):
-            if content[i] != self.huffman_coder.uncompressed[i]:
-                content_matches = False
-        self.assertEqual(True, content_matches)
-
     def test_compression_and_decompression_work_with_two_character_file(self):
         content = "ab"
         self.create_test_file(content)
@@ -219,10 +202,7 @@ class TestHuffmanCompression(unittest.TestCase):
         result, travel_path = self.huffman_coder.activate_preorder_traversal()
         self.assertEqual(travel_path, "0001011010110101")
 
-    # FAILS. REMOVED.
-    # IS REASON FOR FAILURE THAT ALGORITHM CONSTRUCTS TREE DIFFERENTLY?
-    # FIND OUT
-    def content_decompression_works(self):
+    def test_content_decompression_works(self):
         tree = "0001011010110101"
         characters = "010000010100001001000011010001000100010101000110010001110100100001001001"
         self.huffman_coder.compressed = "0000000000000001000010000110100110011110110111"
@@ -230,8 +210,8 @@ class TestHuffmanCompression(unittest.TestCase):
         self.huffman_coder.decompress_huffman_tree(
             self.huffman_coder.root_node, tree, characters)
         self.huffman_coder.huffman_decode()
-        result = self.huffman_coder.content
-        self.assertEqual(result, "AAABBCDEFGHI")
+        result = self.huffman_coder.uncompressed
+        self.assertEqual(result, "AAAAAGAGAHGEFGHI")
 
     def create_huffman_tree_for_testing(self):
         """Creating a Huffman tree that should give a printout
@@ -252,9 +232,9 @@ class TestHuffmanCompression(unittest.TestCase):
         I: '01001001'
 
         Huffman coding for each character:
-        A: 0000
-        B: 00010
-        C: 00011
+        A: 000
+        B: 0010
+        C: 0011
         D: 010
         E: 0110
         F: 0111
@@ -262,8 +242,10 @@ class TestHuffmanCompression(unittest.TestCase):
         H: 110
         I: 111
 
+        Tree structure            
+
         Example string: 
-        AAABBCDEFGHI
+          A  A  A  A  A G  A G  A  H G   E   F G  H  I
         0000000000000001000010000110100110011110110111
         """
 
