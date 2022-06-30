@@ -29,4 +29,6 @@
 | 27.6.2022 | Fix bugs, refactor validation, write more tests | 3 |
 | 27.6.2022 | Write documentation | 2 |
 | 28.6.2022 | Write documentation | 4 |
-| **total**| ---- | **27** |
+| 29.6.2022 | Write documentation, clean and refactor code | 8 |
+| 30.6.2022 | Test application, clean last issues, finish documentation | 4 |
+| **total**| ---- | **39** |

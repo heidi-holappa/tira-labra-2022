@@ -340,7 +340,7 @@ The application logic would benefit from following updates:
 - Refactoring of application logic
 
 ## Pylint / Pytest  
-The following Pylint -notifications were ignored in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues were ignored):
+The final Pylint score is 10.00/10.00. The following Pylint -notifications were disabled in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues were ignored):
 - too-many-instance-attributes
   - HuffmanCoding
   - LempelZiv
@@ -348,7 +348,7 @@ The following Pylint -notifications were ignored in agreement with the course as
   - HuffmanCoding (creating analysis data)
   - LempelZiv (creating analysis data)
 
-For a detailed description on the tests, please see [testing documentation](testing-documentation.md)
+The final coverage brach percentage is 99 percent. For a detailed description on the tests, please see [testing documentation](testing-documentation.md)
 
 # Sources
 
