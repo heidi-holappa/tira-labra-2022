@@ -59,6 +59,6 @@ class GuiMenu:
         """
         messagebox.showinfo(
             title="About the application",
-            message="Version 0.1\n\nCreated as a University project in 2022",
+            message="Version 1.0\n\nCreated as a University project in 2022",
             icon=messagebox.INFO
         )
