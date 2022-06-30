@@ -1,4 +1,4 @@
-# Design documentation
+# Implementation documentation
 
 ## Application structure
 
@@ -322,6 +322,9 @@ In addition following characters are supported:
 
 In the future the application could be expanded to handle a wider variety of ASCII-characters. 
 
+### Other restrictions for content
+For this project a txt file must have the minimum of 10 characters and 2 unique characters for the file to be compressed. The requirement for 2 unique characters is related to the way the Huffman tree is built in this project to avoid handling an edge case for tree creation (tree only has one leaf). It is worth noting that the compression ratio for a file that only has one unique file would be quite good for both Huffman coding and Lempel-Ziv 77, if the file was of a good size. On Huffman coding on a large file that compressed size would approach 1/8 and on Lempel-Ziv the size would approach 1/15 of the original size (as in most indexes a match of length 15 would be found).  
+
 ### Canonical Huffman tree could be introduced
 While researching the subject I came across the concept of [canonical Huffman code](https://en.wikipedia.org/wiki/Canonical_Huffman_code). It could perhaps be used to improve the efficiency of the Huffman compression. Due to time constraints I did not have a chance to pursue this, but it could be a worthwile addition in the future.  
 
@@ -332,10 +335,9 @@ For the test material in this project the average offset length was between 1100
 
 ### Application logic  
 The application logic would benefit from following updates:
-- Introducing error handling to compression / uncompression
-- Improved error handling on extensive tests
+- Improving error handling in compression / uncompression
+- Improving error handling on extensive tests
 - Refactoring of application logic
-  - validating content could be moved to Entities package class SupportedCharacters
 
 ## Pylint / Pytest  
 The following Pylint -notifications were ignored in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues were ignored):
