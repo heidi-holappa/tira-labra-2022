@@ -1,7 +1,6 @@
 import os
 import time
 import glob
-import string
 from random import randint, choice
 from datetime import datetime
 from essential_generators import DocumentGenerator
@@ -41,19 +40,21 @@ class ExtensiveTestHandler:
     def create_document_with_natural_language(self, n_of_paragraphs: int = 100):
         """Uses the libary Essential Generators to create random
         natural content. The created data has to be manipulated as
-        it contains characters not suitable for the current algorithms.
+        it contains characters not supported by the current algorithms.
 
         Args:
             n (int, optional): Number of paragraphs to be created. Defaults to 100.
         """
-        created_content = ""
+        created_content_as_list = []
         for _ in range(n_of_paragraphs):
-            created_content += self.document_generator.paragraph() + "\n\n"
-        document_content = ""
+            created_content_as_list.append(self.document_generator.paragraph() + "\n\n")
+        created_content = "".join(created_content_as_list)
+        stripped_content_as_list = []
         ascii_order_set = self.supported_characters
         for char in created_content:
             if ord(char) in ascii_order_set:
-                document_content += char
+                stripped_content_as_list.append(char)
+        document_content = "".join(stripped_content_as_list)
         file = f"natural-language-document-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)
         print("creating file ", filename)
@@ -65,19 +66,23 @@ class ExtensiveTestHandler:
         Args:
             n (int, optional): Number of paragraps to create. Defaults to 100.
         """
-        document_content = ""
-        characters = string.printable.split()[0]
+        char_list = []
+        for char in self.supported_characters:
+            char_list.append(chr(char))
+        characters = "".join(char_list)
+        document_content_as_list = []
         for _ in range(n_of_paragraphs):
             characters_in_paragraph = randint(500, 1000)
-            document_content += "".join([choice(characters)
-                                        for _ in range(characters_in_paragraph)]) + "\n\n"
+            document_content_as_list.append("".join([choice(characters)
+                                        for _ in range(characters_in_paragraph)]) + "\n\n")
+        document_content = "".join(document_content_as_list)
         file = f"random-printable-ascii-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)
         print("creating file ", filename)
         self.file_manager.create_txt_file(filename, document_content)
 
     def activate_extensive_tests(self, min_characters: int = 0, max_characters: int = 100000):
-        """Activates extensive tests. Formats the log file and picks
+        """Activates extensive tests. Initializes the log file and picks
         up files that meet the given limitation for character length.
         For each file that meets the limitation the tests are then run.
 
@@ -113,16 +118,17 @@ class ExtensiveTestHandler:
             InvalidCharactersError: If given content contains unsupported characters,
             and error is raised.
         """
-        ascii_order_set = self.supported_characters
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.txt')):
             with open(filename, 'r', encoding="utf-8") as file:
                 content = file.read()
-                for char in content:
-                    if ord(char) not in ascii_order_set:
-                        file_split = filename.split("/")
-                        raise InvalidCharactersError(
-                            f"Error! {file_split[-1]} includes non-supported characters. \
-Non-supported character: {char}")
+                content_is_valid, \
+                    invalid_characters = default_supported_characters.validate_given_content(
+                        content)
+                if not content_is_valid:
+                    file_split = filename.split("/")
+                    raise InvalidCharactersError(
+                        f"Error! {file_split[-1]} includes non-supported characters. \
+Non-supported character: {invalid_characters}")
 
     def remove_extensive_test_files(self):
         """Removes the files created during a extensive testing.
@@ -166,7 +172,7 @@ Non-supported character: {char}")
         Returns:
             bool: boolean value for whether or not tests and validation succeeded.
         """
-        
+
         tests_succeeded = True
         self.compression_management.lempel_ziv_compress(filename)
         self.compression_management.lempel_ziv_uncompress(
@@ -185,7 +191,7 @@ Non-supported character: {char}")
             }
             self.write_error_to_log(error_as_dict)
         return tests_succeeded
-    
+
     def test_huffman_compression(self, filename: str, content: str) -> bool:
         """Handles compressing an uncompressing the given content
         with Huffman coding. Validates that original content and the uncompressed
@@ -200,7 +206,7 @@ Non-supported character: {char}")
             bool: boolean value for whether or not tests and validation succeeded.
         """
         tests_succeeded = True
-    
+
         self.compression_management.activate_huffman_compression(
             filename)
         self.compression_management.activate_huffman_uncompression(
@@ -284,7 +290,7 @@ Failed tests: {fail}\n\n\
         tkinter_content += "------ END OF ERROR NOTIFICATION ------\n\n"
         with open(self.log_file, "a", encoding="utf-8") as file:
             file.write(tkinter_content)
-        
+
     def html_log_end(self, success, fail, total_time):
         """Once tests are done, a summary of tests is written to the file.
 

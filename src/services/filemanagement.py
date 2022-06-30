@@ -16,7 +16,7 @@ class FileManagement:
         Returns:
             str: content of the file as a String
         """
-        with open(filename, encoding="utf-8") as source_content:
+        with open(filename, "r", encoding="utf-8") as source_content:
             content = source_content.read()
         return content
 

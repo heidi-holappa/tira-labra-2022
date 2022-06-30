@@ -23,20 +23,21 @@ class GraphManagement:
 uncompressed and compressed content. For instance a ratio of 0.5 would mean that the compressed \
 file's size is 50 percent of the file size of the uncompressed file. For both Huffman Coding and \
 Lempel-Ziv 77 the compression ratio is worse for files with random content. You can read more \
-about the reasons for this in the 'Execution documentation'. Link can be found in the \
+about the reasons for this in the 'Implementation documentation'. Link can be found in the \
 README.md.</p>\n",
             "huffman-character-count": "<p>With a high character count the role of \
-higher frequency is more visible. With a small character count (for instance files \
-with just few different characters) a very high compression ratio can be achieved, \
-even with low frequency.</p>\n",
+higher frequency variance is more visible. With a small character count (for instance \
+files with just few different characters) a very high compression ratio can be achieved, \
+even with low frequency variance.</p>\n",
             "huffman-frequency-variance": "<p>The graph above describes the variance \
 in the Huffman frequencies. As can be seen with the test content, the compression ratio \
 is generally better with content that has a higher variance in the frequencies, but there \
-are exceptions. You can read more about the reasons for this in the 'Execution \
+are exceptions. You can read more about the reasons for this in the 'Implementation \
 documentation'. Link can be found in the README.md.</p>\n",
-            "lempel-ziv-mean-length": "<p>The average lenght describes the length \
+            "lempel-ziv-mean-length": "<p>The average length describes the length \
 of the match found in the sliding window. When the average length is higher, the \
-compression ratio is generally better.</p>\n",
+compression ratio is generally better. Note that the mean value is only calculated for \
+found matches. Indexes for which no match was found are not included in the mean value. </p>\n",
             "lempel-ziv-mean-offset": "The offset is the difference in indexes \
 between the matches. For the included test material the offset is generally around \
 1200-1400 characters. Currently 12 bits (0-4096) are reserved for storing the offset, \
