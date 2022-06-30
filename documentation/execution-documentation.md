@@ -6,10 +6,10 @@
 - The general structure of the application GUI can be overviewed in the [how-to-guide](how-to-guide.md).
 
 ## Algorithms introduced
-The purpose of this project was to study two well known algorithms and/or compression methods designed for lossless data compression: Huffman coding and Lempel-Ziv 77. For easier testing and reviewing experience, a short introductory to these algorithms will be introduced. More detailed descriptions can be found from the sources at the end of this document. 
+The purpose of this project was to study two well known algorithms and/or compression methods designed for lossless data compression: Huffman coding and Lempel-Ziv 77. For easier testing and reviewing experience, a short introductory to these algorithms will be presented. More detailed descriptions can be found from the sources at the end of this document. 
 
 ### Huffman coding
-A main idea in the Huffman coding is that often some characters are used more frequently than others. It is then reasonable to store data in a way that the most frequent charcters take the least amount of space and the characters that are the least frequent take the most amount of space.  
+A main idea in the Huffman coding is that often some characters are used more frequently than others. It is then reasonable to store data in a way that the most frequent characters take the least amount of space and the characters that are the least frequent take the most amount of space.  
 
 To do this, we first must calculate **frequencies** for all characters. These can also be viewed as **probabilities**. This is simply done by calculating how many times each character repeats in the material.  
 
@@ -24,7 +24,18 @@ graph TB
     D-->E((C, 1))
     D-->F((D, 1))
 ```
-As we can see, each node has a frequency and a node with children has a frequency of `frequency of left child + frequency of right child`. It is important to note as can be seen that this implementation of the Huffman tree is not a balanced tree, but as the structure is built based on the frequencies, the time spending traversing the tree is balanced. This means that the shorter paths are traversed more often than the longer paths.
+As we can see, each node has a frequency and a node with children has a frequency of `frequency of left child + frequency of right child`. It is important to note as can be seen that this implementation of the Huffman tree is not a balanced tree, but as the structure is built based on the frequencies, it balances the time consumed traversing the tree. This means that the shorter paths are traversed more often than the longer paths. The steps for creating a Huffman tree in this way are
+
+```
+1. Calculate frequencies for all unique characters and place them in a minimum heap
+2. While there are more than two nodes in heap:
+   2.1 Take a value from the minimum heap and place it as the left child
+   2.2 Take a value from the minimum heap and place it as the right child
+   2.3 Create a parent node with a frequency of 'frequency of the left child + frequency 
+of the right child'
+  2.4 Place the parent node into the minimum heap and continue
+3. Finalize the tree with a root node (children are the last two nodes in the minimum heap)
+```
 
 Now we can create the Huffman codes for all characters. This is done by documenting, how the tree should be traversed to reach each character. We can do this by deciding that with a '0' we go left and with a '1' we go right. This way the Huffman codes for this tree would be:
 
@@ -43,12 +54,14 @@ AAAA B B  C  D
 
 To uncompress the stored content we need to have the tree, the characters and the Huffman coded content (traversal paths). In this application the tree is stored in a [pre-order](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order,_NLR), in which we 
 
+```
 - visit a node
 - recursively traverse left in the current node's subtree
 - recursively traverse right in the current node's subtree
 - when traversing ends in a leaf node, store the character in that leaf node
+```
 
-Now if 0 means 'go left' and 1 means 'go right', the pre-order version of the tree would now be:
+Now if 0 means 'go left' and 1 means 'go right', the pre-order version of the tree introduced above would be:
 
 ```
 001011
@@ -142,10 +155,10 @@ One detail worth mentioning is that in many applications of the Lempel-Ziv 77 a 
   Window    |  Lookahead buffer
     ABC          ABCABC
 ```
-The offset would be 3 but the length could be more than that, for example 9. As we can see, we can parse the next characters from the content that we a constructing. Because this application uses Python's built-it `str.rfind` to find optimal matches, this marvelous idea was omitted from the implementation. This idea is explained in more detail for instance in [this article](https://towardsdatascience.com/how-data-compression-works-exploring-lz77-3a2c2e06c097)
+The offset would be 3 but the length could be more than that, for example 9. As we can see, we can parse the next characters from the content that we a constructing. Because this application uses Python's built-it `str.rfind` to find optimal matches, this marvelous idea was omitted from the implementation. This idea is explained in more detail for instance in [this article](https://towardsdatascience.com/how-data-compression-works-exploring-lz77-3a2c2e06c097).
 
 ### Writing compressed content to a file
-Currently the data is written to file as bytes. First data is tranformed into a bytearray and then written. This is my first time working with bit transformation and the solution is most likely quite naive and perhaps inefficient. Data is now first turned into a string of 1's and 0' and then divided into bytes (8 bits). This data is then stored as bytes to a file.
+Currently the data is written to file as bytes. First data is tranformed into a bytearray and then written. This is my first time working with bit transformation and the solution is most likely quite naive and perhaps inefficient. Data is now first turned into a string of 1's and 0's and then divided into bytes (8 bits). This data is then stored as bytes to a file.
 
 **Huffman coding**  
 The bits included in the file created with Huffman compression consist of:
@@ -176,11 +189,11 @@ It is worth noting that on Lempel-Ziv 77 the list of supported characters is not
 ## Accomplished Time Complexities and Space Requirements
 
 ### Lempel-Ziv 77 
-In the compression phase the Lempel Ziv 77 algorithm iterates through the whole content once. At each iterative step a search is executed and an optimal match is search for from the lookahead buffer and the window. Matches are searched for with Python's built-in `str.find()` method. The process is repeated at each iterative step of the content `k` that is being compressed. In the worst case scenario no matches are found and the process needs to be repeated at each index, so the time complexity is `k * search time`. 
+In the compression phase the Lempel Ziv 77 algorithm iterates through the whole content once. At each iterative step a search is executed and an optimal match is searched for from the lookahead buffer and the window. Matches are searched for with Python's built-in `str.find()` method. The process is repeated at each iterative step of the content `k` that is being compressed. In the worst case scenario no matches are found and the process needs to be repeated at each index, so the time complexity is `k * search time`. 
 
 Based on Python's documentation `str.find()` uses Boyer-Moore, Sunday and Horspool - algorithms, and has the worst case time complexity of `O(n*m)`, average time complexity of `O(n)` and lower case time complexity of `O(n / m)`, in which `n` equals the size of the string from where a match is looked for and `m` equals the string that for which matches are looked for ([source 1](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm), [source 2](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)).  
 
-It is important to note that if a match of x characters is found **and** x < lookahead buffer size, the algorithm then looks for a match for 'x + 1' characters. As the minimum length for match is 3 characters, each match still reduce the time complexity from the worst case scenario in which no matches are found at any index, since matches reduce the indexes in which the search has to be performed.
+It is important to note that `if a match of x characters is found` **and** `x < lookahead buffer size`, the algorithm then looks for a match for 'x + 1' characters. As the minimum length for match is 3 characters, each match still reduce the time complexity from the worst case scenario in which no matches are found at any index, since matches reduce the indexes in which the search has to be performed.
 
 From this an estimate of the total worst case time complexity can be created. A rough worst case time complexity would be `O(k * m * n)`, in which
 - k = characters in content that is compressed
@@ -202,7 +215,7 @@ The space complexity is more related to a particular implementation. In this pro
 
 
 ### Huffman coding
-Let `k` be the length of the content to be compressed and `n` be the number of unique characters in the material. The Huffman compression begins with iterating through the content `k` once to calculate the frequencies, taking a linear time of `O(k)`.  
+Let `k` be the character count of the content to be compressed and `n` be the number of unique characters in the material. The Huffman compression begins with iterating through the content `k` once to calculate the frequencies, taking a linear time of `O(k)`.  
 
 After the frequencies are calculated, the Huffman tree is created. [John Morris](https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html) from the University of Auckland presents, that the time complexity of the encoding phase of Huffman coding is `O(n log n)`, in which n is the numbers of characters in the constructed tree. A similar time complexity is presented in Cormen et. al. book 'Introduction to Algorithms.' In some sources (i.e. [[1]](https://www.cs.umd.edu/class/fall2017/cmsc451-0101/Lects/lect06-greedy-huffman.pdf) [[2]](https://www.codesdope.com/course/algorithms-huffman-codes/)) the implementation used in this project is called a **greedy algorithm** as the algorithm always chooses the best available option when combining frequencies.
 
@@ -265,6 +278,10 @@ Which is under the balanced tree height of 3.
 As we can see in this edge case the traversal times are balanced out, making the time complexity be in this edge case in the range of `O(k log n)`. One edge case does not offer definitive proof and there is some amount of uncertainty left on this time complexity.  
 
 It is my current understanding that the time complexity of the decompression phase falls under `O(k log n)`, because the frequencies balance the steps taken while traversing the tree. The online tutorial-site [CodeScope](https://www.codesdope.com/course/algorithms-huffman-codes/) suggests similar time complexity for decoding, but the article has no author, so it is hard to estimate it's credibility. 
+
+Another way to reason the time complexity of the uncompression phase is to hypothesize that as in worst cases the compression ratio is close to 1.0, it follows that when a file size is sufficiently large and the amount of unique characters is close to maximum, for each character in the original file the compressed content has approximately 8 tree traversal 'steps' stored. This follows because each step takes one bit and the maximum supported character count is 102, which would put the average traversal time close to 7-8 steps (bits). This means that in a worst scenario the traversal time is 8 times the character count of the original content, which is close to the `log n` range. In an more average case with better compression ratio it would follow with the same logic that for each character the average 'steps' needed would be closer to 4-5 for content that has a good amount of unique characters and higher variance in frequencies, which would be close to `log n`. 
+
+This part of the time complexity is fully based on my own reasoning based on what I have learned during this project and at the time I still lack the sufficient skills to write a competent mathematical proof for this. Please take this into consideration when reviewing this information.
 
 To sum it up, the uncompression phase of Huffman coding has the following steps:
 
@@ -340,6 +357,7 @@ The application logic would benefit from following updates:
 - Refactoring of application logic
   - Log content creation could be more well structured
   - Some overlaps in methods in service classes Compression Management and ExtensiveTestHandler
+  - Some additional methods could be altered to be private methods. 
 
 ## Pylint / Pytest  
 The final Pylint score is 10.00/10.00. The following Pylint -notifications were disabled in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues were ignored):
