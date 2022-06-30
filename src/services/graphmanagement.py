@@ -23,9 +23,9 @@ class GraphManagement:
             "compression-ratio": "<p>Compression ratio is the <b>size ratio</b> between the \
 uncompressed and compressed content. For instance a ratio of 0.5 would mean that the compressed \
 file's size is 50 percent of the file size of the uncompressed file. For both Huffman Coding and \
-Lempel-Ziv 77 the compression ratio is worse for files with random content. You can read more \
-about the reasons for this in the 'Implementation documentation'. Link can be found in the \
-README.md.</p>\n",
+Lempel-Ziv 77 the compression ratio is worse for files with randomly created content. You can \
+read more about the reasons for this in the 'Implementation documentation'. Link can be found \
+in the README.md.</p>\n",
             "huffman-character-count": "<p>With a high character count the role of \
 higher frequency variance is more visible. With a small character count (for instance \
 files with just few different characters) a very high compression ratio can be achieved, \
@@ -41,8 +41,7 @@ compression ratio is generally better. Note that the mean value is only calculat
 found matches. Indexes for which no match was found are not included in the mean value. </p>\n",
             "lempel-ziv-mean-offset": "The offset is the difference in indexes \
 between the matches. For the included test material the offset is generally around \
-1200-1400 characters. Currently 12 bits (0-4096) are reserved for storing the offset, \
-but perhaps two bits less would suffice in most cases? \
+1200-1400 characters. Currently 12 bits (0-4096) are reserved for storing the offset. \
 This could possibly improve the compression ratio.</p>\n"
         }
 
