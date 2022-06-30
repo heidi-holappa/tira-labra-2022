@@ -70,12 +70,15 @@ class ExtensiveTestHandler:
         char_list = []
         for char in self.supported_characters:
             char_list.append(chr(char))
+        char_list.remove("\x00")
+        char_list.remove("\n")
         characters = "".join(char_list)
         document_content_as_list = []
         for _ in range(n_of_paragraphs):
             characters_in_paragraph = randint(500, 1000)
-            document_content_as_list.append("".join([choice(characters)
-                                                     for _ in range(characters_in_paragraph)]) + "\n\n")
+            document_content_as_list.append("".join(
+                [choice(characters) for _ in range(characters_in_paragraph)]) + "\n\n"
+            )
         document_content = "".join(document_content_as_list)
         file = f"random-printable-ascii-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)

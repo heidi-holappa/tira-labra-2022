@@ -108,7 +108,8 @@ Time used for writing and processing data: \
                          total_time,
                          success,
                          fail):
-        """A method that handles calling the method that create the HTML-log file.
+        """A method that handles calling the methods that create the content
+        for the HTML-log file.
 
         Args:
             total_time (str): Total time used for running tests.
@@ -141,12 +142,12 @@ Time used for writing and processing data: \
         log_time = datetime.now()
         log_time_strf = log_time.strftime("%d.%m.%Y %H:%M:%S")
         forewords = f"\
-<h1>Extended testing report</h1><br>\n\
-<p>This document includes a report of the extended testing executed on \
-<b>{log_time_strf}</b>. The tables include information on compression and \
-uncompression of test files. You can also find graphs that measure perfomance \
-of compression algorithms based on selected measurers. Note that running the \
-extended tests overwrites the report.</p><br>\n\n"
+<h1>ANALYSIS REPORT</h1>\n\
+<p>This document contains a report for the analysis testing executed on \
+<b>{log_time_strf}</b>. The included tables contain information on compression and \
+uncompression phases. Graphs visualize perfomance of compression algorithms based on \
+selected measurers. Note that running the analysis tests overwrites the report.</p>\n\n\
+<h2>OVERVIEW</h2>\n\n"
         return forewords
 
     def _create_overview_data_for_html_log(self, total_time, success, fail) -> str:
@@ -155,11 +156,13 @@ extended tests overwrites the report.</p><br>\n\n"
         Returns:
             str: created content as a string
         """
-        analysis = f"""<H2>EXTENSIVE TEST SUMMARY</H2><br>\n\
-<b>Total runtime:</b> {total_time} seconds<br>\n\
-<b>Successful tests:</b> {success}<br>\n\
-<b>Failed tests:</b> {fail}<br>\n\n\
-<h2>Detailed summary</h2><br>\n\n"""
+        analysis = f"""<b>Total runtime:</b> {total_time} seconds<br>\n\
+<b>Tests run:</b> {success + fail}<br>\n\
+<ul>\n\
+    <li><b>Successful tests:</b> {success}<br></li>\n\
+    <li><b>Failed tests:</b> {fail}<br></li>\n\
+</ul>\n\n\
+<h2>DETAILED SUMMARY</h2>\n\n"""
         return analysis
 
     def _create_tables_for_html_log(self) -> str:
@@ -168,9 +171,14 @@ extended tests overwrites the report.</p><br>\n\n"
         Returns:
             str: content as a string
         """
-        tables = "<h2>Compression analysis</h2><br>"
+        tables = "<h3>Tables</h3>\n\
+<p>The tables contain detailed information on compression and uncompression \
+phases. The sought after compression ratio for this project was 0.4-0.6. \
+The files on which this compression ratio was less than or equal to 0.6 are \
+colored green and other are colored red.</p>\n\n\
+<h4>Compression analysis</h4>\n"
         tables += self._create_html_compression_table()
-        tables += "<h2>Uncompression analysis</h2><br>"
+        tables += "<h4>Uncompression analysis</h4>\n\n"
         tables += self._create_html_uncompression_table()
         tables += "<br>\n"
         return tables
@@ -181,7 +189,7 @@ extended tests overwrites the report.</p><br>\n\n"
         Returns:
             str: created content as a string
         """
-        graphs = "<h2>Graphs</h2>\n\
+        graphs = "<h3>Graphs</h3>\n\
 <p>Below you can review visual comparison of test results. The labels indicate the \
 number of the file in question. Filenames can be found with the number from the tables \
 above.</p>\n"
@@ -362,7 +370,7 @@ alt='Huffman character count'></img><br>\n"
         return compression_log
 
     def _create_html_uncompression_table(self) -> str:
-        """Creates a table of the uncompression results."""
+        """Creates an HTML-table of the uncompression results."""
         uncompression_log = "\
 <table border='1'>\n\
     <tr cellspacing='3'>\n\
@@ -407,7 +415,7 @@ alt='Huffman character count'></img><br>\n"
 
     def create_uncompression_entry(self,
                                    logdata: dict) -> None:
-        """Writes log data for uncompression event.
+        """Writes log data for uncompression event for the Tkinter Text-widget.
 
         Args:
             additional_content (str, optional): Optional additional information. Defaults to "".
