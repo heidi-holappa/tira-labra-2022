@@ -5,7 +5,7 @@ import glob
 import string
 from config import DEFAULT_TEST_DATA_PATH, DEFAULT_TEST_GRAPH_FOLDER
 from config import HTML_LOG, CSV_LOG, ARCHIVE_LOG, TKINTER_LOG
-from config import IMG_COMPRESS_RATIO, IMG_HUFFMAN_FREQ, IMG_LZ_MEAN_MATCH, IMG_LZ_MEAN_OFFSET
+from config import IMG_COMPRESS_RATIO, IMG_HUFFMAN_FREQ, IMG_LZ_MEAN_MATCH, IMG_LZ_MEAN_OFFSET, IMG_HUFFMAN_CHAR_COUNT
 from services.compressionmanagement import default_compression_management
 from services.extensivetesthandler import default_test_handler
 from services.filemanagement import default_file_manager
@@ -195,6 +195,9 @@ class TestExtensiveTesting(unittest.TestCase):
             DEFAULT_TEST_GRAPH_FOLDER, IMG_LZ_MEAN_MATCH)
         img_lz_offset = os.path.join(
             DEFAULT_TEST_GRAPH_FOLDER, IMG_LZ_MEAN_OFFSET)
+        img_huf_char_count = os.path.join(
+            DEFAULT_TEST_DATA_PATH, IMG_HUFFMAN_CHAR_COUNT
+        )
         if os.path.exists(html_path):
             os.remove(html_path)
         if os.path.exists(archive_path):
@@ -211,6 +214,8 @@ class TestExtensiveTesting(unittest.TestCase):
             os.remove(img_lz_match)
         if os.path.exists(img_lz_offset):
             os.remove(img_lz_offset)
+        if os.path.exists(img_huf_char_count):
+            os.remove(img_huf_char_count)
 
 
 class TestFileManagement(unittest.TestCase):
