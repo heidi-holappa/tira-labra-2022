@@ -91,6 +91,7 @@ GUI ->> ExtensiveTestHandler: activate_extensive_tests(min_characters, max_chara
 ExtensiveTestHandler ->> ExtensiveTestHandler: init_html_file()
 ExtensiveTestHandler ->> ExtensiveTestHandler: init_csv_file()
 ExtensiveTestHandler ->> ExtensiveTestHandler: validate_test_files()
+ExtensiveTestHandler ->> GUI: returns error if unsupported content and aborts
 ExtensiveTestHandler ->> SupportedCharacters: get characters in dictionary
 ExtensiveTestHandler ->> ExtensiveTestHandler: for each file within min and max character count
 ExtensiveTestHandler ->> ExtensiveTestHandler: run_tests_on_file(filename, content)
@@ -100,13 +101,12 @@ ExtensiveTestHandler ->> CompressionManagement: activate_huffman_uncompression(f
 ExtensiveTestHandler ->> ExtensiveTestHandler: validate_content_matches(content, compressed_content)
 ExtensiveTestHandler ->> ExtensiveTestHandler: if file handling or validation fails, log errors
 ExtensiveTestHandler ->> ExtensiveTestHandler: test_lempelziv_compression(filename, content)
-ExtensiveTestHandler ->> CompressionManagement: activate_huffman_compression(filename)
-ExtensiveTestHandler ->> CompressionManagement: activate_huffman_uncompression(filename)
+ExtensiveTestHandler ->> CompressionManagement: activate_lempelziv_compression(filename)
+ExtensiveTestHandler ->> CompressionManagement: activate_lempelziv_uncompression(filename)
 ExtensiveTestHandler ->> ExtensiveTestHandler: validate_content_matches(content, compressed_content)
 ExtensiveTestHandler ->> ExtensiveTestHandler: if file handling or validation fails, log errors
 ExtensiveTestHandler ->> ExtensiveTestHandler: remove_extensive_test_files()
 ExtensiveTestHandler ->> ExtensiveTestHandler: log_end(success, fail, total)
 ExtensiveTestHandler ->> ExtensiveTestHandler: html_log_end(success, fail, total)
-ExtensiveTestHandler ->> GUI: try/except returns error if unsupported content
 GUI ->> user: _show_success_message()
 ```
