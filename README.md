@@ -3,6 +3,9 @@ This project was built as a university course project during Summer 2022 for the
 
 Two well known algorithms, Huffman coding and Lempel-Ziv 77, were implemented. Please see the project documentation for additional information.
 
+## Latest release
+The latest stable release for the project can be [downloaded here](https://github.com/heidi-holappa/tira-labra-2022/releases/tag/final-release).
+
 
 ## Project documentation
 

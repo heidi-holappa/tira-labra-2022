@@ -1,6 +1,6 @@
 # Installation
 
-Begin by downloading the project from GitHub either by cloning the project or by downloading the [final release](#).  
+Begin by downloading the project from GitHub either by cloning the project or by downloading the [final release](https://github.com/heidi-holappa/tira-labra-2022/releases/tag/final-release).  
 
 Install dependencies with the following command:
 ```
