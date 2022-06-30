@@ -1,11 +1,12 @@
-from tkinter import ttk, constants, Frame, Menu, IntVar, filedialog, messagebox, Text
+from tkinter import ttk, constants, Frame, IntVar, filedialog, messagebox, Text
 from config import DEFAULT_DATA_PATH
-from gui.gui_menu import GuiMenu
 from services.compressionmanagement import default_compression_management
 from services.filemanagement import default_file_manager
 
 
 class CompressionView:
+    """Creates the view used for compressing and uncompressing selected files.
+    """
 
     def __init__(self, root):
         self._root = root
@@ -25,7 +26,7 @@ class CompressionView:
             self._frame.pack(fill=constants.X)
 
     def destroy(self):
-        """A method to destroy the Frame-object and all it's children.
+        """A method to destroy the Frame-object instance self._frame and all it's children.
         """
         if self._frame:
             self._frame.destroy()
@@ -87,7 +88,7 @@ class CompressionView:
 
         label_description = ttk.Label(
             master=self._label_and_instruction_frame,
-            text="In this view you can compress or uncompress data.\nUse radio button to choose compression algorithm. Compression log data is updated when file is compressed.",
+            text="In this view you can compress or uncompress data.\nUse radio buttons to choose compression algorithm. Compression log data is updated when file is compressed/uncompressed.",
             style="Centered.TLabel"
         )
 
@@ -135,7 +136,7 @@ class CompressionView:
 
         button_select_file_to_compress = ttk.Button(
             master=self._compression_frame,
-            text="select file",
+            text="Select file",
             command=self._handle_get_file_to_compress,
             style="Custom.TButton"
 
@@ -143,7 +144,7 @@ class CompressionView:
 
         button_select_file_to_uncompress = ttk.Button(
             master=self._uncompression_frame,
-            text="select file",
+            text="Select file",
             command=self._handle_get_file_to_uncompress,
             style="Custom.TButton"
 
@@ -151,14 +152,14 @@ class CompressionView:
 
         button_compress = ttk.Button(
             master=self._compression_frame,
-            text="compress",
+            text="Compress",
             command=self._handle_compression,
             style="Custom.TButton"
         )
 
         button_uncompress = ttk.Button(
             master=self._uncompression_frame,
-            text="uncompress",
+            text="Uncompress",
             command=self._handle_uncompression,
             style="Custom.TButton"
         )
@@ -215,6 +216,8 @@ class CompressionView:
         )
 
     def _construct_log_frame(self):
+        """Constructs the frame widget showcasing log data.
+        """
         analysis_header = ttk.Label(
             master=self._analysis_frame,
             text="Compression log",
@@ -240,17 +243,22 @@ class CompressionView:
         textfield.insert(1.0, log_content)
         textfield["state"] = "normal"
 
-    # TODO: Consider improving validation
     def _handle_compression(self):
-        """An initial method for handling compression.
-
-        Only validations at the moment are that file is chosen and file extension matches.
+        """Handles compressing of a txt-file. Before compression validations are
+        executed on the given file.
         """
         if not self.file_to_compress:
             self._file_error("Select a file to compress")
             return
         if not self.compression_management.validate_file_extension(self.file_to_compress[-3:], "txt"):
             self._file_error("Can only compress txt-files currently")
+            return
+        content_is_valid, invalid_characters = self.compression_management.validate_uploaded_txt_file_content(self.file_to_compress)
+        if not content_is_valid:
+            self._file_error(f"File contains unsupported characters: {','.join(invalid_characters)}")
+            return
+        if not self.compression_management.validate_file_length_and_content(self.file_to_compress):
+            self._file_error("File must have atleast 10 characters and two unique characters.")
             return
         self.init_log_files()
         compression_method = self._compression_var.get()
@@ -264,6 +272,8 @@ class CompressionView:
         self._compression_status_notification("File compressed successfully!")
 
     def _update_log(self):
+        """After a successful compression/uncompression, the log-frame content is updated.
+        """
         self.clear_frame(self._analysis_frame)
         self._construct_log_frame()
 
@@ -277,13 +287,7 @@ class CompressionView:
             widgets.destroy()
 
     def _handle_uncompression(self):
-        """An initial method for handling compression.
-
-        Note to self: validation has duplicate code. Consider creating a method to
-        handle validation.
-
-        Currently only Huffman coding is available.
-        Only validations at the moment are that file is chosen and file extension matches.
+        """Handles uncompression of compressed content.
         """
 
         if not self.file_to_uncompress:
@@ -305,6 +309,8 @@ class CompressionView:
             "File uncompressed successfully!")
 
     def init_log_files(self):
+        """Initializes the log-files before compression / uncompression.
+        """
         self.compression_management.loghandler.init_csv_file()
         self.compression_management.loghandler.init_tkinter_log_file()
 

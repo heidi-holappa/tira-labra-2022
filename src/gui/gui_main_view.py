@@ -1,4 +1,4 @@
-from tkinter import ttk, constants, Frame, Menu
+from tkinter import ttk, constants, Frame
 from gui.gui_menu import GuiMenu
 from services.compressionmanagement import default_compression_management
 
@@ -68,10 +68,12 @@ class MainView:
         self.construct_buttons()
 
     def construct_buttons(self):
+        """Constructs buttons for the main view.
+        """
 
         button_compression_view = ttk.Button(
             master=self._frame,
-            text="compress / uncompress data",
+            text="Compress or uncompress data",
             command=self._compression_view,
             style="Custom.TButton"
         )
@@ -95,9 +97,6 @@ class MainView:
             padx=10,
             pady=10
         )
-
-    def compress_all(self):
-        self.compression_management.compress_all_txt_files_in_directory()
 
     def _create_menubar(self):
         """A method that calls for the construction of default menu bar.

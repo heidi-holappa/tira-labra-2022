@@ -1,6 +1,5 @@
-from tkinter import ttk, constants, Frame, IntVar, filedialog, messagebox, Text, simpledialog
+from tkinter import ttk, constants, Frame, messagebox, Text, simpledialog
 import webbrowser
-from config import DEFAULT_DATA_PATH
 from config import DEFAULT_TEST_DATA_PATH
 from services.compressionmanagement import default_compression_management
 from services.filemanagement import default_file_manager
@@ -147,7 +146,6 @@ The largest as-default available test file has almost 7,800,000 characters and i
         self.clear_frame(self._analysis_frame)
         self.construct_analysis_frame()
 
-    # TODO: This could be moved to shared methods (compression view uses this as well)
     def clear_frame(self, frame: ttk.LabelFrame):
         """A general method for clearing a selected frame before repopulating it. 
         Can be used for multiple purposes. 
