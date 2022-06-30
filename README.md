@@ -17,7 +17,7 @@ Two well known algorithms, Huffman coding and Lempel-Ziv 77, were implemented. P
   * [Weekly report #4](documentation/weekly-report-4.md)
   * [Weekly report #5](documentation/weekly-report-5.md)
   * [Weekly report #6](documentation/weekly-report-6.md)
-Extra-documents
+* Extra-documents
   * [Project architecture (extra document)](/documentation/architecture.md)
 
 ## Installation
