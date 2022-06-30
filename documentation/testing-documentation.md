@@ -11,13 +11,13 @@ The automated tests are divided into two categories. Lighter tests are run every
 | Services | FileManagement | If no log file is found a default message is returned. | |
 | Services | CompressionManagement | Test file extension validation works | |
 | Services | ExtensiveTestHandler | All supported characters are included | |
-| Services | ExtensiveTestHandler | Randomly created content only includes supported charcters | |
+| Services | ExtensiveTestHandler | Randomly created content only includes supported characters | |
 | Services | ExtensiveTestHandler | Content validation works as intended | Multiple tests |
-| Services | ExtensiveTestHandler | HTML-report and graphs are created | |
-| Services | ExtensiveTestHandler | Test that compression/uncompressoin of larger, 1-15 MB (sic), files succeeds  | Part of extended tests |
+| Services | ExtensiveTestHandler | HTML-report and graphs are created | Part of extended tests |
+| Services | ExtensiveTestHandler | Test that compression/uncompression of larger, 1-15 MB (sic), files succeeds  | Part of extended tests |
 | Entities | HuffmanCoding | frequencies are calculated correctly | |
 | Entities | HuffmanCoding | Huffman tree is built correctly | |
-| Entities | HuffmanCoding | uncompressed file content matches the original file content with different types of content. ||
+| Entities | HuffmanCoding | uncompressed content matches the original file content with different types of content. ||
 | Entities | HuffmanCoding | Huffman tree is correctly re-created in uncompression-phase ||
 | Entities | HuffmanCoding | Huffman tree is correctly re-created in uncompression-phase | Multiple different tests |
 | Entities | HuffmanNode | node comparison works. | class HuffmanNode is in the file huffman.py |
