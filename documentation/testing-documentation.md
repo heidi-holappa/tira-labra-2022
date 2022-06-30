@@ -108,7 +108,7 @@ if __name__ == "__main__":
 ```
 
 ## Analysis of test results
-The included [analysis-test HTML-log](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html) the contains a report on test run on sample content with character count between 50,000 and 2,500,000. We will next look a bit closer to at the results. Some additional graphs drawn from the table results are included.  
+The included [analysis-test HTML-log](https://htmlpreview.github.io/?https://github.com/heidi-holappa/tira-labra-2022/blob/master/test-data/compression-log.html) contains a report on test run on the provided sample content with character count between 50,000 and 2,500,000. We will next look a bit closer to at the results. For easier reviewing a copy of the table 'Compression analysis' is included in this document as well some of the graphs from the report.  Some additional graphs drawn from the table results are also included.  
 
 The sought compression ratio for this project was between 40-60 percent (meaning that the compressed file size is 40-60 percent of the original size). As can be seen in the table for the compression phase (below), this is achieved for most files. 
 
@@ -152,7 +152,7 @@ The file 5 contains randomly created ASCII-paragraphs. With 102 available charac
 
 **Side note:** *(As a curiosity from Lempel-Ziv 77 results on file 5 we can actually deduct that in the whole content there was at most app. 300 matches found, as the minimum length for a match is three characters and only 304 bytes were saved (saving a match takes 2 bytes).)*
 
-For the selected sample-data the Huffman coding fares better with files containing mathematical constants (files 1,8 and 9). Even though on these files the variance in Huffman coded values is small, the amount of Huffman coded values is smaller as well, meaning that the most common Huffman coded values (in this case integer values 0-9) have a shorter traversal path, making their size less than the original 8 bits. You can read more on how the Huffman tree is created from the [Design/execution documentation](execution-documentation.md)
+For the selected sample-data the Huffman coding fares better with files containing mathematical constants (files 1,8 and 9). Even though on these files the variance in Huffman coded values is small, the amount of Huffman coded values is smaller as well, meaning that the most common Huffman coded values (in this case integer values 0-9) have a shorter traversal path, making their size less than the original 8 bits. You can read more on how the Huffman tree is created from the [Implementation documentation](execution-documentation.md)
 
 ### Performance comparison
 
