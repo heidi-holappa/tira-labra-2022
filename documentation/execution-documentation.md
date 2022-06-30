@@ -315,12 +315,13 @@ _*) Please note the uncertainty regarding this time complexity discussed in sect
 
 ## Performance and O-analysis comparison
 A detailed look at the performance is included in the [testing documentation's](https://github.com/heidi-holappa/tira-labra-2022/blob/master/documentation/testing-documentation.md#performance-comparison) section 'Performance comparison.'
-As written above, this is still under investigation.
 
 ## Known Quality Issues and Suggestions for Improvement
 
-### Data manipulation
-Data manipulation to bit form is quite naive due to lack of experience. This affects the efficiency of the compression ratio. With more experience with bit-transformation the compression ratio could most likely be significantly improved. Also data fetch and write time could be improved
+### Data manipulation and performance
+Data manipulation to bit form is quite naive due to lack of experience. This might affect the efficiency of the compression ratio. With more experience with bit-transformation the compression ratio could perhaps be improved. Also data fetch and write times could be improved.  
+
+Additionally Python most likely is not the optimal language for performance efficiency. For instance traversing the Huffman tree objects might take more time on Python than it would on a more efficient language.
 
 ### Limited character support
 Currently only printable ASCII-charcters are supported:
@@ -348,7 +349,7 @@ While researching the subject I came across the concept of [canonical Huffman co
 One additional benefit to implementing the Canonical Huffman tree would be that for it more definite time complexities are available. 
 
 ### Lempel-Ziv 77 ideal offset should be investigated
-For the test material in this project the average offset length was between 1100-1300 characters. This means that in most occations the optimal match can be found within that distance. Currently the window size is 4096 and storing the offset value takes 12 bits. If the window size was 2048, it would require 11 bits and compression speed would increase. This means that for each match found we would save one bit of space. As the minimum match searched for is now three characters, this would mean that for each found match the compression ratio would be in the worst case 2/3 which is approximately 0.67. 
+For the test material in this project the average offset length was between 1100-1300 characters. This means that in most occations the optimal match can be found within that distance. Currently the window size is 4096 and storing the offset value takes 12 bits. If the window size was 2048, it would require 11 bits and compression speed would increase on files containing repetition. This means that for each match found we would save one bit of space. As the minimum match searched for is now three characters, this would mean that for each found match the compression ratio would be in the worst case 2/3 which is approximately 0.67. 
 
 ### Application logic  
 The application logic would benefit from following updates:
@@ -419,3 +420,6 @@ Below is a summary of the work hours put into this course. Week 7 contains the h
 **Python-specific**  
 [23] [Source code for object str](https://hg.python.org/cpython/file/5444c2e22ff8/Objects/stringobject.c#l1742)  
 [24] [An archived blog post by Frederik Lundh](http://web.archive.org/web/20151113000216/effbot.org/zone/stringlib.htm)  
+
+**Stack overflow**  
+[25] [Question on the time complexity of Huffman coding decompression phase](https://stackoverflow.com/questions/72809147/time-complexity-for-greedily-coded-huffman-tree): In my pursuit for knowledge I asked a question on the time complexity issue I had uncertainty on. Mr. Mark Adler answerred the question.
