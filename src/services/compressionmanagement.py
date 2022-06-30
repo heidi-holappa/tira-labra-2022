@@ -51,7 +51,7 @@ class CompressionManagement:
             filename (str): file which content is to be uncompressed.
         """
 
-        uncompressed_filename = filename[:-4] + "_uncompressed.txt"
+        uncompressed_filename = filename[:-4] + "_huf_uncompressed.txt"
         logentry = LogEntry()
         huffman_uncompressor = HuffmanCoding(
             uncompressed_filename, filename, logentry)
@@ -88,7 +88,7 @@ class CompressionManagement:
         Args:
             filename (str): name of the compressed file.
         """
-        uncompressed_filename = filename[:-3] + "_uncompressed.txt"
+        uncompressed_filename = filename[:-3] + "_lz_uncompressed.txt"
         logentry = LogEntry()
         lempel_ziv_uncompressor = LempelZiv77(
             uncompressed_filename, filename, logentry)

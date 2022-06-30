@@ -179,7 +179,7 @@ Non-supported character: {invalid_characters}")
         self.compression_management.lempel_ziv_compress(filename)
         self.compression_management.lempel_ziv_uncompress(
             filename[:-3] + "lz")
-        with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
+        with open(filename[:-4] + "_lz_uncompressed.txt", "r", encoding="utf-8") as file:
             lz77_uncompressed_content = file.read()
         contents_match = self.validate_content_matches(
             content, lz77_uncompressed_content)
@@ -213,7 +213,7 @@ Non-supported character: {invalid_characters}")
             filename)
         self.compression_management.activate_huffman_uncompression(
             filename[:-3] + "huf")
-        with open(filename[:-4] + "_uncompressed.txt", "r", encoding="utf-8") as file:
+        with open(filename[:-4] + "_huf_uncompressed.txt", "r", encoding="utf-8") as file:
             huffman_uncompressed_content = file.read()
         result = self.validate_content_matches(
             content, huffman_uncompressed_content)
