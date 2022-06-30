@@ -42,5 +42,22 @@ class SupportedCharacters:
             index_to_character_dict[i] = value
         return character_list, character_to_index_dict, index_to_character_dict
 
+    def validate_given_content(self, content: str) -> tuple:
+        """Validates that given content only contains supported characters.
+        Returns a tuple of a boolean value and a list of possible unsupported characters.
+
+        Args:
+            content (str): string to be validated
+
+        Returns:
+            tuple: boolean value and a list of unsupported characters
+        """
+        result = True
+        invalid_characters = []
+        for char in content:
+            if ord(char) not in self.char_to_index_dict:
+                result = False
+                invalid_characters.append(char)
+        return result, invalid_characters
 
 default_supported_characters = SupportedCharacters()

@@ -42,7 +42,7 @@ class HuffmanCoding:
         in the given content.
 
         Note that the keys for the dictionary are ord-forms of characters, meaning
-        their representation as is their order in ASCII 256 code.
+        the key-value is the character order in ASCII 256 code.
         """
         for i in enumerate(self.content):
             current = ord(self.content[i[0]])
@@ -88,6 +88,19 @@ class HuffmanCoding:
         self.root_node = heappop(nodes)[1]
         self.collect_huffman_coded_values(self.root_node)
 
+    def create_huffman_nodes(self):
+        """This metdod creates the nodes for the Huffman tree.
+
+        Returns:
+            list: A list of Node objects to be inserted into the Huffman tree.
+        """
+        nodes = []
+        heapify(nodes)
+        for key, value in self.frequencies.items():
+            heappush(nodes, (value, HuffmanNode(key, value)))
+
+        return nodes
+
     def collect_huffman_coded_values(self, node, code_value=""):
         """Once the Huffman tree is created, the Huffman codes for
         all characters can be created. This method traverses the huffman tree
@@ -106,19 +119,6 @@ class HuffmanCoding:
         if not node.left_child and not node.right_child:
             self.huffman_coded_values[node.character] = updated_value
 
-    def create_huffman_nodes(self):
-        """This metdod creates the nodes for the Huffman tree.
-
-        Returns:
-            list: A list of Node objects to be inserted into the Huffman tree.
-        """
-        nodes = []
-        heapify(nodes)
-        for key, value in self.frequencies.items():
-            heappush(nodes, (value, HuffmanNode(key, value)))
-
-        return nodes
-
     def huffman_encode(self):
         """This method write the compressed content by replacing all
         characters in original content with huffman coded values.
@@ -129,10 +129,12 @@ class HuffmanCoding:
         characters_length = len(characters)
         n_of_characters = int(characters_length / 8)
 
-        encoded_content = ""
+        encoded_content_list = []
 
         for char in self.content:
-            encoded_content += self.huffman_coded_values[ord(char)]
+            encoded_content_list.append(self.huffman_coded_values[ord(char)])
+
+        encoded_content = "".join(encoded_content_list)
 
         content_length = len(encoded_content)
 
@@ -186,7 +188,7 @@ class HuffmanCoding:
         return tree_string, tree_characters
 
     def huffman_decode(self):
-        """This method decodes a content compressed in huffman code.
+        """This method decodes content compressed in huffman code.
         The huffman tree is traversed based on the bit information
         left (if 0) or right (if 1) until a leaf node is found. Then
         the character from that node is added to the uncompressed string.
@@ -209,7 +211,6 @@ class HuffmanCoding:
                 uncompressed_as_list.append(chr(node.character))
                 node = self.root_node
         self.uncompressed = "".join(uncompressed_as_list)
-        self.content = uncompressed_as_list
 
     def _init_huffman_decode(self) -> tuple:
         self.uncompressed = ""
@@ -217,26 +218,6 @@ class HuffmanCoding:
         node = self.root_node
         i = 0
         return initialized_list, node, i
-
-    def write_compressed_file(self, filename, content):
-        """Converts content into a bytearray and calls an instance
-        of FileManagement from Service package to store content as
-        bytes.
-        """
-        content_as_integers = []
-        for i in range(0, len(content), 8):
-            content_as_integers.append(int(content[i:i+8], 2))
-        byte_array = bytearray(content_as_integers)
-        self.file_manager.create_binary_file(filename, byte_array)
-
-    def write_uncompressed_file(self, filename, content):
-        """This method writes the compressed data into a file.
-
-        At initial stage the filename is set. Later on, it will be created
-        based on the file opened for compression.
-        """
-        with open(filename, "w", encoding="utf-8") as compressed_file:
-            compressed_file.write(content)
 
     def fetch_uncompressed_content(self):
         """Calls a method from an instant of FileManager object from service package
@@ -313,14 +294,12 @@ class HuffmanCoding:
                 tree[1:],
                 characters)
             return tree, characters
-        # if len(characters):
-        #     node.character = int(characters[:8], 2)
-        #     return tree, characters[8:]
-        # return "", ""
         node.character = int(characters[:8], 2)
         return tree, characters[8:]
 
     def log_add_frequencies(self):
+        """Calculates frequency-data for log.
+        """
         freqs = []
         for freq in self.huffman_coded_values.values():
             freqs.append(len(freq))
@@ -329,6 +308,8 @@ class HuffmanCoding:
         self.logentry.logdata["huffman_freq_variance"] = f"{(variance(freqs)):.2f}"
 
     def log_add_character_count(self):
+        """Adds the sum of unique characters to the log.
+        """
         self.logentry.logdata["huffman-character-count"] = str(len(self.frequencies))
 
     def analyze_compression(self):
@@ -419,9 +400,29 @@ class HuffmanCoding:
         write_total_time = write_endtime - write_starttime
         self.logentry.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
+    def write_compressed_file(self, filename, content):
+        """Converts content into a bytearray and calls an instance
+        of FileManagement from Service package to store content as
+        bytes.
+        """
+        content_as_integers = []
+        for i in range(0, len(content), 8):
+            content_as_integers.append(int(content[i:i+8], 2))
+        byte_array = bytearray(content_as_integers)
+        self.file_manager.create_binary_file(filename, byte_array)
+
+    def write_uncompressed_file(self, filename, content):
+        """This method writes the compressed data into a file.
+
+        At initial stage the filename is set. Later on, it will be created
+        based on the file opened for compression.
+        """
+        with open(filename, "w", encoding="utf-8") as compressed_file:
+            compressed_file.write(content)
+
     def activate_preorder_traversal(self):
         """A method used by automated tests to verify that the Huffman tree
-        is correctly re-created
+        is correctly re-created.
 
         Returns:
             str, str: returns character order and travel path
@@ -439,7 +440,9 @@ class HuffmanCoding:
         return str_result, str_travel_path
 
     def preorder_traversal(self, node, result: list, travel_path: list):
-        """A recursive method that travels the tree in pre-order.
+        """A recursive method that travels the tree in pre-order. Used
+        by the automated tests to verify that the Huffman tree is
+        correctly created.
 
         Args:
             node (HuffmanNode): Node currently under inspection
@@ -454,7 +457,6 @@ class HuffmanCoding:
         if node.right_child:
             travel_path.append(1)
             self.preorder_traversal(node.right_child, result, travel_path)
-
 
 class HuffmanNode:
 

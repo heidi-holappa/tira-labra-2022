@@ -36,6 +36,7 @@ class LempelZiv77:
             uncompressed data
             compressed_filename (str): name and location of the file with
             compressed data
+            logentry (LogEntry): an instance to manage writing of the log entry
         """
         self.uncompressed_filename = uncompressed_filename
         self.compressed_filename = compressed_filename
@@ -50,146 +51,42 @@ class LempelZiv77:
         self.logentry = logentry
         self.supported_characters = default_supported_characters
 
-    def fetch_uncompressed_content(self):
-        """Calls FileManagement from service package to fetch uncompressed content
-        """
-        self.content = self.file_manager.fetch_uncompressed_content(
-            self.uncompressed_filename)
-
-    def fetch_compressed_content(self):
-        """Calls FileManagement from service package to fetch compressed content and
-        another method to transform the fetched content into a string.
-        """
-        compressed_content_as_bytes: bytes = self.file_manager.fetch_compressed_content(
-            self.compressed_filename)
-        self.tranform_bytes_into_string(compressed_content_as_bytes)
-
-    def tranform_bytes_into_string(self, byte_data):
-        """Transforms the byte data into string of ones and zeroes.
-
-        Args:
-            byte_data (bytes): Stored content as bytes of data
-        """
-
-        data_as_list = []
-        for byte in byte_data:
-            data_as_list.append(str(bin(byte)[2:].zfill(8)))
-        self.compressed_content = "".join(data_as_list)
-
-    def write_txt_content_into_a_file(self, filename, content_to_write):
-        """Calls file management to write content to a file
-
-        Args:
-            filename (str): file to write to
-            content_to_write (str): content to be written
-        """
-        self.file_manager.create_txt_file(filename, content_to_write)
-
-    def write_binary_content_into_a_file(self, filename, content_to_write):
-        """Calls FileManagement from service package to write byte content
-        to a file.
-
-        Args:
-            filename (str): file to write into
-            content_to_write (bytes): byte-data to be written
-        """
-        self.file_manager.create_binary_file(filename, content_to_write)
-
     def lempel_ziv_activate_compression(self):
         """A method to activate and manage different steps of compression.
 
         Method also includes run-time logging on different phases.
         """
         fetch_starttime = time.time()
-        self.fetch_uncompressed_content()
+        self._lempel_ziv_fetch_uncompressed_content()
         fetch_endtime = time.time()
         fetch_total_time = fetch_endtime - fetch_starttime
         self.logentry.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
 
         compress_starttime = time.time()
-        self.compress_content()
+        self._lempel_ziv_compress_content()
         compress_endtime = time.time()
         compress_total_time = compress_endtime - compress_starttime
         self.logentry.logdata["compression_time"] = f"{compress_total_time:.2f}"
 
         write_starttime = time.time()
-        self.write_binary_content_into_a_file(
+        self._lempel_ziv_write_binary_content_into_a_file(
             self.compressed_filename, self.bytearray_data)
         write_endtime = time.time()
         write_total_time = write_endtime - write_starttime
         self.logentry.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
 
-    def lempel_ziv_activate_uncompression(self):
-        """A method to activate and manage different steps of uncopmpression.
-
-        Method also includes run-time logging.
-        """
-        fetch_starttime = time.time()
-        self.fetch_compressed_content()
-        fetch_endtime = time.time()
-        fetch_total_time = fetch_endtime - fetch_starttime
-        self.logentry.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
-
-        compress_starttime = time.time()
-        self.lempel_ziv_handle_uncompression()
-        compress_endtime = time.time()
-        compress_total_time = compress_endtime - compress_starttime
-        self.logentry.logdata["compression_time"] = f"{compress_total_time:.2f}"
-
-        write_starttime = time.time()
-        self.write_txt_content_into_a_file(
-            self.uncompressed_filename, self.content)
-        write_endtime = time.time()
-        write_total_time = write_endtime - write_starttime
-        self.logentry.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
-
-    def lempel_ziv_handle_uncompression(self):
-        """A method to handle the steps of data uncompression. First data is transformed
-        to tuples. Then the content is uncompressed.
-        """
-        self.construct_tuples_from_fetched_content()
-        self.lempel_ziv_uncompress()
-
-    def compress_content(self):
+    def _lempel_ziv_compress_content(self):
         """A method to compress the given content.
         """
         self.compressed_content_as_list = []
         i = 0
         while i < len(self.content):
-            result = self.init_window_search(i)
+            result = self._init_window_search(i)
             self.compressed_content_as_list.append(result)
             i += result[1]
         self.construct_binary_version_of_content()
 
-    def construct_binary_version_of_content(self):
-        """A method to create binary type content of the data. The logic is the following:
-        Offset: 12 bits
-        Length of match: 4 bits
-        Next character: a byte"""
-        content_as_bits = []
-        for member in self.compressed_content_as_list:
-            offset = member[0]
-            match_length = member[1]
-            next_character = member[2]
-            next_char_index = self.supported_characters.char_to_index_dict[next_character]
-            if offset == 0:
-                content_as_bits.append("0")
-                # content_as_bits.append(str(bin(next_character)[2:].zfill(8)))
-                content_as_bits.append(str(bin(next_char_index)[2:].zfill(7)))
-            else:
-                content_as_bits.append("1")
-                content_as_bits.append(str(bin(offset)[2:].zfill(12)))
-                content_as_bits.append(str(bin(match_length)[2:].zfill(4)))
-        content_as_bits.append("0000000")
-        remaining_bits = str((8 - len(content_as_bits) % 8) * "0")
-        content_as_bits.append(remaining_bits)
-        self.compressed_content = "".join(content_as_bits)
-        for i in range(0, len(self.compressed_content), 8):
-            value = ord(chr(int(self.compressed_content[i:i+8], 2)))
-            self._bytearray_list.append(value)
-        self.bytearray_data = bytearray(self._bytearray_list)
-
-    def init_window_search(self, current_index: int) -> tuple:
+    def _init_window_search(self, current_index: int) -> tuple:
         """A method to initialize the window search.
 
         Args:
@@ -220,11 +117,11 @@ class LempelZiv77:
 
         Args:
             window_start_index (int): index from which the sliding window begins.
-            buffer_start_index (int): index from which the lookahead buffer start
+            buffer_start_index (int): index from which the lookahead buffer starts.
             buffer_end_index (int): index in which the buffer and the sliding windows end.
 
         Returns:
-            tuple: offset, match length and character, if no match is found.
+            tuple: (offset, match length, character*) (* only if no match is found, else 0).
         """
         longest = (0, 0, 0)
         for i in range(buffer_start_index+3, buffer_end_index + 1):
@@ -240,6 +137,67 @@ class LempelZiv77:
             longest = (0, 1, ord(self.content[buffer_start_index]))
         return longest
 
+    def construct_binary_version_of_content(self):
+        """A method to create binary type content of the data. The logic is the following:
+        Offset: 12 bits
+        Length of match: 4 bits
+        Next character: a byte
+        break-character = 00000000 (indicator bit + 7 bits)
+        remaining bits: remainder to fill in the bytes
+        """
+        content_as_bits = []
+        counter = 0
+        for member in self.compressed_content_as_list:
+            offset, match_length, next_character = member
+            next_char_index = self.supported_characters.char_to_index_dict[next_character]
+            if offset == 0:
+                content_as_bits.append("0" + str(bin(next_char_index)[2:].zfill(7)))
+                counter += 8
+            else:
+                content_as_bits.append("1" + \
+                    str(bin(offset)[2:].zfill(12)) + \
+                    str(bin(match_length)[2:].zfill(4)))
+                counter += 17
+        content_as_bits.append("00000000")
+        counter += 8
+        remaining_bits = str((8 - counter % 8) * "0")
+        content_as_bits.append(remaining_bits)
+        self.compressed_content = "".join(content_as_bits)
+        for i in range(0, len(self.compressed_content), 8):
+            value = ord(chr(int(self.compressed_content[i:i+8], 2)))
+            self._bytearray_list.append(value)
+        self.bytearray_data = bytearray(self._bytearray_list)
+
+    def lempel_ziv_activate_uncompression(self):
+        """A method to activate and manage different steps of uncopmpression.
+
+        Method also includes run-time logging.
+        """
+        fetch_starttime = time.time()
+        self._lempel_ziv_fetch_compressed_content()
+        fetch_endtime = time.time()
+        fetch_total_time = fetch_endtime - fetch_starttime
+        self.logentry.logdata["data_fetch_and_process_time"] = f"{fetch_total_time:.2f}"
+
+        compress_starttime = time.time()
+        self.lempel_ziv_handle_uncompression()
+        compress_endtime = time.time()
+        compress_total_time = compress_endtime - compress_starttime
+        self.logentry.logdata["compression_time"] = f"{compress_total_time:.2f}"
+
+        write_starttime = time.time()
+        self._lempel_ziv_write_string_content_into_a_file(
+            self.uncompressed_filename, self.content)
+        write_endtime = time.time()
+        write_total_time = write_endtime - write_starttime
+        self.logentry.logdata["data_write_and_process_time"] = f"{write_total_time:.2f}"
+
+    def lempel_ziv_handle_uncompression(self):
+        """A method to handle the steps of data uncompression. First data is transformed
+        to tuples. Then the content is uncompressed.
+        """
+        self.construct_tuples_from_fetched_content()
+        self.lempel_ziv_uncompress()
 
     def construct_tuples_from_fetched_content(self):
         """A method that transforms the fetched data into tuples.
@@ -289,6 +247,32 @@ class LempelZiv77:
         uncompressed_string = "".join(content)
         self.content = uncompressed_string
 
+    # pylint: disable=duplicate-code
+    def analyze_compression(self):
+        """Collects analysis data on compression.
+        """
+
+        self.logentry.logdata["original_filename"] = self.uncompressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
+        self.logentry.logdata["action"] = "0"
+        self.calculate_mean_length_and_mean_offset_for_log()
+
+    # pylint: disable=duplicate-code
+    def analyze_uncompression(self):
+        """Collects analysis data on uncompression.
+        """
+
+        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split(
+            "/")[-1]
+        self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
+        self.logentry.logdata["action"] = "1"
+        self.calculate_mean_length_and_mean_offset_for_log()
+
     def calculate_mean_length_and_mean_offset_for_log(self):
         """Handles calculating the mean length and mean offset of
         the matching content in the events when a match is found
@@ -306,28 +290,47 @@ class LempelZiv77:
         if offsets:
             self.logentry.logdata["lz_mean_offset"] = str(mean(offsets))
 
-    # pylint: disable=duplicate-code
-    def analyze_compression(self):
-        """An initial method for creating analysis data on compression.
+    def _lempel_ziv_fetch_uncompressed_content(self):
+        """Calls FileManagement from service package to fetch uncompressed content
+        """
+        self.content = self.file_manager.fetch_uncompressed_content(
+            self.uncompressed_filename)
+
+    def _lempel_ziv_fetch_compressed_content(self):
+        """Calls FileManagement from service package to fetch compressed content and
+        another method to transform the fetched content into a string.
+        """
+        compressed_content_as_bytes: bytes = self.file_manager.fetch_compressed_content(
+            self.compressed_filename)
+        self._transform_bytes_into_string(compressed_content_as_bytes)
+
+    def _transform_bytes_into_string(self, byte_data):
+        """Transforms the byte data into string of ones and zeroes.
+
+        Args:
+            byte_data (bytes): Stored content as bytes of data
         """
 
-        self.logentry.logdata["original_filename"] = self.uncompressed_filename.split(
-            "/")[-1]
-        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
-            "/")[-1]
-        self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
-        self.logentry.logdata["action"] = "0"
-        self.calculate_mean_length_and_mean_offset_for_log()
+        data_as_list = []
+        for byte in byte_data:
+            data_as_list.append(str(bin(byte)[2:].zfill(8)))
+        self.compressed_content = "".join(data_as_list)
 
-    # pylint: disable=duplicate-code
-    def analyze_uncompression(self):
-        """An initial method for creating analysis data on compression.
+    def _lempel_ziv_write_string_content_into_a_file(self, filename, content_to_write):
+        """Calls FileManagement to write content to a file
+
+        Args:
+            filename (str): file to write to
+            content_to_write (str): content to be written
         """
+        self.file_manager.create_txt_file(filename, content_to_write)
 
-        self.logentry.logdata["compressed_filename"] = self.compressed_filename.split(
-            "/")[-1]
-        self.logentry.logdata["uncompressed_filename"] = self.uncompressed_filename.split(
-            "/")[-1]
-        self.logentry.logdata["compression_method"] = "Lempel-Ziv 77"
-        self.logentry.logdata["action"] = "1"
-        self.calculate_mean_length_and_mean_offset_for_log()
+    def _lempel_ziv_write_binary_content_into_a_file(self, filename, content_to_write):
+        """Calls FileManagement from service package to write byte content
+        to a file.
+
+        Args:
+            filename (str): file to write into
+            content_to_write (bytes): byte-data to be written
+        """
+        self.file_manager.create_binary_file(filename, content_to_write)
