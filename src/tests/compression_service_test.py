@@ -36,15 +36,16 @@ class TestCompressionManagement(unittest.TestCase):
             extension, accepted_extensions)
         self.assertEqual(False, return_value)
 
-    
     # @pytest.mark.extendedtest
+
     def content_validation_fails_if_file_has_one_unique_character(self):
         content = str("AAAAAAAAAAAAAAAAAAAAAAAAA")
         filename = "test_content_validation.txt"
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
-        result = self.compression_management.validate_file_length_and_content(file_and_path)
+        result = self.compression_management.validate_file_length_and_content(
+            file_and_path)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_unsupported_characters*.*")):
             os.remove(filename)
         self.assertEqual(False, result)
@@ -56,7 +57,8 @@ class TestCompressionManagement(unittest.TestCase):
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
-        result = self.compression_management.validate_file_length_and_content(file_and_path)
+        result = self.compression_management.validate_file_length_and_content(
+            file_and_path)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_content_validation*.*")):
             os.remove(filename)
         self.assertEqual(False, result)
@@ -68,7 +70,8 @@ class TestCompressionManagement(unittest.TestCase):
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
-        result = self.compression_management.validate_file_length_and_content(file_and_path)
+        result = self.compression_management.validate_file_length_and_content(
+            file_and_path)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_content_validation*.*")):
             os.remove(filename)
         self.assertEqual(True, result)
@@ -80,7 +83,8 @@ class TestCompressionManagement(unittest.TestCase):
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
-        result, invalid_characters = self.compression_management.validate_uploaded_txt_file_content(file_and_path)
+        result, invalid_characters = self.compression_management.validate_uploaded_txt_file_content(
+            file_and_path)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_unsupported_characters*.*")):
             os.remove(filename)
         self.assertFalse(result)
@@ -92,7 +96,8 @@ class TestCompressionManagement(unittest.TestCase):
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
-        result, invalid_characters = self.compression_management.validate_uploaded_txt_file_content(file_and_path)
+        result, invalid_characters = self.compression_management.validate_uploaded_txt_file_content(
+            file_and_path)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_unsupported_characters*.*")):
             os.remove(filename)
         self.assertTrue(3, len(invalid_characters))

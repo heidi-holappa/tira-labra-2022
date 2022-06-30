@@ -95,21 +95,21 @@ class TestLempelZivCompression(unittest.TestCase):
         """
         test_content = "AABCABCDABCDABCD"
         list_of_tuples_should_be = [
-            (0,1,ord("A")),
-            (0,1,ord("A")),
-            (0,1,ord("B")),
-            (0,1,ord("C")),
-            (3,3,0),
-            (0,1,ord("D")),
-            (4,4,0),
-            (4,4,0),
+            (0, 1, ord("A")),
+            (0, 1, ord("A")),
+            (0, 1, ord("B")),
+            (0, 1, ord("C")),
+            (3, 3, 0),
+            (0, 1, ord("D")),
+            (4, 4, 0),
+            (4, 4, 0),
         ]
         self.lz77_coder.content = test_content
         self.lz77_coder._lempel_ziv_compress_content()
         created_list = self.lz77_coder.compressed_content_as_list
         print(list_of_tuples_should_be, created_list)
         self.assertEqual(list_of_tuples_should_be, created_list)
-    
+
     @pytest.mark.extendedtest
     def test_edge_case_content_max_match_size_is_correctly_transformed_to_tuples(self):
         """For this test a correct output for the given content has been manually deducted.
@@ -117,23 +117,23 @@ class TestLempelZivCompression(unittest.TestCase):
         """
         test_content = "ABCDEFGHIJKLMNOABCDEFGHIJKLMNOABCDEFGHIJKLMNO"
         list_of_tuples_should_be = [
-            (0,1,ord("A")),
-            (0,1,ord("B")),
-            (0,1,ord("C")),
-            (0,1,ord("D")),
-            (0,1,ord("E")),
-            (0,1,ord("F")),
-            (0,1,ord("G")),
-            (0,1,ord("H")),
-            (0,1,ord("I")),
-            (0,1,ord("J")),
-            (0,1,ord("K")),
-            (0,1,ord("L")),
-            (0,1,ord("M")),
-            (0,1,ord("N")),
-            (0,1,ord("O")),
-            (15,15,0),
-            (15,15,0),
+            (0, 1, ord("A")),
+            (0, 1, ord("B")),
+            (0, 1, ord("C")),
+            (0, 1, ord("D")),
+            (0, 1, ord("E")),
+            (0, 1, ord("F")),
+            (0, 1, ord("G")),
+            (0, 1, ord("H")),
+            (0, 1, ord("I")),
+            (0, 1, ord("J")),
+            (0, 1, ord("K")),
+            (0, 1, ord("L")),
+            (0, 1, ord("M")),
+            (0, 1, ord("N")),
+            (0, 1, ord("O")),
+            (15, 15, 0),
+            (15, 15, 0),
         ]
         self.lz77_coder.content = test_content
         self.lz77_coder._lempel_ziv_compress_content()
@@ -194,12 +194,12 @@ class TestLempelZivCompression(unittest.TestCase):
                 content_matches = False
         self.assertEqual(True, content_matches)
 
-    @pytest.mark.extendedtest 
-    def test_compressed_data_matches_with_a_very_long_existing_file(self): 
+    @pytest.mark.extendedtest
+    def test_compressed_data_matches_with_a_very_long_existing_file(self):
         filename = os.path.join(DEFAULT_TEST_DATA_PATH,
                                 "gutenberg-top-10.txt")
         self.uncompressed_filename = filename[:-4] + "_uncompressed.txt"
-        with open(filename, "r", encoding="utf-8") as file: 
+        with open(filename, "r", encoding="utf-8") as file:
             content = file.read()
         self.create_test_file(content)
         self.lz77_coder.lempel_ziv_activate_compression()

@@ -9,9 +9,8 @@ class SupportedCharacters:
         """Constructor for the class.
         """
         self.supported_characters_as_list, \
-        self.char_to_index_dict, \
-        self.index_to_char_dict = self.init_data_structures()
-
+            self.char_to_index_dict, \
+            self.index_to_char_dict = self.init_data_structures()
 
     def init_data_structures(self) -> tuple:
         """Initializes the data structures of supported characters to be provided
@@ -59,5 +58,6 @@ class SupportedCharacters:
                 result = False
                 invalid_characters.append(char)
         return result, invalid_characters
+
 
 default_supported_characters = SupportedCharacters()

@@ -4,6 +4,7 @@ from entities.logentry import LogEntry
 from entities.supportedcharacters import default_supported_characters
 from services.filemanagement import default_file_manager
 
+
 class NoCompressedContentError(Exception):
     """Gives an understandable error incase compression fails because
     no content is given.
@@ -151,12 +152,13 @@ class LempelZiv77:
             offset, match_length, next_character = member
             next_char_index = self.supported_characters.char_to_index_dict[next_character]
             if offset == 0:
-                content_as_bits.append("0" + str(bin(next_char_index)[2:].zfill(7)))
+                content_as_bits.append(
+                    "0" + str(bin(next_char_index)[2:].zfill(7)))
                 counter += 8
             else:
-                content_as_bits.append("1" + \
-                    str(bin(offset)[2:].zfill(12)) + \
-                    str(bin(match_length)[2:].zfill(4)))
+                content_as_bits.append("1" +
+                                       str(bin(offset)[2:].zfill(12)) +
+                                       str(bin(match_length)[2:].zfill(4)))
                 counter += 17
         content_as_bits.append("00000000")
         counter += 8
@@ -217,7 +219,8 @@ class LempelZiv77:
                 offset = 0
                 length = 1
                 character_index = int(self.compressed_content[i+1:i+8], 2)
-                character = chr(self.supported_characters.index_to_char_dict[character_index])
+                character = chr(
+                    self.supported_characters.index_to_char_dict[character_index])
                 i += 8
             else:
                 offset = int(self.compressed_content[i+1:i+13], 2)

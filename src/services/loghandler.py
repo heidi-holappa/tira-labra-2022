@@ -120,9 +120,10 @@ Time used for writing and processing data: \
 
             file.write(
                 self._create_forewords_for_html_log()
-                )
+            )
             file.write(
-                self._create_overview_data_for_html_log(total_time, success, fail)
+                self._create_overview_data_for_html_log(
+                    total_time, success, fail)
             )
             file.write(
                 self._create_tables_for_html_log()
@@ -436,7 +437,6 @@ Time used for writing and processing data: \
 {logdata['data_write_and_process_time']} seconds\n"""
             file.write(content)
             file.write("------ END OF ENTRY ------\n\n")
-
 
     def single_tkinter_compression_log_entry(self, logdata: dict):
         """Creates a single log entry. This method is called when using

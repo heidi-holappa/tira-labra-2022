@@ -6,6 +6,7 @@ from entities.lempelziv77 import LempelZiv77
 from entities.logentry import LogEntry
 from entities.supportedcharacters import default_supported_characters
 
+
 class CompressionManagement:
     """Handles management for compressing and uncompressing files.
 
@@ -106,9 +107,9 @@ class CompressionManagement:
         self.loghandler.create_uncompression_entry(logentry.logdata)
 
     def add_size_and_compression_ratio_to_logentry(self,
-                            uncompressed_filename,
-                            compressed_filename,
-                            logentry):
+                                                   uncompressed_filename,
+                                                   compressed_filename,
+                                                   logentry):
         """Updates the logentry object to include the file sizes and
         the compression ratio. The os.stat.st_size return the file
         size in bytes.

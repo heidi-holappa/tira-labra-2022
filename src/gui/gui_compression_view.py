@@ -253,12 +253,15 @@ class CompressionView:
         if not self.compression_management.validate_file_extension(self.file_to_compress[-3:], "txt"):
             self._file_error("Can only compress txt-files currently")
             return
-        content_is_valid, invalid_characters = self.compression_management.validate_uploaded_txt_file_content(self.file_to_compress)
+        content_is_valid, invalid_characters = self.compression_management.validate_uploaded_txt_file_content(
+            self.file_to_compress)
         if not content_is_valid:
-            self._file_error(f"File contains unsupported characters: {','.join(invalid_characters)}")
+            self._file_error(
+                f"File contains unsupported characters: {','.join(invalid_characters)}")
             return
         if not self.compression_management.validate_file_length_and_content(self.file_to_compress):
-            self._file_error("File must have atleast 10 characters and two unique characters.")
+            self._file_error(
+                "File must have atleast 10 characters and two unique characters.")
             return
         self.init_log_files()
         compression_method = self._compression_var.get()

@@ -47,7 +47,8 @@ class ExtensiveTestHandler:
         """
         created_content_as_list = []
         for _ in range(n_of_paragraphs):
-            created_content_as_list.append(self.document_generator.paragraph() + "\n\n")
+            created_content_as_list.append(
+                self.document_generator.paragraph() + "\n\n")
         created_content = "".join(created_content_as_list)
         stripped_content_as_list = []
         ascii_order_set = self.supported_characters
@@ -74,7 +75,7 @@ class ExtensiveTestHandler:
         for _ in range(n_of_paragraphs):
             characters_in_paragraph = randint(500, 1000)
             document_content_as_list.append("".join([choice(characters)
-                                        for _ in range(characters_in_paragraph)]) + "\n\n")
+                                                     for _ in range(characters_in_paragraph)]) + "\n\n")
         document_content = "".join(document_content_as_list)
         file = f"random-printable-ascii-{n_of_paragraphs}-paragraphs.txt"
         filename = os.path.join(DEFAULT_TEST_DATA_PATH, file)
@@ -139,8 +140,6 @@ Non-supported character: {invalid_characters}")
             os.remove(filename)
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, '*.lz')):
             os.remove(filename)
-
-
 
     def run_tests_on_file(self, filename: str, content: str):
         """Runs tests on a given file. Compresses and uncompresses

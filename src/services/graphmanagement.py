@@ -8,6 +8,7 @@ from config import IMG_HUFFMAN_CHAR_COUNT
 from config import IMG_LZ_MEAN_MATCH
 from config import IMG_LZ_MEAN_OFFSET
 
+
 class GraphManagement:
     """A class that handles constructing graphs for the HTML-log.
     """
@@ -160,11 +161,11 @@ This could possibly improve the compression ratio.</p>\n"
         return html_path
 
     def construct_compression_ratio_bar_chart(
-            self,
-            x_values: list,
-            y_values: list,
-            labels: list
-        ) -> str:
+        self,
+        x_values: list,
+        y_values: list,
+        labels: list
+    ) -> str:
         """Constructs a bar char of compression ratio comparison
         between Huffman coding and LZ77.
 

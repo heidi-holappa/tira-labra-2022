@@ -11,6 +11,7 @@ from services.extensivetesthandler import default_test_handler
 from services.filemanagement import default_file_manager
 from services.extensivetesthandler import InvalidCharactersError
 
+
 class TestExtensiveTesting(unittest.TestCase):
 
     def setUp(self):
@@ -91,7 +92,8 @@ class TestExtensiveTesting(unittest.TestCase):
     def test_validate_content_matches_fails_when_content_do_not_match(self):
         content_one = "ABC"
         content_two = "ABD"
-        result = self.extensive_test_handler.validate_content_matches(content_one, content_two)
+        result = self.extensive_test_handler.validate_content_matches(
+            content_one, content_two)
         self.assertEqual(False, result)
 
     @pytest.mark.extendedtest
@@ -104,16 +106,15 @@ class TestExtensiveTesting(unittest.TestCase):
             if not result:
                 break
         self.assertEqual(result, True)
-    
+
     @pytest.mark.extendedtest
     def test_old_compression_log_is_archived_when_new_log_is_created(self):
-        self.extensive_test_handler.activate_extensive_tests(1,10000)
-        self.extensive_test_handler.activate_extensive_tests(1,10000)
+        self.extensive_test_handler.activate_extensive_tests(1, 10000)
+        self.extensive_test_handler.activate_extensive_tests(1, 10000)
         filepath = os.path.join(DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
         result = os.path.exists(filepath)
         self.assertEqual(result, True)
 
-    
     @pytest.mark.extendedtest
     def test_graphs__defined_in_configuration_file_are_created(self):
         self.extensive_test_handler.activate_extensive_tests(1, 10000)
@@ -144,11 +145,12 @@ class TestExtensiveTesting(unittest.TestCase):
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
-        result = self.extensive_test_handler.test_huffman_compression(file_and_path, "EFG")
+        result = self.extensive_test_handler.test_huffman_compression(
+            file_and_path, "EFG")
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_unsupported_characters*.*")):
             os.remove(filename)
         self.assertEqual(False, result)
-    
+
     @pytest.mark.extendedtest
     def test_lempelziv_returns_false_with_non_matching_content(self):
         content = str("ABCDEFGHIJKLMN")
@@ -156,11 +158,12 @@ class TestExtensiveTesting(unittest.TestCase):
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, filename)
         with open(file_and_path, "a", encoding="utf-8") as file:
             file.write(content)
-        result = self.extensive_test_handler.test_lempelziv_compression(file_and_path, "HIJKEFG")
+        result = self.extensive_test_handler.test_lempelziv_compression(
+            file_and_path, "HIJKEFG")
         for filename in glob.glob(os.path.join(DEFAULT_TEST_DATA_PATH, "test_unsupported_characters*.*")):
             os.remove(filename)
         self.assertEqual(False, result)
-    
+
     @pytest.mark.extendedtest
     def test_log_archive_is_created_if_content_exists(self):
         self.extensive_test_handler.activate_extensive_tests(1, 5000)
@@ -168,7 +171,6 @@ class TestExtensiveTesting(unittest.TestCase):
         file_and_path = os.path.join(DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
         result = os.path.exists(file_and_path)
         self.assertEqual(True, result)
-
 
     @pytest.mark.extendedtest
     def test_log_file_does_not_have_standard_notification_when_log_is_created(self):
@@ -178,19 +180,21 @@ class TestExtensiveTesting(unittest.TestCase):
         """
         self.extensive_test_handler.activate_extensive_tests(1, 5000)
         notification = "No log content yet. Compress something to get log data."
-        result = self.filemanager.get_log_content()        
+        result = self.filemanager.get_log_content()
         self.assertNotEqual(result, notification)
-
 
     def destroy_test_files(self):
         html_path = os.path.join(DEFAULT_TEST_DATA_PATH, HTML_LOG)
         csv_path = os.path.join(DEFAULT_TEST_DATA_PATH, CSV_LOG)
         archive_path = os.path.join(DEFAULT_TEST_DATA_PATH, ARCHIVE_LOG)
         tkinter_log_path = os.path.join(DEFAULT_TEST_DATA_PATH, TKINTER_LOG)
-        img_compression_ratio_path = os.path.join(DEFAULT_TEST_GRAPH_FOLDER, IMG_COMPRESS_RATIO)
+        img_compression_ratio_path = os.path.join(
+            DEFAULT_TEST_GRAPH_FOLDER, IMG_COMPRESS_RATIO)
         img_huffman = os.path.join(DEFAULT_TEST_GRAPH_FOLDER, IMG_HUFFMAN_FREQ)
-        img_lz_match = os.path.join(DEFAULT_TEST_GRAPH_FOLDER, IMG_LZ_MEAN_MATCH)
-        img_lz_offset = os.path.join(DEFAULT_TEST_GRAPH_FOLDER, IMG_LZ_MEAN_OFFSET)
+        img_lz_match = os.path.join(
+            DEFAULT_TEST_GRAPH_FOLDER, IMG_LZ_MEAN_MATCH)
+        img_lz_offset = os.path.join(
+            DEFAULT_TEST_GRAPH_FOLDER, IMG_LZ_MEAN_OFFSET)
         if os.path.exists(html_path):
             os.remove(html_path)
         if os.path.exists(archive_path):
@@ -207,6 +211,7 @@ class TestExtensiveTesting(unittest.TestCase):
             os.remove(img_lz_match)
         if os.path.exists(img_lz_offset):
             os.remove(img_lz_offset)
+
 
 class TestFileManagement(unittest.TestCase):
 

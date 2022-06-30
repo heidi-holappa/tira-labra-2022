@@ -310,7 +310,8 @@ class HuffmanCoding:
     def log_add_character_count(self):
         """Adds the sum of unique characters to the log.
         """
-        self.logentry.logdata["huffman-character-count"] = str(len(self.frequencies))
+        self.logentry.logdata["huffman-character-count"] = str(
+            len(self.frequencies))
 
     def analyze_compression(self):
         """Creates analysis data on Huffman compression.
@@ -457,6 +458,7 @@ class HuffmanCoding:
         if node.right_child:
             travel_path.append(1)
             self.preorder_traversal(node.right_child, result, travel_path)
+
 
 class HuffmanNode:
 
