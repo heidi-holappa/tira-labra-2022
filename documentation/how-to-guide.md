@@ -1,6 +1,6 @@
 # Installation
 
-Begin by downloading the project from GitHub. During the project stable releases will be published. Before the first release the project can be cloned. 
+Begin by downloading the project from GitHub either by cloning the project or by downloading the [final release](#).  
 
 Install dependencies with the following command:
 ```
@@ -20,11 +20,13 @@ Run the application with the command `poetry run invoke start`. The application 
 
 ![Main view](images/how-to-guide-main-view.png)
 
-From the menu a user can 
+From the menu user can 
 * File-menu
+  * Choose one of the available views
   * exit the application
 * Help-menu
   * access help -documentation
+  * access documentation on analysis-tests
   * view app information
 
 From the button `compress / uncompress data` user can access compression view. 
@@ -36,7 +38,7 @@ Data can be compressed / uncompressed with Huffman coding algorithm and Lempel-Z
 
 ![Compression view](images/how-to-guide-compression-view.png)
 
-Start by selecting either an uncompressed txt-file or compressed huf- or lz-file. Four example txt-files are included in the default data folder for more convenient testing experience.  
+Start by selecting either an uncompressed txt-file or compressed huf- or lz-file. Four example txt-files are included in the default data folder for more convenient testing experience. When compressing data be sure to also choose the compression method you wish to use. 
 
 ![File explorer](images/how-to-guide-compression-view-explorer.png)
 
@@ -44,7 +46,7 @@ Once compression / uncompression is done, short analysis of results will be show
 
 ![Analysis](images/how-to-guide-compression-view-action-taken.png)
 
-A compressed file is created into the same directory. Data is stored as bytes.  
+A compressed/uncompressed file is created into the same directory where the accessed file is located. In compressed files data is stored as bytes.  
 
 ## Analysis-tests view
 In the GUI's 'analysis-tests' view user can create new randomly created test material or run analysis-tests on the files located in the configured test-folder.  
@@ -67,7 +69,7 @@ The application uses dotenv for configuration. User can reconfigure:
 
 
 # How To Run Tests
-To run the limited but quicker test-set use the command `poetry run invoke test` in the root folder of the project. To run all available tests use the command `poetry run invoke extended-test`.  
+To run the limited but quicker test-set use the command `poetry run invoke test` in the root folder of the project. This lighter test set is run every time the application launches. To run all available tests use the command `poetry run invoke extended-test`.  
 
 To generate a coverage report use the command `poetry run invoke coverage-report`.
 
@@ -89,9 +91,6 @@ In addition following characters are supported:
 - (246) # ö
 - (214) # Ö
 
-The compression creates byte-files with extensions .huf (Huffman coding) and .lz (Lempel-Ziv 77). An uncompressed version can then be created from these files.
+Content is validated and if accessed txt-file contains unsupported characters, user is notified and compression is aborted. 
 
-# For creator 
-* Miten ohjelma suoritetaan, miten eri toiminnallisuuksia käytetään
-* Minkä muotoisia syötteitä ohjelma hyväksyy
-* Missä hakemistossa on jar ja ajamiseen tarvittavat testitiedostot.
+![Error - unsupported characters](images/error-non-supported-characters.png)

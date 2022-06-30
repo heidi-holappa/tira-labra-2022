@@ -338,6 +338,8 @@ The application logic would benefit from following updates:
 - Improving error handling in compression / uncompression
 - Improving error handling on extensive tests
 - Refactoring of application logic
+  - Log content creation could be more well structured
+  - Some overlaps in methods in service classes Compression Management and ExtensiveTestHandler
 
 ## Pylint / Pytest  
 The final Pylint score is 10.00/10.00. The following Pylint -notifications were disabled in agreement with the course assistant, as style issues are not at the focus on this course (bullet points include classes in which these issues were ignored):
@@ -349,6 +351,20 @@ The final Pylint score is 10.00/10.00. The following Pylint -notifications were 
   - LempelZiv (creating analysis data)
 
 The final coverage brach percentage is 99 percent. For a detailed description on the tests, please see [testing documentation](testing-documentation.md)
+
+## Work hours for the course  
+Below is a summary of the work hours put into this course. Week 7 contains the hours for final phase before the deadline.
+
+| Week # | hours |
+| ---- | ---- |
+| 1 | 14 |
+| 2 | 16,5 |
+| 3 | 18,25 |
+| 4 | 17 |
+| 5 | 15,5 |
+| 6 | 19 |
+| 7 | 39 |
+| **Total** | **139.25** |
 
 # Sources
 
