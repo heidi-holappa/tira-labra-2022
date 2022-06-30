@@ -112,6 +112,9 @@ class TestLempelZivCompression(unittest.TestCase):
     
     @pytest.mark.extendedtest
     def test_edge_case_content_max_match_size_is_correctly_transformed_to_tuples(self):
+        """For this test a correct output for the given content has been manually deducted.
+        It is then compared to the output of the algorithm.
+        """
         test_content = "ABCDEFGHIJKLMNOABCDEFGHIJKLMNOABCDEFGHIJKLMNO"
         list_of_tuples_should_be = [
             (0,1,ord("A")),
